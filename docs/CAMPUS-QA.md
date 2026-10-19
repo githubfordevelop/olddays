@@ -39,3 +39,11 @@ The user explicitly replied 已打开. Confirmed tab2 HTTP localhost:4184; the d
 Final regression: completed case01 inside the PC mode through SMS pack, QQ offline message, BBS post and browser search cache,4/4 plus correct final deduction. Both original cases remain playable after the new wrappers. Final required suite:68JS tests plus4Python tests, all pass. Cache references unified tocampus3.0.6 before publishing.
 
 Integrated remote main1faf1ea (Tide Collector) before publishing rather than overwriting it. Script order preserves both story layers. Actual merged UI checks: open Tide three-handset shelf and black N73, switch to PC and see native PC browser, return to phone and retain Continue, choose ordinary3310 and see its native four functions, then reopen completed campus case6/6. Tide remains intact; native play and PC no longer accidentally inherit its active story screen.
+
+## 2026-10-20 02:00 续作：存档盒
+- 首页、手机工作台、PC 工作台均增加存档盒，入口在文档流内，不覆盖手机屏幕；全屏游玩隐藏入口。
+- 可下载 JSON 并从本地文件恢复收藏机、两宗案件、潮声每机笔记、动漫收藏、虚拟话费/退订与原生小游戏。采用明确项目名单，不导入任意 localStorage，也不包含 Java 模拟器数据库、真实网页历史或系统文件。
+- 恢复前显示余额、校园状态、潮声状态和收藏数，二次确认后刷新。拒绝未知格式/版本/项目、过大文件、不符类型与原型字段；写入失败尝试恢复此前值。
+- CUA 本地实际下载、选择刚导出文件、预览、确认恢复、重开预览，余额 87 元/校园通关/动漫 1 项一致。390×844 实看对话框和确认按钮完整可见。
+- CUA 导入未知项目测试文件被中文拒绝，确认按钮隐藏，未改进度。
+- 76 JS + 4 Python 通过；本轮未重新通关潮声完整结局，亦不宣称物理触摸或真实手机文件选择器已验。

@@ -20,3 +20,9 @@ body.handset-mode.pocket-expanded .museum-device:has(.phone-hardware-gamepad) .d
 body.pocket-expanded .museum-device>.phone-hardware-gamepad{grid-column:2;grid-row:1;display:flex!important;flex-direction:column;justify-content:center;padding:4px!important;min-width:0;gap:6px}
 }
 @media(max-height:550px) and (orientation:landscape){body.pocket-expanded .museum-device:has(.phone-hardware-gamepad){height:calc(100dvh - 110px)!important}body.handset-mode.pocket-expanded .museum-device>.phone-hardware-gamepad .hardware-numbers{min-height:92px!important;height:92px!important;max-height:92px!important;grid-template-rows:repeat(2,44px)!important;flex:none!important;margin:0!important}body.handset-mode.pocket-expanded .museum-device>.phone-hardware-gamepad .hardware-navigation{height:132px!important;min-height:132px!important;flex:none!important;margin:0!important}}
+
+/* Save controls remain in document flow, never over the phone screen. */
+.save-box-entry{display:block;margin:10px auto;padding:9px 18px;border:1px solid #a38c6e;border-radius:20px;background:#fff5dd;color:#493926;min-height:44px}
+.save-box{box-sizing:border-box;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow:auto;border:1px solid #a38c6e;border-radius:18px;padding:24px;background:#fff8e9;color:#352f27;box-shadow:0 24px 80px #0005}
+.save-box::backdrop{background:#211b17a6}.save-box p{line-height:1.7}.save-box button,.save-box-file{min-height:44px;padding:10px 14px;margin:6px 0;cursor:pointer}.save-box-file{display:block}.save-box-file input{display:block;max-width:100%;margin-top:8px}.save-box-close{float:right}.save-box [data-save-confirm]{background:#334d3c;color:white;border:0;border-radius:8px}.save-box [hidden]{display:none!important}
+body.pocket-expanded .save-box-entry{display:none}
