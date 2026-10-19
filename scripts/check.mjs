@@ -42,7 +42,7 @@ console.log(
   "JavaScript, asset references, mobile manifest, and 1996–2025 year coverage checked.",
 );
 
-execFileSync(process.execPath, ["--test", "tests/behavior.test.mjs", "tests/java-runtime.test.mjs"], {
+execFileSync(process.execPath, ["--test", "tests/behavior.test.mjs", "tests/java-runtime.test.mjs", "tests/content-library.test.mjs"], {
   stdio: "inherit",
 });
 

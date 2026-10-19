@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ode-joy",
+    "name": "欢乐颂",
+    "credit": "贝多芬公版旋律 · 本站合成演奏",
+    "seconds": 24
+  },
+  {
+    "id": "twinkle",
+    "name": "小星星",
+    "credit": "传统旋律公版旋律 · 本站合成演奏",
+    "seconds": 24
+  },
+  {
+    "id": "greensleeves",
+    "name": "绿袖子",
+    "credit": "传统旋律公版旋律 · 本站合成演奏",
+    "seconds": 24
+  },
+  {
+    "id": "jingle-bells",
+    "name": "铃儿响叮当",
+    "credit": "James Lord Pierpont公版旋律 · 本站合成演奏",
+    "seconds": 24
+  },
+  {
+    "id": "new-year",
+    "name": "友谊地久天长",
+    "credit": "传统苏格兰旋律公版旋律 · 本站合成演奏",
+    "seconds": 24
+  },
+  {
+    "id": "canon-bells",
+    "name": "卡农 · 铃声片段",
+    "credit": "帕赫贝尔公版旋律 · 本站合成演奏",
+    "seconds": 24
+  },
+  {
+    "id": "morning",
+    "name": "晨景 · 口袋铃声",
+    "credit": "格里格公版旋律 · 本站合成演奏",
+    "seconds": 24
+  },
+  {
+    "id": "gran-vals",
+    "name": "大圆舞曲 · 老手机铃声",
+    "credit": "塔雷加公版旋律 · 本站合成演奏",
+    "seconds": 24
+  }
+]

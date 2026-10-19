@@ -3,27 +3,72 @@
     "id": "journey",
     "title": "西游记",
     "author": "吴承恩",
-    "label": "公版经典 · 前五回",
+    "label": "公版经典 · 前20回",
     "license": "经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。",
-    "chapterCount": 5,
-    "characters": 29304
+    "chapterCount": 20,
+    "characters": 119818
   },
   {
     "id": "kingdoms",
     "title": "三国演义",
     "author": "罗贯中",
-    "label": "公版经典 · 前五回",
+    "label": "公版经典 · 前20回",
     "license": "经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。",
-    "chapterCount": 5,
-    "characters": 23663
+    "chapterCount": 20,
+    "characters": 99538
   },
   {
     "id": "redchamber",
     "title": "红楼梦",
     "author": "曹雪芹",
-    "label": "公版经典 · 前五回",
+    "label": "公版经典 · 前20回",
     "license": "经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。",
-    "chapterCount": 5,
-    "characters": 35897
+    "chapterCount": 20,
+    "characters": 132193
+  },
+  {
+    "id": "watermargin",
+    "title": "水浒传",
+    "author": "施耐庵",
+    "label": "公版经典 · 前10回",
+    "license": "经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。",
+    "chapterCount": 10,
+    "characters": 80751
+  },
+  {
+    "id": "gods",
+    "title": "封神演义",
+    "author": "许仲琳",
+    "label": "公版经典 · 前10回",
+    "license": "经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。",
+    "chapterCount": 10,
+    "characters": 57333
+  },
+  {
+    "id": "scholars",
+    "title": "儒林外史",
+    "author": "吴敬梓",
+    "label": "公版经典 · 前10回",
+    "license": "经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。",
+    "chapterCount": 10,
+    "characters": 63670
+  },
+  {
+    "id": "suitang",
+    "title": "隋唐演义",
+    "author": "褚人获",
+    "label": "公版经典 · 前10回",
+    "license": "经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。",
+    "chapterCount": 10,
+    "characters": 56266
+  },
+  {
+    "id": "yuefei",
+    "title": "说岳全传",
+    "author": "钱彩、金丰",
+    "label": "公版经典 · 前10回",
+    "license": "经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。",
+    "chapterCount": 10,
+    "characters": 47851
   }
 ]

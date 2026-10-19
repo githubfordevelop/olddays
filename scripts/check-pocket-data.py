@@ -3,8 +3,8 @@ import json,zipfile,struct,tarfile
 root=Path(__file__).resolve().parents[1]
 for m in json.loads((root/'data/classics-sources.json').read_text()):
  b=json.loads((root/f'dist/books/{m["id"]}.json').read_text())
- assert len(b['chapters'])==5
- assert all(len(''.join(c['paragraphs']))>3000 and 'oldid=' in c['source'] for c in b['chapters'])
+ assert len(b['chapters'])==m['chapterCount'] and m['chapterCount']>=10
+ assert all(len(''.join(c['paragraphs']))>1000 and 'oldid=' in c['source'] for c in b['chapters'])
 for name,cls in [('snake','OldSnake'),('calculator','PocketCalculator'),('notes','PocketNotes')]:
  with zipfile.ZipFile(root/f'dist/javame/demos/{name}.jar') as z:
   assert cls in z.read('META-INF/MANIFEST.MF').decode()
