@@ -60,47 +60,25 @@ const eras = {
     ],
   },
 };
-const categories = [
-  {
-    id: "portal",
-    title: "新闻 · 门户",
-    en: "NEWS & PORTALS",
-    sites: [
-      ["新浪", "www.sina.com.cn"],
-      ["搜狐", "www.sohu.com"],
-      ["网易", "www.163.com"],
-      ["人民网", "www.people.com.cn"],
-      ["新华网", "www.xinhuanet.com"],
-      ["中国新闻网", "www.chinanews.com.cn"],
-    ],
-  },
-  {
-    id: "forum",
-    title: "论坛 · 社区",
-    en: "FORUMS & COMMUNITIES",
-    sites: [
-      ["天涯社区", "www.tianya.cn"],
-      ["猫扑大杂烩", "www.mop.com"],
-      ["西祠胡同", "www.xici.net"],
-      ["水木清华", "www.smth.org"],
-      ["百度贴吧", "post.baidu.com"],
-      ["榕树下", "www.rongshuxia.com"],
-    ],
-  },
-  {
-    id: "life",
-    title: "生活 · 发现",
-    en: "LIFE & DISCOVERY",
-    sites: [
-      ["hao123", "www.hao123.com"],
-      ["中关村在线", "www.zol.com.cn"],
-      ["太平洋电脑网", "www.pconline.com.cn"],
-      ["中国博客网", "www.blogcn.com"],
-      ["中国雅虎", "cn.yahoo.com"],
-      ["硅谷动力", "www.enet.com.cn"],
-    ],
-  },
-];
+function catalogMarkup(prefix) {
+  const total = siteCatalog.reduce((n,c)=>n+c.sites.length,0);
+  const eligible = siteCatalog.reduce((n,c)=>n+c.sites.filter(s=>s.since<=Number(year())).length,0);
+  return `<section class="old-catalog" id="${prefix}" data-catalog><h2>万维网旧址簿 <small>${eligible} 个候选入口 / 共 ${total} 个</small></h2><p>回到 ${year()} · 按建议浏览年代筛选。目录收录不代表已有可用快照；点击后查询真实存档。</p><label class="catalog-search">⌕ <input type="search" data-catalog-search placeholder="找旧站：梦网、易搜、天涯、QQ…" aria-label="搜索旧网站名称或域名"></label><div class="catalog-index">${siteCatalog.map(c=>`<a href="#${prefix}-${c.id}">${escapeHTML(c.title.split(" · ")[0])}</a>`).join("")}</div><p class="catalog-result" aria-live="polite">显示 ${eligible} 个年代候选入口</p>${siteCatalog.map(c=>{const sites=c.sites.filter(s=>s.since<=Number(year()));return `<details class="catalog-group" id="${prefix}-${c.id}" ${sites.length?'open':''}><summary>${escapeHTML(c.title)} <small>${sites.length}</small></summary><div class="catalog-links">${sites.map(s=>`<div class="catalog-entry" data-catalog-key="${escapeHTML(s.name+' '+s.url)}">${siteLink(s.name,s.url)}<small>${escapeHTML(s.url)}</small></div>`).join("")}</div>${sites.length?'':'<p>这个分类在所选年代暂无候选入口，可切换较晚年份。</p>'}</details>`}).join("")}<p class="catalog-empty" hidden>没有找到这个名称。可以直接在顶部地址栏输入旧网址。</p><p class="catalog-foot">旧网页是历史资料，部分登录、音乐、下载与游戏服务已失效。本站家园、菜园与精武堂为原创重制，和历史站点入口分开提供。记得更多旧网址？欢迎到 GitHub 提交站名、旧域名及来源。</p></section>`;
+}
+document.addEventListener("input", e=>{
+  if (!e.target.matches?.("[data-catalog-search]")) return;
+  const box=e.target.closest("[data-catalog]"), q=e.target.value.trim().toLowerCase();
+  let count=0;
+  box.querySelectorAll(".catalog-group").forEach(group=>{
+    let matches=0;
+    group.querySelectorAll("[data-catalog-key]").forEach(entry=>{
+      const show=entry.dataset.catalogKey.toLowerCase().includes(q); entry.hidden=!show; if(show)matches++;
+    });
+    group.hidden=!!q&&!matches; if(q&&matches)group.open=true; count+=matches;
+  });
+  box.querySelector(".catalog-result").textContent=`找到 ${count} 个旧站入口`;
+  box.querySelector(".catalog-empty").hidden=count>0;
+});
 let date = "2004-08-01",
   current = { type: "home" },
   history = [],
@@ -186,7 +164,7 @@ function mobileMenu() {
   );
 }
 function mobileHome() {
-  return `<section class="wap-home"><div class="wap-welcome"><b>时光导航</b><span>${date.replaceAll("-", ".")} · 历史互联网</span></div><div class="wap-search"><span>⌕</span><button id="focus-address">输入旧网址，回到那一年…</button><button data-action="settings" aria-label="切换浏览器皮肤">换肤</button></div><nav class="nostalgia-channels"><button data-scroll-news>大事记</button><button data-scene="homeworld">家园</button><button data-scene="friends">朋友</button><button data-scene="garden">种菜</button><button data-scene="wutang">精武堂</button><button data-scene="novels">小说</button><a href="https://web.archive.org/web/${year()}*/http://www.mop.com/" data-site="www.mop.com" data-name="猫扑大杂烩">猫扑</a></nav><div class="wap-caption">常用网址<span>经典入口 · 存档覆盖以来源为准</span></div><div class="speed-dial">${[
+  return `<section class="wap-home"><div class="wap-welcome"><b>时光导航</b><span>${date.replaceAll("-", ".")} · 历史互联网</span></div><div class="wap-search"><span>⌕</span><button id="focus-address">输入旧网址，回到那一年…</button><button data-action="settings" aria-label="切换浏览器皮肤">换肤</button></div><nav class="nostalgia-channels"><button data-scroll-news>大事记</button><button data-section="mobile-catalog">旧站大全</button><button data-scene="homeworld">家园</button><button data-scene="friends">朋友</button><button data-scene="garden">种菜</button><button data-scene="wutang">精武堂</button><button data-scene="novels">小说</button><a href="https://web.archive.org/web/${year()}*/http://www.mop.com/" data-site="www.mop.com" data-name="猫扑大杂烩">猫扑</a></nav><div class="wap-caption">常用网址<span>经典入口 · 存档覆盖以来源为准</span></div><div class="speed-dial">${[
     ["新浪", "www.sina.com.cn", "新"],
     ["网易", "www.163.com", "网"],
     ["搜狐", "www.sohu.com", "狐"],
@@ -196,7 +174,7 @@ function mobileHome() {
   ]
     .map(
       (x, i) =>
-        `<a href="https://web.archive.org/web/${year()}*/http://${x[1]}/" data-site="${x[1]}" data-name="${x[0]}" class="dial dial-${i}"><b>${x[2]}</b><span>${x[0]}</span></a>`,
+        `<a href="https://web.archive.org/web/${year()}*/http://${x[1] === "www.tianya.cn" && date < "2005-11-01" ? "www.tianyaclub.com" : x[1]}/" data-site="${x[1] === "www.tianya.cn" && date < "2005-11-01" ? "www.tianyaclub.com" : x[1]}" data-name="${x[0]}" class="dial dial-${i}"><b>${x[2]}</b><span>${x[0]}</span></a>`,
     )
     .join("")}</div><div class="wap-years"><span>穿越</span>${Object.keys(eras)
     .map(
@@ -205,7 +183,7 @@ function mobileHome() {
     )
     .join(
       "",
-    )}<button id="wap-more-date" aria-label="更多日期">…</button></div>${annualNewsMarkup("mobile")}<div class="wap-link-box"><div class="wap-caption">论坛 · 社区<span>那些聊不完的夜晚</span></div><div class="wap-site-links">${categories[1].sites.map((s) => siteLink(s[0], s[1])).join("")}</div></div><div class="wap-bottom"><button data-action="settings">⚙ 换个浏览器，换种心情</button><p>真实历史资料 · 不生成虚构新闻<br>考古浏览器 / ARCHAEO BROWSER</p></div></section>`;
+    )}<button id="wap-more-date" aria-label="更多日期">…</button></div>${annualNewsMarkup("mobile")}${catalogMarkup("mobile-catalog")}<div class="wap-bottom"><button data-action="settings">⚙ 换个浏览器，换种心情</button><p>真实历史资料 · 不生成虚构新闻<br>考古浏览器 / ARCHAEO BROWSER</p></div></section>`;
 }
 
 function year() {
@@ -226,11 +204,12 @@ function era() {
   );
 }
 function siteLink(name, url, extra = "") {
+  if(url === "www.tianya.cn" && date < "2005-11-01") url="www.tianyaclub.com";
   return `<a href="https://web.archive.org/web/${year()}*/http://${escapeHTML(url)}/" data-site="${escapeHTML(url)}" data-name="${escapeHTML(name)}">${escapeHTML(name)}${extra}</a>`;
 }
 function renderHome() {
   const e = era();
-  return `${mobileHome()}<div class="portal"><div class="portal-topline"><span>欢迎回来，远方的网友。</span><span class="online">● 时光连接已建立 · ${year()}</span></div><header class="portal-head"><div class="wordmark"><div class="logo" aria-hidden="true"></div><div><div class="brand">考古浏览器</div><div class="brand-en">ARCHAEO BROWSER</div></div></div><div class="tagline">在地址栏输入一个网址，<br>在时间里找回一段记忆。</div><div class="head-date"><b>${year()}</b><small>THE INTERNET, THEN.</small></div></header><nav class="portal-nav"><button class="active" data-action="home">时光首页</button><button data-section="portal">新闻门户</button><button data-section="forum">论坛社区</button><button data-section="life">个人天地</button><button data-action="favorites">我的收藏</button></nav><div class="welcome-strip"><span>✉ 欢迎来到过去。<b> 今天，你想回到哪一年？</b></span><span>EST. IN MEMORIES / 001</span></div><section class="era-hero"><div class="hero-copy"><div class="eyebrow">A SMALL WINDOW TO A BIG PAST</div><h1>${e.phrase}</h1><p>${e.sub}<br>时间停在 ${date.replaceAll("-", ".")}，从一个旧网址开始。</p><div class="hero-stamp">${year()}</div></div><div class="hero-side" aria-hidden="true"><div class="hero-sky"></div><div class="cloud"></div><div class="hill"></div><div class="hill two"></div><div class="little-window"><div class="little-title">hello_world.txt <span style="float:right">×</span></div><div class="little-body">Connecting to...<br><b>the good old days.</b><br><span style="color:#8d9a72">[ connection found ]</span></div></div><div class="hero-side-label">SOMEWHERE IN YOUR MEMORY</div></div></section><div class="year-selector"><span>选择你的年代 →</span>${Object.keys(
+  return `${mobileHome()}<div class="portal"><div class="portal-topline"><span>欢迎回来，远方的网友。</span><span class="online">● 时光连接已建立 · ${year()}</span></div><header class="portal-head"><div class="wordmark"><div class="logo" aria-hidden="true"></div><div><div class="brand">考古浏览器</div><div class="brand-en">ARCHAEO BROWSER</div></div></div><div class="tagline">在地址栏输入一个网址，<br>在时间里找回一段记忆。</div><div class="head-date"><b>${year()}</b><small>THE INTERNET, THEN.</small></div></header><nav class="portal-nav"><button class="active" data-action="home">时光首页</button><button data-section="desktop-catalog-portal">新闻门户</button><button data-section="desktop-catalog-forum">论坛社区</button><button data-section="desktop-catalog-life">个人天地</button><button data-section="desktop-catalog">旧站大全</button><button data-action="favorites">我的收藏</button></nav><div class="welcome-strip"><span>✉ 欢迎来到过去。<b> 今天，你想回到哪一年？</b></span><span>EST. IN MEMORIES / 001</span></div><section class="era-hero"><div class="hero-copy"><div class="eyebrow">A SMALL WINDOW TO A BIG PAST</div><h1>${e.phrase}</h1><p>${e.sub}<br>时间停在 ${date.replaceAll("-", ".")}，从一个旧网址开始。</p><div class="hero-stamp">${year()}</div></div><div class="hero-side" aria-hidden="true"><div class="hero-sky"></div><div class="cloud"></div><div class="hill"></div><div class="hill two"></div><div class="little-window"><div class="little-title">hello_world.txt <span style="float:right">×</span></div><div class="little-body">Connecting to...<br><b>the good old days.</b><br><span style="color:#8d9a72">[ connection found ]</span></div></div><div class="hero-side-label">SOMEWHERE IN YOUR MEMORY</div></div></section><div class="year-selector"><span>选择你的年代 →</span>${Object.keys(
     eras,
   )
     .map(
@@ -252,23 +231,7 @@ function renderHome() {
     )
     .join(
       "",
-    )}</div></section><section class="box"><h2>▤ 考古须知 <span>READ ME</span></h2><p class="note">这里的链接通往<strong>真实历史存档</strong>。<br>首页是我们重制的年代导航，<strong>并非历史原页</strong>。<br>有些图片和帖子已经遗失。缺失，也是历史的一部分。<br><a href="#" data-action="about">了解存档来源 →</a></p></section><div class="text-ad"><b>慢一点，上网。</b><small>TAKE YOUR TIME ONLINE</small></div></aside><div class="center-col"><h2 class="section-title">◇ 那一年的互联网 <span>EXPLORE THE OLD WEB</span></h2>${categories
-    .map((c) => {
-      let sites = c.sites;
-      if (year() === "2018" && c.id === "forum")
-        sites = [
-          ["天涯社区", "www.tianya.cn"],
-          ["百度贴吧", "tieba.baidu.com"],
-          ["豆瓣", "www.douban.com"],
-          ["V2EX", "www.v2ex.com"],
-          ["知乎", "www.zhihu.com"],
-          ["哔哩哔哩", "www.bilibili.com"],
-        ];
-      return `<section class="category-block" id="${c.id}"><div class="category-label">${c.title}<span>${c.en}</span></div><div class="link-grid">${sites.map((s, i) => siteLink(s[0], s[1], c.id === "forum" && i === 0 ? "<em>HOT</em>" : "")).join("")}</div></section>`;
-    })
-    .join(
-      "",
-    )}</div><aside class="right-col"><div class="memory-card"><h3>一小片回忆</h3><p>${e.memo}</p><small>— 编者手记 / ${year()}</small></div><section class="box"><h2>↗ 年代探索 <span>TIME CAPSULE</span></h2><div class="topic-list">${e.topics.map((t) => `<div>${siteLink(t[0], t[1])}<small>${year()} · 主题站点入口</small></div>`).join("")}</div><p class="note" style="border-top:1px solid #d9dccd;font-size:10px">编辑选题，非历史新闻标题。<br>点击查找所选年份的真实页面。</p></section></aside></div><footer class="portal-foot"><div><button data-action="about">关于考古浏览器</button>·<button data-action="sources">资料来源</button>·<button data-action="install">添加到手机主屏幕</button></div><div>本站不属于过去，但希望帮你找到过去。 &nbsp; 最佳浏览心情：有一点怀念。</div><div>你的本机探索足迹 <span class="counter" id="counter">${String(
+    )}</div></section><section class="box"><h2>▤ 考古须知 <span>READ ME</span></h2><p class="note">这里的链接通往<strong>真实历史存档</strong>。<br>首页是我们重制的年代导航，<strong>并非历史原页</strong>。<br>有些图片和帖子已经遗失。缺失，也是历史的一部分。<br><a href="#" data-action="about">了解存档来源 →</a></p></section><div class="text-ad"><b>慢一点，上网。</b><small>TAKE YOUR TIME ONLINE</small></div></aside><div class="center-col"><h2 class="section-title">◇ 那一年的互联网 <span>EXPLORE THE OLD WEB</span></h2>${catalogMarkup("desktop-catalog")}</div><aside class="right-col"><div class="memory-card"><h3>一小片回忆</h3><p>${e.memo}</p><small>— 编者手记 / ${year()}</small></div><section class="box"><h2>↗ 年代探索 <span>TIME CAPSULE</span></h2><div class="topic-list">${e.topics.map((t) => `<div>${siteLink(t[0], t[1])}<small>${year()} · 主题站点入口</small></div>`).join("")}</div><p class="note" style="border-top:1px solid #d9dccd;font-size:10px">编辑选题，非历史新闻标题。<br>点击查找所选年份的真实页面。</p></section></aside></div><footer class="portal-foot"><div><button data-action="about">关于考古浏览器</button>·<button data-action="sources">资料来源</button>·<button data-action="install">添加到手机主屏幕</button></div><div>本站不属于过去，但希望帮你找到过去。 &nbsp; 最佳浏览心情：有一点怀念。</div><div>你的本机探索足迹 <span class="counter" id="counter">${String(
     history.filter((x) => x.page.type === "archive").length,
   )
     .padStart(5, "0")

@@ -3692,3 +3692,27 @@ dialog::backdrop {
     font-size: 10px;
   }
 }
+
+/* A shared, searchable old-web directory for desktop and WAP shells. */
+.old-catalog { padding:12px; background:#fffef5; border:1px solid #c9ccba; margin:12px 0; }
+.old-catalog h2 { font-size:17px; margin:0 0 8px; color:#465638; }
+.old-catalog h2 small { display:block; font-size:11px; font-weight:normal; margin-top:5px; }
+.old-catalog p { font-size:12px; line-height:1.7; color:#626953; }
+.catalog-search { display:flex; gap:8px; align-items:center; background:white; border:1px inset #bbb; padding:6px; }
+.catalog-search input { width:100%; min-width:0; border:0; background:white; color:#222; font:inherit; font-size:14px; padding:5px; }
+.catalog-index { display:flex; flex-wrap:wrap; gap:8px 12px; padding:12px 0; font-size:12px; }
+.catalog-group { border-top:1px dotted #bec3ad; padding:8px 0; scroll-margin-top:10px; }
+.catalog-group summary { cursor:pointer; font-weight:bold; font-size:13px; color:#465638; padding:5px 0; }
+.catalog-group summary small { font-weight:normal; color:#888; }
+.catalog-links { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px 10px; padding:9px 0; }
+.catalog-entry { min-width:0; }
+.catalog-entry a { display:block; font-size:13px; line-height:1.5; }
+.catalog-entry small { display:block; color:#888; font-size:10px; overflow-wrap:anywhere; }
+.catalog-entry[hidden],.catalog-group[hidden],.catalog-empty[hidden] { display:none; }
+.catalog-foot { border-top:1px solid #d7dacb; padding-top:10px; }
+@media(max-width:600px) {
+  .wap-home .old-catalog { margin:0; border:0; padding:12px 10px; background:var(--mobile-paper,#fffef5); }
+  .catalog-links { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px 9px; }
+  .catalog-entry a { min-height:28px; }
+  .old-catalog h2 { font-size:15px; }
+}

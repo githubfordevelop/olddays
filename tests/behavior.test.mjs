@@ -65,6 +65,7 @@ function boot(initial = {}, runtime = {}) {
     "annual-news-extra.js",
     "news-articles.js",
     "mobile-scenes.js",
+    "site-catalog.js",
     "app.js",
   ])
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
@@ -326,4 +327,20 @@ test("direct archive navigation rejects wrong dates, foreign hosts, and stale re
   });
   await pending;
   assert.equal(opened.length, 0);
+});
+
+
+test("old-web catalog has unique safe entries, year filtering and both screen layouts", () => {
+  const app=boot();
+  assert.equal(app.run("siteCatalog.length"),14);
+  assert.ok(app.run("siteCatalog.reduce((n,c)=>n+c.sites.length,0)")>=240);
+  assert.equal(app.run("new Set(siteCatalog.flatMap(c=>c.sites.map(s=>s.url))).size"),240);
+  assert.equal(app.run("siteCatalog.every(c=>c.sites.every(s=>/^[a-z0-9.-]+$/.test(s.url)&&s.since>=1994&&s.since<=2025))"),true);
+  const early=app.run('date="2004-08-01"; catalogMarkup("test")');
+  assert.match(early,/移动梦网/); assert.match(early,/一搜/); assert.match(early,/www.tianyaclub.com/);
+  assert.doesNotMatch(early,/www.pengyou.com/);
+  assert.match(app.run('date="2018-08-01"; catalogMarkup("test")'),/www.pengyou.com/);
+  const home=app.run('renderHome()');
+  assert.match(home,/id="mobile-catalog"/); assert.match(home,/id="desktop-catalog"/);
+  assert.match(app.run('date="2004-08-01";siteLink("天涯","www.tianya.cn")'),/data-site="www.tianyaclub.com"/);
 });
