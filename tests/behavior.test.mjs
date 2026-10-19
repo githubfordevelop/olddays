@@ -93,6 +93,7 @@ function boot(initial = {}, runtime = {}) {
     "desk-experience.js",
     "device-profiles.js",
     "dreamnet-game.js",
+    "playground-extras.js",
 
   ])
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
@@ -106,6 +107,7 @@ function boot(initial = {}, runtime = {}) {
     context,
     document,
     values,
+    listeners,
     run: (s) => vm.runInContext(s, context),
     click(dataset) {
       const target = {
@@ -590,4 +592,47 @@ test('insufficient virtual credit cannot go negative and SMS TD cancels recurrin
  assert.equal(b.run('walletTopUp(2000)'),true);assert.equal(b.run('dreamnet.balance'),2100);
  b.run('walletPurchase("铃声01","monthly");sendPhoneSms("TD")');
  assert.equal(b.run('dreamnet.enabled'),false);assert.match(b.run('phoneState.sent.at(-1).reply'),/关闭成功/);assert.equal(b.run('walletAdvanceMonth()'),0);
+});
+
+test('device years sort chronologically and Apple/offline players enforce capabilities',()=>{
+ const b=boot();assert.equal(b.run('Object.keys(phoneModels).length'),18);
+ assert.equal(b.run('sortedPhoneModels().map(([,m])=>parseInt(m.era)).every((v,i,a)=>!i||a[i-1]<=v)'),true);
+ for(const model of ['iphone','fullscreen','mp3','mp4','mp5','psp']){b.run(`phoneState.model=${JSON.stringify(model)}`);assert.equal(b.run("phoneAppAllowed('java')"),false,model);}
+ b.run("phoneState.model='mp3'");assert.equal(b.run("phoneAppAllowed('music')"),true);assert.equal(b.run("phoneAppAllowed('videos')"),false);
+ b.run("phoneState.model='mp4'");assert.equal(b.run("phoneAppAllowed('videos')"),true);assert.equal(b.run("phoneAppAllowed('browser')"),false);assert.doesNotMatch(b.run("extraPhoneScreen('videos')"),/iframe|https:/);
+ b.run("phoneState.model='mp5'");assert.equal(b.run("phoneAppAllowed('browser')"),true);
+ b.run("phoneState.model='symbian'");assert.equal(b.run("phoneAppAllowed('java')"),true);
+});
+test('virtual single purchases refund once and SMS can cancel one subscription without cancelling another',()=>{
+ const b=boot();b.run("walletPurchase('神作20')");assert.equal(b.run('dreamnet.balance'),8000);assert.equal(b.run("walletRefund('神作20')"),true);assert.equal(b.run('dreamnet.balance'),10000);assert.equal(b.run("walletRefund('神作20')"),false);assert.equal(b.run('dreamnet.balance'),10000);
+ b.run("walletPurchase('铃声01','monthly');walletPurchase('漫画01','monthly');handleDreamnetSms('退订 铃声01')");assert.equal(b.run("dreamnet.subscriptions['铃声01'].active"),false);assert.equal(b.run("dreamnet.subscriptions['漫画01'].active"),true);assert.equal(b.run('walletAdvanceMonth()'),800);
+ b.run("handleDreamnetSms('TD')");assert.equal(b.run('walletAdvanceMonth()'),0);
+});
+test('original pocket games have reachable wins and secrets only unlock from discovered inputs',()=>{
+ const b=boot();assert.equal(b.run("discoveries.includes('cheat')"),false);b.run("handleDreamnetSms('上上下下左右左右BA')");assert.equal(b.run("discoveries.includes('cheat')"),true);
+ b.run("resetArcade('lights');lights=Array(9).fill(false);[0,2,4,7].forEach(toggleLight);[0,2,4,7].forEach(arcadePlay)");assert.equal(b.run('lights.every(v=>!v)'),true);assert.equal(b.run("discoveries.includes('lights')"),true);
+ b.run("resetArcade('slide');slideTiles=[1,2,3,4,5,6,0,7,8]");assert.equal(b.run('arcadePlay(0)'),false);b.run('arcadePlay(7);arcadePlay(8)');assert.equal(b.run("slideTiles.join(',')"),'1,2,3,4,5,6,7,8,0');
+ b.run("resetArcade('memory');memoryCards=['★','★','♪','♪','☀','☀','♠','♠','♥','♥','☂','☂'];for(let i=0;i<12;i++)arcadePlay(i)");assert.equal(b.run('memoryMatched.length'),12);
+});
+test('new advertised resources and published comic pages exist locally',()=>{
+ const b=boot();assert.equal(b.run('smsDownloads.length'),24);for(const image of JSON.parse(b.run('JSON.stringify(smsDownloads.map(o=>o.image))')))assert.ok(readFileSync('dist/'+image).length,image);
+ for(let i=0;i<=32;i++)assert.ok(readFileSync(`dist/images/daming/${String(i).padStart(2,'0')}.jpg`).length>1000);
+ assert.ok(readFileSync('dist/video/pocket-summer.mp4').length>1000);
+});
+
+
+test('Java physical keys support click fallback and pointer capture failure without losing presses',()=>{
+ const b=boot();b.run("phoneState.app='java';var keyEvents=[];pocketJavaMessage=(a,c,d)=>keyEvents.push([a,c,d])");
+ const key={dataset:{phoneKey:'5'},focus(){},setPointerCapture(){throw Error('touch capture unavailable')},classList:{add(){},remove(){}},hasAttribute(name){return name==='data-phone-key'},closest(selector){return selector.split(',').some(s=>s.trim()==='[data-phone-key]')?this:null}};
+ const event={target:key,pointerId:7,detail:1,preventDefault(){}};
+ // Click-only input (including synthetic taps) must press rather than being discarded by detail>0.
+ for(const fn of b.listeners.get('click'))fn(event);
+ assert.equal(b.run('keyEvents.length'),1);assert.equal(b.run('keyEvents[0][1]'),53);
+ assert.doesNotThrow(()=>{for(const fn of b.listeners.get('pointerdown'))fn(event)});
+ assert.equal(b.run('keyEvents.length'),2);assert.equal(b.run('pocketJavaHeld.get(7)'),53);
+ // The compatibility click following a real pointer press must not send a duplicate keydown.
+ for(const fn of b.listeners.get('click'))fn(event);
+ assert.equal(b.run('keyEvents.length'),2);
+ for(const fn of b.listeners.get('pointerup'))fn(event);
+ assert.equal(b.run('pocketJavaHeld.size'),0);assert.equal(b.run('keyEvents[2][2]'),false);
 });
