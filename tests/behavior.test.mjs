@@ -94,6 +94,8 @@ function boot(initial = {}, runtime = {}) {
     "device-profiles.js",
     "dreamnet-game.js",
     "playground-extras.js",
+    "mystery-case.js",
+    "handset-ui.js",
 
   ])
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
@@ -635,4 +637,22 @@ test('Java physical keys support click fallback and pointer capture failure with
  assert.equal(b.run('keyEvents.length'),2);
  for(const fn of b.listeners.get('pointerup'))fn(event);
  assert.equal(b.run('pocketJavaHeld.size'),0);assert.equal(b.run('keyEvents[2][2]'),false);
+});
+
+
+test("handset controls separate Navi models from four-way joystick models",()=>{
+ const b=boot();
+ b.run("phoneState.model='nokia3310'");
+ assert.match(b.run("phoneHardwareMarkup()"),/hardware-navi/);
+ assert.equal((b.run("phoneHardwareMarkup()").match(/data-phone-dir=/g)||[]).length,2);
+ b.run("phoneState.model='symbian'");
+ assert.equal((b.run("phoneHardwareMarkup()").match(/data-phone-dir=/g)||[]).length,4);
+ assert.match(b.run("phoneHardwareMarkup()"),/data-phone-ok/);
+});
+test("browser skins preserve content selection and replace handset branding",()=>{
+ const b=boot();b.run("ucQuery='旧城';ucPage='nav';handsetBrowserSkin='opera'");
+ const html=b.run("phoneUCMarkup()");
+ assert.match(html,/browser-skin-opera/);assert.match(html,/工具 \/ 年代画风/);
+ assert.equal(b.run("ucQuery"),'旧城');assert.equal(b.run("ucPage"),'nav');
+ assert.equal(b.run("systemApps.find(a=>a.id==='browser').name"),'浏览器');
 });

@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
+const code=readFileSync('dist/mystery-case.js','utf8');
+function boot(store={}){const timers=[];const c=vm.createContext({localStorage:{getItem:k=>store[k],setItem:(k,v)=>store[k]=v},phoneSmsMarkup:()=>'',phoneQQMarkup:()=>'',phoneUCMarkup:()=>'',phoneCommunityMarkup:()=>'',setInterval(fn){timers.push(fn);},document:{addEventListener(){}},toast(){},ucQuery:''});vm.runInContext(code,c);const run=s=>vm.runInContext(s,c);run.tick=()=>timers[0]();return run;}
+test('case requires every source and correct deduction, persists completion',()=>{const store={},run=boot(store);assert.equal(run('mysteryCollect("pack")'),false);run('mystery.started=true;mysteryCollect("pack");mysteryCollect("pack")');assert.equal(run('mystery.evidence.length'),1);assert.match(run('mysterySolve("0817","owner")'),/没有齐/);run('["qq","uc","forum"].forEach(mysteryCollect)');assert.match(run('mysterySolve("0818","owner")'),/不对/);assert.match(run('mysterySolve("0817","seller")'),/不对/);assert.match(run('mysterySolve("0817","owner")'),/结案/);assert.equal(boot(store)('mystery.solved'),true);});
+test('damaged saves do not inject evidence or content',()=>{const run=boot({'olddays-mystery-01':'{"started":true,"evidence":["pack","pack","<script>"],"hint":999}'});assert.equal(run('mystery.evidence.length'),1);assert.equal(run('mystery.hint'),3);assert.match(run('phoneQQMarkup()'),/阿北/);run('ucQuery="旧城失物招领"');assert.match(run('phoneUCMarkup()'),/搜索结果/);});
+
+test('encounter messages pause, stop in background, cap and persist',()=>{const store={},run=boot(store);run('mystery.started=true;mystery.paused=true');run.tick();assert.equal(run('mystery.pings'),0);run('mystery.paused=false;document.hidden=true');run.tick();assert.equal(run('mystery.pings'),0);run('document.hidden=false');for(let i=0;i<5;i++)run.tick();assert.equal(run('mystery.pings'),3);assert.equal(boot(store)('mystery.pings'),3);assert.match(run('phoneSmsMarkup()'),/后续来信/);});

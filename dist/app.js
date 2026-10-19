@@ -266,6 +266,7 @@ function navigate(page, push = true) {
   if(page.type==='home'&&current.type!=='home')phoneState.app='home';
   current = page;
   document.body.classList.toggle("workbench-mode",page.type==='home'&&deskEntered);
+  document.body.classList.toggle("handset-mode",page.type==='phone'||page.type==='home');
   setTheme();
   if (push) {
     history = history.slice(0, cursor + 1);
