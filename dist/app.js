@@ -136,7 +136,7 @@ function applyAppearance() {
   applyWorldAppearance();
   document.body.dataset.mobileSkin = preferences.skin;
   document.body.classList.toggle("mobile-large", preferences.font === "large");
-  document.body.classList.toggle("mobile-night", preferences.night);
+  document.body.classList.toggle("mobile-night", preferences.night && document.body.dataset.chrome === "classic");
   $("#phone-mark").textContent = mobileSkins[preferences.skin].mark;
   $("#phone-name").textContent = "考古 · " + mobileSkins[preferences.skin].name;
   try {
@@ -146,7 +146,7 @@ function applyAppearance() {
 function settings() {
   dialog(
     "阅读与外观",
-    `<div class="retro-options"><div class="retro-option-tabs"><button data-option-tab="appearance" aria-selected="true">界面</button><button data-option-tab="reading" aria-selected="false">阅读</button></div><section data-option-panel="appearance"><div class="settings-heading"><span class="settings-logo">旧日</span><div><b>找回熟悉的上网手感</b><small>按你喜欢的方式逛旧时光，设置保存在本机。</small></div></div><label class="setting-row" for="interface-shell"><span>浏览方式<small>简洁界面给内容留出更多空间</small></span><select id="interface-shell"><option value="simple" ${document.body.dataset.chrome!=='classic'?'selected':''}>简洁界面</option><option value="classic" ${document.body.dataset.chrome==='classic'?'selected':''}>经典浏览器</option></select></label><details class="browser-skin-details"><summary>经典手机浏览器皮肤</summary><div class="skin-options">${Object.entries(
+    `<div class="retro-options"><div class="retro-option-tabs"><button data-option-tab="appearance" aria-selected="true">界面</button><button data-option-tab="reading" aria-selected="false">经典阅读</button></div><section data-option-panel="appearance"><div class="settings-heading"><span class="settings-logo">旧日</span><div><b>找回熟悉的上网手感</b><small>按你喜欢的方式逛旧时光，设置保存在本机。</small></div></div><label class="setting-row" for="interface-shell"><span>浏览方式<small>简洁界面给内容留出更多空间</small></span><select id="interface-shell"><option value="simple" ${document.body.dataset.chrome!=='classic'?'selected':''}>简洁界面</option><option value="classic" ${document.body.dataset.chrome==='classic'?'selected':''}>经典浏览器</option></select></label><details class="browser-skin-details"><summary>经典手机浏览器皮肤</summary><div class="skin-options">${Object.entries(
       mobileSkins,
     )
       .map(
@@ -155,7 +155,7 @@ function settings() {
       )
       .join(
         "",
-      )}</div></details></section><section data-option-panel="reading" hidden><h3 class="settings-label">网页显示</h3><label class="setting-row" for="reading-font"><span>页面字号<small>仅影响本应用内的手机页面</small></span><select id="reading-font"><option value="standard" ${preferences.font === "standard" ? "selected" : ""}>标准</option><option value="large" ${preferences.font === "large" ? "selected" : ""}>大字</option></select></label><label class="setting-row" for="reading-night"><span>夜间模式<small>护眼深色界面</small></span><input id="reading-night" type="checkbox" ${preferences.night ? "checked" : ""}></label></section><div class="retro-option-footer"><span>设置将在本机保存</span><button class="primary" id="finish-settings">确定</button></div><p class="settings-disclaimer">UC 与 Opera Mini 为风格参考，非官方产品，也不是某一版本的精确复刻。设置保存在当前设备。</p></div>`,
+      )}</div></details></section><section data-option-panel="reading" hidden><h3 class="settings-label">网页显示</h3><label class="setting-row" for="reading-font"><span>页面字号<small>用于经典浏览器的旧网址导航</small></span><select id="reading-font"><option value="standard" ${preferences.font === "standard" ? "selected" : ""}>标准</option><option value="large" ${preferences.font === "large" ? "selected" : ""}>大字</option></select></label><label class="setting-row" for="reading-night"><span>夜间配色<small>用于经典手机浏览器外观</small></span><input id="reading-night" type="checkbox" ${preferences.night ? "checked" : ""}></label></section><div class="retro-option-footer"><span>设置将在本机保存</span><button class="primary" id="finish-settings">确定</button></div><p class="settings-disclaimer">小说字号与夜读，可在正文顶部直接调整。<br>UC 与 Opera Mini 为风格参考，非官方产品，也不是某一版本的精确复刻。设置保存在当前设备。</p></div>`,
   );
 }
 function mobileMenu() {
@@ -255,6 +255,10 @@ function renderWorldPage(page) {
  return renderers[page.type]?.();
 }
 function navigate(page, push = true) {
+  if(current.type==='phone'&&page.type!=='phone'){
+    pocketJavaReleaseAll();
+    document.body.classList.remove('pocket-expanded','pocket-landscape');
+  }
   if(push) $("#modal").close();
   requestId++;
   if(pendingArchive) pendingArchive.abort();
@@ -293,6 +297,7 @@ function navigate(page, push = true) {
   document.querySelector('.app-overflow')?.removeAttribute?.('open');
   if (page.type === "phone") layoutPhoneJavaKeypad();
   if (page.type === "phone" && window.innerWidth <= 600 && !document.body.classList.contains("pocket-expanded")) pocketExpand();
+  if(page.type === "phone") syncPocketControls();
   window.scrollTo({ top: 0, behavior: "instant" });
   if (page.type === "archive") return resolveSnapshot(page, requestId);
 }
@@ -419,13 +424,15 @@ function favorites() {
 }
 function action(a) {
   document.querySelector('.app-overflow')?.removeAttribute?.('open');
-  if(a === 'open-url') dialog('打开旧网址',`<form id="simple-address-form"><label for="simple-address">还记得那个网址吗？</label><input id="simple-address" type="text" inputmode="url" autocomplete="url" placeholder="例如 www.sina.com.cn" required><button class="primary" type="submit">寻找 ${year()} 年的网页 →</button></form>`);
+  if(a === 'open-url'){dialog('打开旧网址',`<form id="simple-address-form"><label for="simple-address">还记得那个网址吗？</label><input id="simple-address" type="text" inputmode="url" autocomplete="url" placeholder="例如 www.sina.com.cn" required><button class="primary" type="submit">寻找 ${year()} 年的网页 →</button></form>`);$('#simple-address').focus();}
   if(a === 'back') move(-1);
+  if(a === 'leave-phone'){if(cursor>0)move(-1);else navigate({type:'home'});}
   if(a === 'date') dateDialog();
   if(a === 'toggle-shell'){
     const classic=document.body.dataset.chrome !== 'classic';
     document.body.dataset.chrome=classic?'classic':'simple';
     try{localStorage.setItem('olddays-chrome',document.body.dataset.chrome);}catch{}
+    applyAppearance();
   }
   if (a === "settings") settings();
   if (a === "mobilemenu") mobileMenu();
@@ -595,6 +602,7 @@ document.addEventListener("change", (e) => {
   if(e.target.id==='interface-shell'){
     document.body.dataset.chrome=e.target.value==='classic'?'classic':'simple';
     try{localStorage.setItem('olddays-chrome',document.body.dataset.chrome);}catch{}
+    applyAppearance();
   }
   if (e.target.id === "reading-font") {
     preferences.font = e.target.value;
@@ -632,8 +640,12 @@ function clock() {
     hour12: false,
   });
 }
+$("#retro-audio").volume=0.35;
 clock();
 setInterval(clock, 60000);
 navigate({ type: "home" });
 
 document.addEventListener('click',e=>{const b=e.target.closest('[data-option-tab]');if(!b)return;document.querySelectorAll('[data-option-panel]').forEach(p=>p.hidden=p.dataset.optionPanel!==b.dataset.optionTab);document.querySelectorAll('[data-option-tab]').forEach(t=>t.setAttribute('aria-selected',String(t===b)));});
+
+document.addEventListener('click',e=>{if(!e.target.closest('.app-overflow')||e.target.closest('.app-overflow nav button'))document.querySelector('.app-overflow')?.removeAttribute?.('open');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelector('.app-overflow')?.removeAttribute?.('open');});

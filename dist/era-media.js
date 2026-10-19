@@ -15,7 +15,7 @@ function renderEraMedia(){
 document.addEventListener('click',e=>{
  const b=e.target.closest('[data-era-media],[data-music-toggle]');if(!b)return;e.preventDefault();
  if(b.hasAttribute('data-era-media'))return openEraMedia();
- const audio=$('#retro-audio');audio.volume=Number($('#music-volume')?.value||35)/100;
+ const audio=$('#retro-audio'),legacyVolume=$('#music-volume');if(legacyVolume)audio.volume=Number(legacyVolume.value)/100;
  if(!audio.paused){audio.pause();document.querySelectorAll('[data-music-toggle]').forEach(x=>x.textContent=x.hasAttribute('data-music-compact')?'♪':'▶ 播放配乐');}
  else audio.play().then(()=>document.querySelectorAll('[data-music-toggle]').forEach(x=>x.textContent=x.hasAttribute('data-music-compact')?'Ⅱ':'Ⅱ 暂停配乐')).catch(()=>toast('音频暂时无法播放，请再点一次或检查声音设置'));
 });

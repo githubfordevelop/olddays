@@ -457,3 +457,42 @@ test('unsupported Java share bridge replies do not reach the virtual filesystem'
  handler({fileName:'valid.jar',data:new Uint8Array([1,2])});
  assert.equal(calls.length,1);assert.equal(calls[0][1],'valid.jar');
 });
+
+test('leaving the handset restores page scrolling and navigation chrome',()=>{
+ const {run,document}=boot();const removed=[];
+ document.body.classList.remove=(...names)=>removed.push(...names);
+ run('current={type:"phone"};navigate({type:"home"})');
+ assert.ok(removed.includes('pocket-expanded'));
+ assert.ok(removed.includes('pocket-landscape'));
+ assert.equal(run('current.type'),'home');
+});
+
+test('paid and unavailable magazine sources show clear access cards instead of blank embeds',()=>{
+ const {run}=boot();run('date="2020-08-01";realMagazineIndex=0');
+ for(const id of ['story','duzhe']){
+  const html=run('realMagazineFrame({id:'+JSON.stringify(id)+'})');
+  assert.match(html,/reading-access-card/);
+  assert.doesNotMatch(html,/<iframe/);
+  assert.match(html,/<a href="https:/);
+ }
+ assert.match(run('realMagazineFrame({id:"manke"})'),/<iframe/);
+});
+
+test('screen-sized reading paragraphs preserve every source character',()=>{
+ const {run}=boot();
+ const book=JSON.parse(readFileSync('dist/books/journey.json','utf8'));
+ for(const chapter of book.chapters){
+  const formatted=run('readingParagraphs('+JSON.stringify(chapter.paragraphs)+')');
+  assert.equal(formatted.join(''),chapter.paragraphs.join(''));
+  assert.ok(formatted.length>=chapter.paragraphs.length);
+ }
+ assert.ok(run('readingParagraphs('+JSON.stringify(book.chapters[0].paragraphs)+').length')>1);
+});
+
+test('changing music tracks preserves a muted volume',()=>{
+ const {run,document}=boot();
+ document.querySelector('#retro-audio').volume=0;
+ run('setMemoryTrack(1,false)');
+ assert.equal(document.querySelector('#retro-audio').volume,0);
+ assert.match(run('renderMusicSalon()'),/value="0" aria-label="随身听音量"/);
+});
