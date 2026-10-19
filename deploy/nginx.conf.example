@@ -1,0 +1,13 @@
+# Replace the domain; configure HTTPS certificates for your actual server.
+server {
+    listen 80;
+    server_name archaeo.example.com;
+    root /var/www/archaeo/current;
+    index index.html;
+    charset utf-8;
+    add_header X-Content-Type-Options nosniff always;
+    location / { try_files $uri $uri/ =404; }
+    location ~* \.(?:html|js|css|webmanifest)$ {
+        add_header Cache-Control "no-cache";
+    }
+}
