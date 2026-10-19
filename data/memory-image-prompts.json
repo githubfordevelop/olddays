@@ -16,5 +16,35 @@
     "tool": "built-in image_gen",
     "prompt": "2003 Chinese county bus station at night, green coach, wet pavement under tungsten lamps, public telephone booth, suitcase and paper ticket, grainy early digital camera nostalgia. No legible text, logos or watermark.",
     "asset": "images/memories/station.jpg"
+  },
+  {
+    "id": "portrait",
+    "tool": "built-in image_gen",
+    "prompt": "Original nostalgic early digital camera portrait of a fully clothed adult woman aged 25, wired earphones, warm evening light; fictional person, not historical photography.",
+    "asset": "images/memories/portrait.jpg"
+  },
+  {
+    "id": "magazine",
+    "tool": "built-in image_gen",
+    "prompt": "Dense original 2004 Chinese mobile magazine back cover: feature phones, fully clothed adult woman, ringtone and wallpaper DIY, MP3, 176x220, fictional 106XXXX SMS code; explicitly not historical or official.",
+    "asset": "images/posters/magazine.jpg"
+  },
+  {
+    "id": "ringtone",
+    "tool": "built-in image_gen",
+    "prompt": "Original 2006 autumn ringtone memory poster, orange leaves, feature phone, CD and distant adult figure, title 秋天不回来; no lyrics, album art or artist likeness, non-official creative reconstruction.",
+    "asset": "images/posters/ringtone.jpg"
+  },
+  {
+    "id": "games",
+    "tool": "built-in image_gen",
+    "prompt": "Original early mobile Java game advertisement, pixel martial arts town and miniature game scenes, 今晚江湖见, no commercial game screenshots or characters.",
+    "asset": "images/posters/games.jpg"
+  },
+  {
+    "id": "anime",
+    "tool": "built-in image_gen",
+    "prompt": "Original nostalgic after-school anime club poster, original fictional anime characters, 放学以后动漫见 and 本周剧情猜测; no existing manga panels or official characters.",
+    "asset": "images/posters/anime.jpg"
   }
 ]
