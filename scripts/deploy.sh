@@ -4,7 +4,7 @@ set -euo pipefail
 : "${DEPLOY_USER:?Set DEPLOY_USER repository variable}"
 : "${DEPLOY_ROOT:?Set DEPLOY_ROOT repository variable}"
 : "${DEPLOY_SSH_KEY:?Set DEPLOY_SSH_KEY secret}"
-: "${DEPLOY_KNOWN_HOSTS:?Set DEPLOY_KNOWN_HOSTS secret}"
+DEPLOY_KNOWN_HOSTS="${DEPLOY_KNOWN_HOSTS:-$(cat deploy/known_hosts)}"
 : "${RELEASE_SHA:?Release commit is required}"
 DEPLOY_PORT="${DEPLOY_PORT:-22}"
 [[ "$DEPLOY_HOST" =~ ^[A-Za-z0-9.-]+$ ]] || { echo 'Invalid host'; exit 1; }

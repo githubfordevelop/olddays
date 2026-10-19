@@ -13,7 +13,7 @@
 | Variable | DEPLOY_PORT | 22 |
 | Variable | DEPLOY_ROOT | /srv/olddays |
 | Secret | DEPLOY_SSH_KEY | 项目专用 SSH 私钥；不写入源码 |
-| Secret | DEPLOY_KNOWN_HOSTS | 已核验服务器主机公钥记录 |
+| Secret（可选） | DEPLOY_KNOWN_HOSTS | 覆盖仓库内已核验的 deploy/known_hosts |
 
 发布脚本再次检查本地资源，然后 rsync 至 releases/<完整提交>，原子切换 current，核验本机 HTTP 与 version.json。健康检查失败时尝试恢复旧链接。首次部署没有旧链接可回滚，需核验公网 HTTP。
 
@@ -28,3 +28,5 @@
 公网 http://121.40.22.96/version.json 显示当前提交与部署时间。回滚到 releases/ 中上一份完整静态版本后，仍需检查公网入口。不要将整个仓库用作 Web 根目录。
 
 目前访问入口为 HTTP。绑定域名及 HTTPS 需要另行确定域名与证书；本流程不购买服务、不修改云账号权限。
+
+本项目工作流已给当前服务器设置默认部署参数，Variables 可覆盖；必需 Secret 为 DEPLOY_SSH_KEY。主机公钥是公开信息，默认固定在 deploy/known_hosts，私钥不进入源码。

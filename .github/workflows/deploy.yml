@@ -22,7 +22,7 @@ jobs:
         run: bash -n scripts/deploy.sh
   deploy:
     needs: check
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.DEPLOY_HOST != ''
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     environment: production
     steps:
@@ -31,10 +31,10 @@ jobs:
           persist-credentials: false
       - name: Publish immutable release and switch current
         env:
-          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
-          DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
-          DEPLOY_ROOT: ${{ vars.DEPLOY_ROOT }}
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST || '121.40.22.96' }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER || 'olddays' }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT || '22' }}
+          DEPLOY_ROOT: ${{ vars.DEPLOY_ROOT || '/srv/olddays' }}
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
           DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
           RELEASE_SHA: ${{ github.sha }}
