@@ -81,6 +81,8 @@ function boot(initial = {}, runtime = {}) {
     "memory-gallery.js",
     "community-room.js",
     "javame-room.js",
+    "era-posters.js",
+    "anime-club.js",
     "era-home.js",
 
   ])
@@ -421,3 +423,5 @@ test('SMS remains local, bounded and safely rendered',()=>{const {run}=boot();ru
 test('picture search matches story text, filters tags and returns full local detail',()=>{const {run}=boot();run('galleryQuery="短信";galleryTag="全部"');assert.ok(run('filteredPictures().length')>=1);run('galleryTag="校园"');assert.equal(run('filteredPictures().every(s=>s.tag==="校园")'),true);run('galleryQuery="no-such-memory-2384"');assert.equal(run('filteredPictures().length'),0);assert.match(run('renderPictureStory({story:"one-seventeen"})'),/草稿箱/);assert.ok(run('pictureStories.every(s=>s.text.join("").length>500)'));});
 test('community choices respect the selected year and escape local replies',()=>{const {run}=boot({'archaeo-community-replies':JSON.stringify({'tianya-0':['<script>alert(1)</script>']})});run('date="2004-08-01"');assert.equal(run('communityAvailable().some(c=>c.id==="qzone")'),false);run('communityThread=0');assert.match(run('renderCommunity()'),/&lt;script&gt;/);assert.doesNotMatch(run('renderCommunity()'),/<script>alert/);run('date="2011-01-01"');assert.equal(run('communityAvailable().some(c=>c.id==="pengyou")'),true);});
 test('skin delegated buttons cannot match the body appearance attribute',()=>{const source=readFileSync('dist/capture-studio.js','utf8');assert.match(source,/button\[data-world-skin\]/);assert.doesNotMatch(source,/closest\('\[data-open-skins\],\[data-world-skin\]/);});
+
+test('anime discussion respects era, stores only a local choice and never reveals future solutions',()=>{const {run}=boot();run('date="1996-08-01"');assert.doesNotMatch(run('renderAnimeClub()'),/鸣人的身世/);run('date="2004-08-01";animeTopic="onepiece-sky";animeChoices[animeTopic]=1');assert.match(run('renderAnimeClub()'),/空岛/);assert.match(run('renderAnimeClub()'),/不公布/);assert.match(run('renderAnimeClub()'),/class="selected"/);});

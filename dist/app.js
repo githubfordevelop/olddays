@@ -251,10 +251,11 @@ function setTheme() {
 }
 function renderHome() { return renderTimeHome(); }
 function renderWorldPage(page) {
- const renderers={pictures:renderMemoryGallery,picturestory:()=>renderPictureStory(page),community:renderCommunity,javame:renderJavaRoom,phone:renderPhoneLab,admagazine:renderAdMagazine,arcade:()=>renderArcade(page),bookshelf:renderBookshelf,book:()=>renderBook(page),games:renderGamesHall,music:renderMusicSalon,videos:renderVideoSalon};
+ const renderers={anime:renderAnimeClub,posters:renderPosterRoom,pictures:renderMemoryGallery,picturestory:()=>renderPictureStory(page),community:renderCommunity,javame:renderJavaRoom,phone:renderPhoneLab,admagazine:renderAdMagazine,arcade:()=>renderArcade(page),bookshelf:renderBookshelf,book:()=>renderBook(page),games:renderGamesHall,music:renderMusicSalon,videos:renderVideoSalon};
  return renderers[page.type]?.();
 }
 function navigate(page, push = true) {
+  if(push) $("#modal").close();
   requestId++;
   if(pendingArchive) pendingArchive.abort();
   pendingArchive=null;
