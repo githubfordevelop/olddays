@@ -704,3 +704,18 @@ test('tide notebooks stay with their handsets and entertainment stays available'
 });
 
 test('PC desktop and native phone selection do not consume or hide the Tide story progress',()=>{const b=boot();b.run("tide.active=true;tide.device='black';visitMode='pc';phoneState.app='browser'");assert.match(b.run('phoneScreen()'),/PERSONAL INTERNET/);assert.equal(b.run('tide.active'),true);b.run("visitMode='phone';phoneState.app='home'");assert.match(b.run('phoneScreen()'),/存储卡已插入|退出故事，普通游玩/);});
+
+test('Tide QQ conversations are handset-specific, persistent, and do not send SMS drafts',()=>{
+ const b=boot();b.run("tide.device='silver';tideChatReply('song')");assert.match(b.run('tideQQ()'),/下雨以前/);assert.equal(b.run('tide.replied'),false);
+ b.run("tide.device='white'");assert.doesNotMatch(b.run('tideQQ()'),/下雨以前/);b.run("tideChatReply('photo')");assert.match(b.run('tideQQ()'),/十年以后/);
+ const c=boot(Object.fromEntries(b.values));c.run("tide.device='silver'");assert.match(c.run('tideQQ()'),/下雨以前/);assert.equal(c.run("tideChatReply('unknown')"),false);
+ c.run("tide.device='black';tideView='qq:chat';tideChatReply('file')");assert.match(c.run('tideQQ()'),/不能替你确定/);assert.equal(c.run('tide.replied'),false);
+});
+test('Only the annotated gate photo reverse counts as the Tide reverse evidence',()=>{
+ const b=boot();b.run("tide.device='black';tideView='back:pier';tideAlbum()");assert.equal(b.run("tide.seen.includes('back')"),false);
+ b.run("tideView='back:gate';tideAlbum()");assert.equal(b.run("tide.seen.includes('back')"),true);
+});
+test('Campus evidence overlays never leak into a collected Tide handset',()=>{
+ const b=boot();b.run("tide.active=true;tide.device='black';campus.started=true;campusPanel='photo';phoneState.app='photos';visitMode='phone'");assert.doesNotMatch(b.run('phoneScreen()'),/广播社|第02案/);assert.match(b.run('phoneScreen()'),/DSC0018/);
+ b.run("tide.active=false;campusPanel='';phoneState.app='photos'");assert.match(b.run('phoneScreen()'),/广播社报名单/);
+});
