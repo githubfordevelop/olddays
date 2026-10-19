@@ -287,6 +287,7 @@ function navigate(page, push = true) {
   updateNav();
   saveTabState();
   renderBrowserTabs();
+  if (page.type === "phone" && window.innerWidth <= 600 && !document.body.classList.contains("pocket-expanded")) pocketExpand();
   window.scrollTo({ top: 0, behavior: "instant" });
   if (page.type === "archive") return resolveSnapshot(page, requestId);
 }

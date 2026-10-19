@@ -3855,3 +3855,9 @@ body { font-family:Tahoma,"SimSun","Songti SC",serif; background:#3a6ea5; }
 @media (prefers-reduced-motion:reduce) {
  .computer *, .computer *::before, .computer *::after { scroll-behavior:auto!important; }
 }
+
+/* Mobile settings stay in the existing bottom browser menu. */
+@media(max-width:600px){
+ .phone-header > [data-action="settings"]{display:none}
+ body.pocket-expanded .phone-header,body.pocket-expanded .addressbar,body.pocket-expanded .timebar,body.pocket-expanded .browser-tabs,body.pocket-expanded .mobile-nav{display:none}
+}
