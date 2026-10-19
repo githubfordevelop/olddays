@@ -390,7 +390,8 @@ function applyDate(d) {
   }
   date = d;
   $("#modal").close();
-  if (["newscenter","yearrecord"].includes(current.type)) openNewsCenter();
+  if (current.type === "media") openEraMedia();
+  else if (["newscenter","yearrecord"].includes(current.type)) openNewsCenter();
   else navigate(current.type === "news" ? { type: "home" } : current);
   toast(`已回到 ${date.replaceAll("-", ".")}`);
 }

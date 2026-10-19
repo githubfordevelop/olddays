@@ -400,4 +400,5 @@ test("media room filters later films and links real historical site entries",()=
  const later=app.run('date="2008-08-01";renderEraMedia()');
  assert.equal((later.match(/<video /g)||[]).length,2);assert.match(later,/CC BY/);assert.match(later,/preload="none"/);
  app.run('openEraMedia()');assert.equal(app.run('current.type'),'media');assert.equal(app.run('current.url'),'archaeo://media');
+ app.run('applyDate("2010-08-01")');assert.match(app.run('current.name'),/2010/);
 });
