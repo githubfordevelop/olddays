@@ -7,7 +7,7 @@ for (const name of readdirSync("dist").filter((x) => x.endsWith(".js")))
   });
 const html = readFileSync("dist/index.html", "utf8");
 for (const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
-  const file = match[1];
+  const file = match[1].split("?")[0];
   if (/^(https?:|data:|archaeo:)/.test(file)) continue;
   if (!existsSync(`dist/${file}`)) throw Error(`Missing local asset: ${file}`);
 }
@@ -32,6 +32,9 @@ for (let y = 1996; y <= 2025; y++) {
     if (e[2] && !e[2].startsWith("https://")) throw Error("Invalid source URL");
   }
 }
+const yearbookContext=vm.createContext({});
+vm.runInContext(readFileSync("dist/yearbook.js","utf8"),yearbookContext);
+if(JSON.stringify(JSON.parse(readFileSync("data/yearbook.json","utf8")))!==JSON.stringify(Object.fromEntries(Array.from({length:30},(_,i)=>{const y=String(1996+i);return [y,JSON.parse(readFileSync(`dist/yearbook/${y}.json`,"utf8"))]})))) throw Error("Yearbook runtime differs from editorial data");
 const manifest = JSON.parse(readFileSync("dist/manifest.webmanifest", "utf8"));
 if (manifest.display !== "standalone")
   throw Error("Mobile manifest missing standalone display");

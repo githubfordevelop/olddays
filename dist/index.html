@@ -17,7 +17,7 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=0.3.0" />
     <title>考古浏览器 — 回到互联网的从前</title>
   </head>
   <body>
@@ -33,11 +33,6 @@
             ><span id="phone-name">考古 · UC 经典</span></span
           ><button data-action="settings" aria-label="浏览器设置">⚙</button>
         </header>
-        <div class="phone-tabs">
-          <span class="phone-tab"
-            >▧ <span id="phone-tab-title">时光首页</span><span>×</span></span
-          ><button data-action="home" aria-label="打开首页">＋</button>
-        </div>
         <div class="titlebar">
           <span
             ><span class="tiny-globe">◉</span>
@@ -50,10 +45,10 @@
           </div>
         </div>
         <div class="menubar">
-          <button data-action="about">文件(F)</button
-          ><button data-action="history">查看(V)</button
+          <button data-action="menu-file">文件(F)</button
+          ><button data-action="menu-view">查看(V)</button
           ><button data-action="favorites">收藏夹(A)</button
-          ><button data-action="settings">工具(T)</button
+          ><button data-action="menu-tools">工具(T)</button
           ><button data-action="about">帮助(H)</button
           ><span class="menu-mark">✥</span>
         </div>
@@ -63,7 +58,7 @@
           ><button class="tool" id="forward" aria-label="前进">
             <span class="tool-icon muted">➜</span><small>前进</small></button
           ><i></i
-          ><button class="tool" data-action="refresh">
+          ><button class="tool" data-action="stop"><span class="tool-icon">✕</span><small>停止</small></button><button class="tool" data-action="refresh">
             <span class="tool-icon blue">⟳</span><small>刷新</small></button
           ><button class="tool" data-action="home">
             <span class="tool-icon house">⌂</span><small>主页</small></button
@@ -95,6 +90,7 @@
           </div>
           <button id="datebutton">◷ 更改时间 <span>⌄</span></button>
         </div>
+        <div class="browser-tabs" id="browser-tabs" aria-label="浏览器标签页"></div>
         <main id="content"></main>
         <footer class="statusbar">
           <span id="status">✓ 完成</span><span>▣ 历史互联网 · 只读浏览</span
@@ -122,11 +118,14 @@
       <div id="dialogbody"></div>
     </dialog>
     <div id="toast" role="status"></div>
-    <script src="annual-news.js"></script>
-    <script src="annual-news-extra.js"></script>
-    <script src="news-articles.js"></script>
-    <script src="mobile-scenes.js"></script>
-    <script src="site-catalog.js"></script>
-    <script src="app.js"></script>
+    <script src="annual-news.js?v=0.3.0"></script>
+    <script src="annual-news-extra.js?v=0.3.0"></script>
+    <script src="news-articles.js?v=0.3.0"></script>
+    <script src="mobile-scenes.js?v=0.3.0"></script>
+    <script src="site-catalog.js?v=0.3.0"></script>
+    <script src="yearbook.js?v=0.3.0"></script>
+    <script src="news-center.js?v=0.3.0"></script>
+    <script src="browser-features.js?v=0.3.0"></script>
+    <script src="app.js?v=0.3.0"></script>
   </body>
 </html>

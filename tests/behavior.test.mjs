@@ -53,6 +53,7 @@ function boot(initial = {}, runtime = {}) {
     },
     URL,
     AbortSignal,
+    AbortController,
     fetch:
       runtime.fetch || (() => Promise.reject(Error("No network in tests"))),
     console,
@@ -66,11 +67,17 @@ function boot(initial = {}, runtime = {}) {
     "news-articles.js",
     "mobile-scenes.js",
     "site-catalog.js",
-    "app.js",
+    "yearbook.js",
+    "news-center.js",
+    "browser-features.js",
   ])
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
       filename: file,
     });
+  context.yearbookTestData=JSON.parse(readFileSync("data/yearbook.json","utf8"));
+  vm.runInContext("Object.assign(yearbook, yearbookTestData)",context);
+  delete context.yearbookTestData;
+  vm.runInContext(readFileSync("dist/app.js","utf8"),context,{filename:"app.js"});
   return {
     context,
     document,
@@ -343,4 +350,44 @@ test("old-web catalog has unique safe entries, year filtering and both screen la
   const home=app.run('renderHome()');
   assert.match(home,/id="mobile-catalog"/); assert.match(home,/id="desktop-catalog"/);
   assert.match(app.run('date="2004-08-01";siteLink("天涯","www.tianya.cn")'),/data-site="www.tianyaclub.com"/);
+});
+
+test("browser tabs keep separate dates and histories and close safely",()=>{
+ const app=boot();
+ app.run('applyDate("2008-08-08"); newBrowserTab(); applyDate("2018-08-08")');
+ assert.equal(app.run('browserTabs.length'),2);
+ app.run('switchBrowserTab(1)');assert.equal(app.run('date'),'2008-08-08');
+ app.run('switchBrowserTab(2)');assert.equal(app.run('date'),'2018-08-08');
+ app.run('closeBrowserTab(2)');assert.equal(app.run('activeTab'),1);assert.equal(app.run('date'),'2008-08-08');
+ app.run('closeBrowserTab(1)');assert.equal(app.run('browserTabs.length'),1);assert.equal(app.run('current.type'),'home');
+});
+
+test("news center offers real additional records, pagination, filtering and attributed detail",()=>{
+ const app=boot();
+ assert.equal(app.run('Object.keys(yearbook).length'),30);
+ assert.equal(app.run('Object.values(yearbook).every(rows=>rows.length>=10)'),true);
+ app.run('openNewsCenter()');
+ assert.equal(app.run('current.type'),'newscenter');
+ assert.ok(app.run('newsCenterRows(current).length')>10);
+ const first=app.run('renderNewsCenter(current)');
+ assert.match(first,/下一页/);assert.match(first,/搜索年度新闻/);
+ const next=app.run('renderNewsCenter({...current,page:2})');assert.notEqual(first,next);
+ assert.equal(app.run('newsCenterRows({month:"2",query:""}).every(r=>Number(r.date.slice(0,2))===2)'),true);
+ assert.equal(app.run('newsCenterRows({query:"zzzz_no_such_event",month:""}).length'),0);
+ const detail=app.run('renderYearRecord({index:0})');assert.match(detail,/CC BY-SA/);assert.match(detail,/oldid=/);
+ app.run('applyDate("2005-08-01")');assert.equal(app.run('current.type'),'newscenter');assert.match(app.run('current.url'),/2005/);
+});
+
+test("lazy yearbook loads just one requested year and ignores a stale screen", async()=>{
+ const rows=JSON.parse(readFileSync('dist/yearbook/2004.json','utf8'));const calls=[];
+ const app=boot({}, {fetch:async url=>{calls.push(url);return {ok:true,json:async()=>rows};}});
+ app.run('delete yearbook["2004"]; openNewsCenter()');
+ await app.run('ensureYearbook("2004")');
+ assert.equal(calls.length,1);assert.match(calls[0],/yearbook\/2004.json/);
+ assert.equal(app.run('current.loading'),false);assert.equal(app.run('history[cursor].page.loading'),false);
+ let resolve;
+ const other=boot({}, {fetch:()=>new Promise(r=>resolve=r)});
+ other.run('delete yearbook["2004"];openNewsCenter();navigate({type:"home"})');
+ resolve({ok:true,json:async()=>rows});await other.run('ensureYearbook("2004")');
+ assert.equal(other.run('current.type'),'home');
 });

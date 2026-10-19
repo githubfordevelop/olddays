@@ -84,6 +84,7 @@ let date = "2004-08-01",
   history = [],
   cursor = -1,
   requestId = 0;
+let pendingArchive = null;
 let saved = [];
 try {
   saved = JSON.parse(localStorage.getItem("archaeo-bookmarks") || "[]");
@@ -137,7 +138,6 @@ function applyAppearance() {
   document.body.classList.toggle("mobile-night", preferences.night);
   $("#phone-mark").textContent = mobileSkins[preferences.skin].mark;
   $("#phone-name").textContent = "考古 · " + mobileSkins[preferences.skin].name;
-  $("#phone-tab-title").textContent = current.name || "时光首页";
   try {
     localStorage.setItem("archaeo-appearance", JSON.stringify(preferences));
   } catch {}
@@ -160,7 +160,7 @@ function settings() {
 function mobileMenu() {
   dialog(
     "浏览器菜单",
-    `<div class="phone-menu"><button data-menu-action="home"><span>⌂</span>时光首页</button><button data-menu-action="favorites"><span>☆</span>我的收藏</button><button data-menu-action="history"><span>◷</span>浏览记录</button><button data-menu-action="date"><span>▦</span>穿越日期</button><button data-menu-action="refresh"><span>⟳</span>刷新页面</button><button data-menu-action="settings"><span>⚙</span>浏览器设置</button><button data-scene="homeworld"><span>⌂</span>家园空间</button><button data-scene="garden"><span>❀</span>开心菜园</button><button data-scene="wutang"><span>武</span>精武堂闯关</button></div><div class="menu-foot">${mobileSkins[preferences.skin].name}风格 · ${date}</div>`,
+    `<div class="phone-menu"><button data-menu-action="newtab"><span>＋</span>新建标签页</button><button data-menu-action="newscenter"><span>▤</span>新闻中心</button><button data-menu-action="stop"><span>✕</span>停止加载</button><button data-menu-action="home"><span>⌂</span>时光首页</button><button data-menu-action="favorites"><span>☆</span>我的收藏</button><button data-menu-action="history"><span>◷</span>浏览记录</button><button data-menu-action="date"><span>▦</span>穿越日期</button><button data-menu-action="refresh"><span>⟳</span>刷新页面</button><button data-menu-action="settings"><span>⚙</span>浏览器设置</button><button data-scene="homeworld"><span>⌂</span>家园空间</button><button data-scene="garden"><span>❀</span>开心菜园</button><button data-scene="wutang"><span>武</span>精武堂闯关</button></div><div class="menu-foot">${mobileSkins[preferences.skin].name}风格 · ${date}</div>`,
   );
 }
 function mobileHome() {
@@ -209,7 +209,7 @@ function siteLink(name, url, extra = "") {
 }
 function renderHome() {
   const e = era();
-  return `${mobileHome()}<div class="portal"><div class="portal-topline"><span>欢迎回来，远方的网友。</span><span class="online">● 时光连接已建立 · ${year()}</span></div><header class="portal-head"><div class="wordmark"><div class="logo" aria-hidden="true"></div><div><div class="brand">考古浏览器</div><div class="brand-en">ARCHAEO BROWSER</div></div></div><div class="tagline">在地址栏输入一个网址，<br>在时间里找回一段记忆。</div><div class="head-date"><b>${year()}</b><small>THE INTERNET, THEN.</small></div></header><nav class="portal-nav"><button class="active" data-action="home">时光首页</button><button data-section="desktop-catalog-portal">新闻门户</button><button data-section="desktop-catalog-forum">论坛社区</button><button data-section="desktop-catalog-life">个人天地</button><button data-section="desktop-catalog">旧站大全</button><button data-action="favorites">我的收藏</button></nav><div class="welcome-strip"><span>✉ 欢迎来到过去。<b> 今天，你想回到哪一年？</b></span><span>EST. IN MEMORIES / 001</span></div><section class="era-hero"><div class="hero-copy"><div class="eyebrow">A SMALL WINDOW TO A BIG PAST</div><h1>${e.phrase}</h1><p>${e.sub}<br>时间停在 ${date.replaceAll("-", ".")}，从一个旧网址开始。</p><div class="hero-stamp">${year()}</div></div><div class="hero-side" aria-hidden="true"><div class="hero-sky"></div><div class="cloud"></div><div class="hill"></div><div class="hill two"></div><div class="little-window"><div class="little-title">hello_world.txt <span style="float:right">×</span></div><div class="little-body">Connecting to...<br><b>the good old days.</b><br><span style="color:#8d9a72">[ connection found ]</span></div></div><div class="hero-side-label">SOMEWHERE IN YOUR MEMORY</div></div></section><div class="year-selector"><span>选择你的年代 →</span>${Object.keys(
+  return `${mobileHome()}<div class="portal"><div class="portal-topline"><span>欢迎回来，远方的网友。</span><span class="online">● 时光连接已建立 · ${year()}</span></div><header class="portal-head"><div class="wordmark"><div class="logo" aria-hidden="true"></div><div><div class="brand">考古浏览器</div><div class="brand-en">ARCHAEO BROWSER</div></div></div><div class="tagline">在地址栏输入一个网址，<br>在时间里找回一段记忆。</div><div class="head-date"><b>${year()}</b><small>THE INTERNET, THEN.</small></div></header><nav class="portal-nav"><button class="active" data-action="home">时光首页</button><button data-news-center>新闻中心</button><button data-section="desktop-catalog-forum">论坛社区</button><button data-section="desktop-catalog-life">个人天地</button><button data-section="desktop-catalog">旧站大全</button><button data-action="favorites">我的收藏</button></nav><div class="welcome-strip"><span>✉ 欢迎来到过去。<b> 今天，你想回到哪一年？</b></span><span>EST. IN MEMORIES / 001</span></div><section class="retro-bulletin"><b>欢迎来到 ${year()} 年的互联网</b><span>${e.memo}</span><button data-news-center>新闻中心 &gt;&gt;</button></section><div class="year-selector"><span>选择你的年代 →</span>${Object.keys(
     eras,
   )
     .map(
@@ -250,28 +250,34 @@ function setTheme() {
 }
 function navigate(page, push = true) {
   requestId++;
+  if(pendingArchive) pendingArchive.abort();
+  pendingArchive=null;
   current = page;
   setTheme();
   if (push) {
     history = history.slice(0, cursor + 1);
     history.push({ page: { ...page }, date });
     cursor = history.length - 1;
-  }
+  } else if(history[cursor]) history[cursor]={page:{...page},date};
   $("#content").innerHTML =
     page.type === "home"
       ? renderHome()
       : page.type === "scene"
         ? renderScene(page)
-        : page.type === "news"
+        : page.type === "newscenter"
+          ? renderNewsCenter(page)
+          : page.type === "yearrecord"
+            ? renderYearRecord(page)
+            : page.type === "news"
           ? renderAnnualStory(page)
           : embeddedArchivePage(page);
   $("#address").value = page.type === "home" ? "archaeo://home" : page.url;
   $("#windowtitle").textContent = page.type === "home" ? "时光首页" : page.name;
-  $("#phone-tab-title").textContent =
-    page.type === "home" ? "时光首页" : page.name;
-  $("#status").textContent = page.type === "home" ? "✓ 完成" : "◷ 等待历史存档";
+  $("#status").textContent = page.type === "archive" ? "◷ 等待历史存档" : "✓ 完成";
   document.title = `${page.type === "home" ? "时光首页" : page.name} · ${year()} — 考古浏览器`;
   updateNav();
+  saveTabState();
+  renderBrowserTabs();
   window.scrollTo({ top: 0, behavior: "instant" });
   if (page.type === "archive") return resolveSnapshot(page, requestId);
 }
@@ -297,6 +303,8 @@ function archiveFailure(page, message) {
     `<div class="archive-loading"><h2>这页历史暂时没有打开</h2><p>${escapeHTML(message)}</p><p>可以重新载入、换一个时间，或返回首页继续探索。</p></div>`;
 }
 async function resolveSnapshot(p, id) {
+  const controller=new AbortController();pendingArchive=controller;
+  const timer=setTimeout(()=>controller.abort(),8500);
   try {
     const cutoff = date.replaceAll("-", "") + "235959";
     const requestedYear = year();
@@ -304,7 +312,7 @@ async function resolveSnapshot(p, id) {
     endpoint.searchParams.set("url", p.url);
     endpoint.searchParams.set("timestamp", cutoff);
     const response = await fetch(endpoint, {
-      signal: AbortSignal.timeout(8500),
+      signal: controller.signal,
     });
     if (id !== requestId) return;
     if (!response.ok) throw Error("unavailable");
@@ -343,7 +351,7 @@ async function resolveSnapshot(p, id) {
   } catch (error) {
     if (id !== requestId) return;
     archiveFailure(p, "暂时无法连接历史存档服务，请稍后重试。");
-  }
+  } finally { clearTimeout(timer); if(pendingArchive===controller)pendingArchive=null; }
 }
 
 function toast(msg) {
@@ -380,15 +388,16 @@ function applyDate(d) {
   }
   date = d;
   $("#modal").close();
-  navigate(current.type === "news" ? { type: "home" } : current);
+  if (["newscenter","yearrecord"].includes(current.type)) openNewsCenter();
+  else navigate(current.type === "news" ? { type: "home" } : current);
   toast(`已回到 ${date.replaceAll("-", ".")}`);
 }
 function favorites() {
   dialog(
     "☆ 我的时光收藏",
-    saved.length
+    (current.type === "archive" ? `<button class="primary" id="savebookmark">收藏这个时间坐标 · ${escapeHTML(current.name)}</button>` : "") + (saved.length
       ? `<p>保存在这台设备上，每一条都带着当时的日期。</p>${saved.map((s, i) => `<div class="saved-row"><a href="#" data-bookmark="${i}">${escapeHTML(s.name)}<small>${escapeHTML(s.date)} · ${escapeHTML(s.url)}</small></a><button data-delete="${i}" aria-label="删除收藏">×</button></div>`).join("")}`
-      : "<p>还没有收藏。打开一个历史网址，点击「收藏这个时间坐标」，把它留在这里。</p>",
+      : "<p>还没有收藏。打开一个历史网址，点击「收藏这个时间坐标」，把它留在这里。</p>"),
   );
 }
 function action(a) {
@@ -397,6 +406,11 @@ function action(a) {
   if (a === "home") navigate({ type: "home" });
   if (a === "favorites") favorites();
   if (a === "refresh") navigate(current, false);
+  if (a === "newtab") newBrowserTab();
+  if (a === "stop") { requestId++; if(pendingArchive)pendingArchive.abort(); pendingArchive=null; if(current.type === "archive") archiveFailure(current,"你已停止此次加载，可重新载入。"); $("#status").textContent="已停止加载"; }
+  if (a.startsWith("menu-")) browserMenu(a.slice(5));
+  if (a === "close-tab") closeBrowserTab(activeTab);
+  if (a === "newscenter") openNewsCenter();
   if (a === "history")
     dialog(
       "◷ 本次探索记录",
@@ -524,6 +538,10 @@ $("#addressform").addEventListener("submit", (e) => {
     openScene(v.slice("archaeo://".length));
     return;
   }
+  const centerMatch=v.match(/^archaeo:\/\/news\/(\d{4})$/);
+  if(centerMatch && Number(centerMatch[1])>=1996 && Number(centerMatch[1])<=2025){ date=centerMatch[1]+date.slice(4);openNewsCenter();return; }
+  const recordMatch=v.match(/^archaeo:\/\/yearrecord\/(\d{4})\/(\d+)$/);
+  if(recordMatch && yearbookCounts[recordMatch[1]]){openYearRecord(Number(recordMatch[2]),recordMatch[1]);return;}
   const storyMatch = v.match(/^archaeo:\/\/news\/(\d{4})\/(\d+)$/);
   if (storyMatch) {
     openAnnualStory(storyMatch[1], Number(storyMatch[2]));

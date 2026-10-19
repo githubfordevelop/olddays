@@ -3716,3 +3716,74 @@ dialog::backdrop {
   .catalog-entry a { min-height:28px; }
   .old-catalog h2 { font-size:15px; }
 }
+
+/* Classic browser chrome: squared controls, tabs and dense portal typography. */
+body { font-family:Tahoma,"SimSun","Songti SC",serif; background:#3a6ea5; }
+.desktop-top { display:none; }
+.computer { border:3px solid #0055df; border-radius:8px 8px 0 0; box-shadow:3px 4px 0 #123e6d; }
+.titlebar { background:linear-gradient(#1686fb 0%,#0054dc 14%,#0267ed 85%,#0041b6); color:white; text-shadow:1px 1px #16326c; font-weight:bold; }
+.titlebar .window-controls button { border:1px solid white; background:linear-gradient(#86b7fb,#1a64d8); color:white; }
+.titlebar .window-controls button:last-child { background:linear-gradient(#ec9b75,#d33e16); }
+.toolbar,.menubar,.addressbar { background:#ece9d8; }
+.toolbar-caption { font-family:Tahoma,sans-serif; }
+.browser-tabs { display:flex; gap:2px; padding:5px 5px 0; background:#ece9d8; border-bottom:1px solid #888; overflow-x:auto; }
+.browser-tab { display:flex; align-items:center; min-width:110px; max-width:200px; border:1px solid #939385; border-radius:3px 3px 0 0; background:#dedccf; }
+.browser-tab.active { background:white; border-top:3px solid #e5a444; }
+.browser-tab button { border:0; background:none; padding:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.browser-tab button:first-child { flex:1; text-align:left; min-width:0; }
+.browser-tab button:last-child { flex:none; }
+.new-browser-tab { border:1px outset #eee; background:#ece9d8; padding:3px 9px; }
+.classic-menu { display:grid; min-width:220px; }
+.classic-menu button { text-align:left; border:0; background:#ece9d8; padding:12px; }
+.classic-menu button:hover { color:white; background:#0a56ce; }
+.portal { font-family:"SimSun","Songti SC",serif; background:white; }
+.portal-head { padding:16px 18px; min-height:90px; }
+.portal-head .tagline { display:none; }
+.portal-head .brand { font-size:30px; color:#003b85; }
+.retro-bulletin { display:flex; align-items:center; gap:14px; padding:10px; margin:10px 0; background:#ffffdf; border:1px solid #d8cf9c; font-size:12px; }
+.retro-bulletin b { white-space:nowrap; color:#ae2017; }
+.retro-bulletin span { flex:1; }
+.retro-bulletin button { background:none; border:0; color:#16469a; }
+.more-news { display:block; width:100%; margin:8px 0; padding:10px; color:#003b85; border:1px outset #d6deec; background:#edf4ff; font-weight:bold; }
+.news-center { background:white; color:#222; padding:16px; min-height:70vh; font-family:"SimSun","Songti SC",serif; }
+.center-masthead { display:flex; align-items:baseline; gap:20px; flex-wrap:wrap; border-bottom:4px solid #164987; padding:12px 0; }
+.center-masthead strong { font-size:32px; color:#b52622; font-style:italic; }
+.center-masthead span { font-size:20px; color:#123b70; }
+.center-masthead small { margin-left:auto; }
+.center-nav { display:flex; align-items:center; gap:10px; background:#edf2f9; padding:8px; flex-wrap:wrap; border-bottom:1px solid #9ab0cb; }
+.center-nav button { background:none; border:0; color:#16469a; }
+.center-notice { background:#fffedc; padding:10px; font-size:12px; line-height:1.8; }
+#news-filter { display:flex; gap:12px; flex-wrap:wrap; padding:12px 0; }
+#news-filter input { max-width:180px; padding:6px; }
+#news-filter select,#news-filter button { padding:6px; }
+.center-pagination { display:flex; align-items:center; justify-content:center; gap:16px; padding:15px 0; font-size:12px; }
+.center-pagination button { padding:6px 10px; border:1px outset #ddd; background:#edf2f9; }
+.center-list article { display:flex; align-items:baseline; gap:14px; padding:12px 4px; border-bottom:1px dotted #bbb; line-height:1.8; }
+.center-list time { flex:0 0 45px; color:#666; font-size:12px; }
+.center-list a { flex:1; color:#003f93; text-decoration:underline; }
+.center-list small { white-space:nowrap; color:#888; font-size:11px; }
+.news-center footer { padding:15px; border-top:1px solid #999; line-height:1.8; color:#777; font-size:11px; }
+.year-record h1 { margin:26px auto; max-width:850px; font-size:26px; line-height:1.6; text-align:center; }
+.year-record .article-body { max-width:850px; margin:auto; min-height:180px; }
+@media(min-width:601px) {
+ .desktop { padding-top:12px; }
+ .news-feed { display:grid; grid-template-columns:1fr 1fr; }
+ .news-item { padding:9px 10px; border-right:1px dotted #ccc; }
+ .year-selector { margin:8px 0; padding:8px; }
+}
+@media(max-width:600px) {
+ .computer { border:0; border-radius:0; box-shadow:none; }
+ .browser-tabs { padding:3px 5px 0; background:var(--mobile-paper,#ece9d8); }
+ .browser-tab { min-width:100px; max-width:160px; font-size:11px; }
+ .browser-tab button { padding:5px; }
+ .news-center { padding:8px; }
+ .center-masthead { gap:8px; }
+ .center-masthead strong { font-size:25px; }
+ .center-masthead span { font-size:16px; }
+ .center-masthead small { width:100%; margin:0; font-size:11px; }
+ .center-list article { gap:7px; padding:9px 0; flex-wrap:wrap; }
+ .center-list a { font-size:14px; }
+ .center-list small { font-size:10px; margin-left:52px; }
+ .center-pagination { gap:8px; }
+ .year-record h1 { font-size:21px; }
+}
