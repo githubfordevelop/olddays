@@ -84,6 +84,8 @@ let date = "2004-08-01",
   history = [],
   cursor = -1,
   requestId = 0;
+function validTravelDate(value){return typeof value==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(value)&&value>='1996-01-01'&&value<='2025-12-31'&&!Number.isNaN(Date.parse(value+'T12:00:00Z'))&&new Date(value+'T12:00:00Z').toISOString().slice(0,10)===value;}
+try{const storedDate=localStorage.getItem('olddays-selected-date');if(validTravelDate(storedDate))date=storedDate;}catch{}
 let pendingArchive = null;
 let saved = [];
 try {
@@ -255,6 +257,7 @@ function renderWorldPage(page) {
  return renderers[page.type]?.();
 }
 function navigate(page, push = true) {
+  try{if(validTravelDate(date))localStorage.setItem('olddays-selected-date',date);}catch{}
   if((current.type==='phone'&&page.type!=='phone')||(current.type==='home'&&page.type!=='home')){
     pocketJavaReleaseAll();
     document.body.classList.remove('pocket-expanded','pocket-landscape');

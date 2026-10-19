@@ -734,3 +734,7 @@ test('Campus notebook only offers rereading discovered records and keeps bounded
  b.run(`campusSaveNotes(${JSON.stringify('<script>private notes</script>')})`);assert.doesNotMatch(b.run('campusMarkup()'),/<script>private/);assert.match(b.run('campusMarkup()'),/&lt;script/);
  const c=boot(Object.fromEntries(b.values));assert.equal(c.run('campus.notes'),'<script>private notes</script>');c.run("campusSaveNotes('x'.repeat(1400))");assert.equal(c.run('campus.notes.length'),1200);
 });
+test('selected historical date survives reload while invalid stored dates fall back safely',()=>{
+ const b=boot({'olddays-selected-date':'2010-06-05'});assert.equal(b.run('date'),'2010-06-05');b.run("applyDate('2008-10-18')");assert.equal(b.values.get('olddays-selected-date'),'2008-10-18');assert.equal(boot(Object.fromEntries(b.values)).run('date'),'2008-10-18');
+ assert.equal(boot({'olddays-selected-date':'2010-02-30'}).run('date'),'2004-08-01');
+});

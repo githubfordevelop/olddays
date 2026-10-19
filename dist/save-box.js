@@ -4,7 +4,7 @@ const saveBoxKeys = Object.freeze({
   'olddays-mystery-01':'object','olddays-campus-case-02':'object','olddays-tide-v1':'object',
   'olddays-pocket-anime':'object','olddays-arcade-save':'object','olddays-discoveries':'array',
   'olddays-support-applause':'number','olddays-qq-demo':'object','olddays-memory-stamps':'array',
-  'olddays-visit-mode':'mode'
+  'olddays-visit-mode':'mode','olddays-selected-date':'date'
 });
 let saveBoxPending=null,saveBoxRead=0;
 const saveBoxFields={
@@ -25,7 +25,8 @@ function saveBoxValidate(input){
     if(!Object.hasOwn(saveBoxKeys,key))throw Error('存档包含未知项目，请使用旧日导出的文件。');
     if(typeof raw!=='string'||raw.length>200000)throw Error('存档项目损坏或过大。');
     const type=saveBoxKeys[key];
-    if(type==='mode'){if(!['pc','phone'].includes(raw))throw Error('显示模式损坏。');}
+    if(type==='date'){if(!/^\d{4}-\d{2}-\d{2}$/.test(raw)||raw<'1996-01-01'||raw>'2025-12-31'||Number.isNaN(Date.parse(raw+'T12:00:00Z'))||new Date(raw+'T12:00:00Z').toISOString().slice(0,10)!==raw)throw Error('存档日期无效。');}
+    else if(type==='mode'){if(!['pc','phone'].includes(raw))throw Error('显示模式损坏。');}
     else {
       let value;try{value=JSON.parse(raw);}catch{throw Error('存档项目不是有效 JSON。');}
       if(type==='array'&&!Array.isArray(value)||type==='object'&&(!value||Array.isArray(value)||typeof value!=='object')||type==='number'&&(!Number.isSafeInteger(value)||value<0))throw Error('存档项目类型不符。');
@@ -50,13 +51,13 @@ function saveBoxRestore(data){
 function saveBoxSummary(data){
   const e=data.entries,read=k=>{try{return JSON.parse(e[k]||'null');}catch{return null;}};
   const wallet=read('olddays-dreamnet-game'),campus=read('olddays-campus-case-02'),t=read('olddays-tide-v1'),anime=read('olddays-pocket-anime');
-  return `${Object.keys(e).length} 项本机记录 · 虚拟话费 ${Number.isFinite(wallet?.balance)?(wallet.balance/100).toFixed(2)+' 元':'未记录'} · 校园故事${campus?.solved?'已完成':campus?.started?'进行中':'未开始'} · 潮声${t?.solved?'已完成':t?.active?'进行中':'已收藏或未开始'} · 动漫收藏 ${Array.isArray(anime?.collection)?anime.collection.length:0} 项`;
+  return `${Object.keys(e).length} 项本机记录 · 年代 ${e['olddays-selected-date']||'旧备份未记录'} · 虚拟话费 ${Number.isFinite(wallet?.balance)?(wallet.balance/100).toFixed(2)+' 元':'未记录'} · 校园故事${campus?.solved?'已完成':campus?.started?'进行中':'未开始'} · 潮声${t?.solved?'已完成':t?.active?'进行中':'已收藏或未开始'} · 动漫收藏 ${Array.isArray(anime?.collection)?anime.collection.length:0} 项`;
 }
 function saveBoxOpen(){
   saveBoxPending=null;saveBoxRead++;
   let dialog=document.getElementById('save-box');
   if(!dialog){dialog=document.createElement('dialog');dialog.id='save-box';dialog.className='save-box';document.body.append(dialog);}
-  dialog.innerHTML=`<form method="dialog"><button class="save-box-close" aria-label="关闭存档盒">×</button></form><small>旧日收藏 / 本机存档</small><h2>把这些日子带走</h2><p>备份收藏手机、故事、动漫收藏、小游戏与虚拟话费。仅限本游戏的本机记录，不含 Java 模拟器内部进度、网页历史与系统文件。</p><button data-save-export>下载当前存档</button><label class="save-box-file">选择存档文件<input type="file" accept=".json,application/json" data-save-import></label><p data-save-feedback role="status">恢复会替换上述项目，建议先下载当前存档。</p><button data-save-confirm hidden>确认替换进度并重新打开</button>`;
+  dialog.innerHTML=`<form method="dialog"><button class="save-box-close" aria-label="关闭存档盒">×</button></form><small>旧日收藏 / 本机存档</small><h2>把这些日子带走</h2><p>备份所选年代、收藏手机、故事、动漫收藏、小游戏与虚拟话费。仅限本游戏的本机记录，不含 Java 模拟器内部进度、网页历史与系统文件。</p><button data-save-export>下载当前存档</button><label class="save-box-file">选择存档文件<input type="file" accept=".json,application/json" data-save-import></label><p data-save-feedback role="status">恢复会替换上述项目，建议先下载当前存档。</p><button data-save-confirm hidden>确认替换进度并重新打开</button>`;
   dialog.showModal();
 }
 const saveBoxEntranceBase=renderPhoneEntrance,saveBoxWorkbenchBase=renderWorkbench;

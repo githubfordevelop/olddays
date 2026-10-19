@@ -28,3 +28,8 @@ test('storage failure rolls back existing save without changing unrelated data',
  assert.throws(()=>b.run(`saveBoxRestore({format:'olddays-save',version:1,entries:{'olddays-discoveries':'[]'}})`));
  assert.deepEqual(Object.fromEntries(b.values),{...entry,unrelated:'untouched'});
 });
+test('save dates round trip and reject impossible or future calendar values',()=>{
+ const b=boot({'olddays-selected-date':'2010-06-05'});assert.match(b.run('saveBoxSummary(saveBoxValidate(saveBoxExport()))'),/2010-06-05/);
+ for(const date of ['2010-02-30','2026-01-01','2010-1-1','<script>'])assert.throws(()=>b.run(`saveBoxValidate(JSON.stringify({format:'olddays-save',version:1,entries:{'olddays-selected-date':${JSON.stringify(date)}}}))`));
+ b.run("saveBoxRestore(saveBoxValidate(saveBoxExport()))");assert.equal(b.values.get('olddays-selected-date'),'2010-06-05');
+});
