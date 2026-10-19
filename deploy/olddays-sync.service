@@ -1,0 +1,19 @@
+[Unit]
+Description=Olddays deploy successful GitHub CI commit
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=olddays
+Group=olddays
+Environment=OLDDAYS_REPOSITORY=githubfordevelop/olddays
+Environment=OLDDAYS_ROOT=/srv/olddays
+Environment=OLDDAYS_HOST=121.40.22.96
+ExecStart=/usr/bin/python3 /usr/local/libexec/olddays-pull-sync.py
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/olddays
+TimeoutStartSec=180

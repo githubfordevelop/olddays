@@ -1,3 +1,130 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ece9d8"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="考古浏览器"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="选择一个年份，重新走进那时的互联网。真实网页存档入口与复古浏览器。"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="stylesheet" href="style.css"><title>考古浏览器 — 回到互联网的从前</title></head>
-<body><div class="desktop"><div class="desktop-top"><span>◈ INTERNET MEMORY PROJECT</span><span>那些网页，还在等你。</span><span>LOCAL TIME <b id="localclock">20:04</b></span></div><div class="computer"><header class="phone-header"><span class="phone-wordmark"><b id="phone-mark">UC</b><span id="phone-name">考古 · UC 经典</span></span><button data-action="settings" aria-label="浏览器设置">⚙</button></header><div class="phone-tabs"><span class="phone-tab">▧ <span id="phone-tab-title">时光首页</span><span>×</span></span><button data-action="home" aria-label="打开首页">＋</button></div><div class="titlebar"><span><span class="tiny-globe">◉</span> <span id="windowtitle">时光首页</span> - 考古浏览器</span><div class="window-controls"><button aria-label="关于浏览器" data-action="about">?</button><button aria-label="切换全屏" data-action="fullscreen">□</button><button aria-label="回到首页" data-action="home">×</button></div></div><div class="menubar"><button data-action="about">文件(F)</button><button data-action="history">查看(V)</button><button data-action="favorites">收藏夹(A)</button><button data-action="settings">工具(T)</button><button data-action="about">帮助(H)</button><span class="menu-mark">✥</span></div><div class="toolbar"><button class="tool" id="back" aria-label="后退"><span class="tool-icon green">⬅</span><small>后退</small></button><button class="tool" id="forward" aria-label="前进"><span class="tool-icon muted">➜</span><small>前进</small></button><i></i><button class="tool" data-action="refresh"><span class="tool-icon blue">⟳</span><small>刷新</small></button><button class="tool" data-action="home"><span class="tool-icon house">⌂</span><small>主页</small></button><i></i><button class="tool" data-action="favorites"><span class="tool-icon gold">★</span><small>收藏夹</small></button><button class="tool" data-action="history"><span class="tool-icon blue">◷</span><small>历史</small></button><div class="toolbar-caption">ARCHAEO / EXPLORER<br><span>重新连接，那一年的世界。</span></div></div><form class="addressbar" id="addressform"><label for="address">地址(D)</label><span class="page-icon">▤</span><input id="address" aria-label="输入历史网站网址" value="archaeo://home" autocomplete="off" spellcheck="false"><button type="submit" class="go">➜ <span>转到</span></button></form><div class="timebar"><div><span class="time-led"></span> 时间坐标 <strong id="timeLabel">2004.08.01</strong><span class="time-note">你正在浏览过去</span></div><button id="datebutton">◷ 更改时间 <span>⌄</span></button></div><main id="content"></main><footer class="statusbar"><span id="status">✓ 完成</span><span>▣ 历史互联网 · 只读浏览</span><span class="connection">● Internet</span><span>◢</span></footer></div><div class="desktop-bottom"><span>把时间留给记忆，把网页留给历史。</span><span>考古浏览器 / ARCHAEO BROWSER · FIRST EDITION</span></div></div><nav class="mobile-nav"><button id="mback" aria-label="后退">‹</button><button id="mforward" aria-label="前进">›</button><button data-action="home" aria-label="主页">⌂</button><button data-action="favorites" aria-label="收藏夹">☆</button><button id="mdate" aria-label="选择年份">◷</button><button data-action="mobilemenu" aria-label="浏览器菜单">☰</button></nav><dialog id="modal"><div class="dialog-top"><strong id="dialogtitle"></strong><button id="closedialog" aria-label="关闭">×</button></div><div id="dialogbody"></div></dialog><div id="toast" role="status"></div><script src="annual-news.js"></script><script src="mobile-scenes.js"></script><script src="app.js"></script></body></html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#ece9d8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="考古浏览器" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta
+      name="description"
+      content="选择一个年份，重新走进那时的互联网。真实网页存档入口与复古浏览器。"
+    />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="stylesheet" href="style.css" />
+    <title>考古浏览器 — 回到互联网的从前</title>
+  </head>
+  <body>
+    <div class="desktop">
+      <div class="desktop-top">
+        <span>◈ INTERNET MEMORY PROJECT</span><span>那些网页，还在等你。</span
+        ><span>LOCAL TIME <b id="localclock">20:04</b></span>
+      </div>
+      <div class="computer">
+        <header class="phone-header">
+          <span class="phone-wordmark"
+            ><b id="phone-mark">UC</b
+            ><span id="phone-name">考古 · UC 经典</span></span
+          ><button data-action="settings" aria-label="浏览器设置">⚙</button>
+        </header>
+        <div class="phone-tabs">
+          <span class="phone-tab"
+            >▧ <span id="phone-tab-title">时光首页</span><span>×</span></span
+          ><button data-action="home" aria-label="打开首页">＋</button>
+        </div>
+        <div class="titlebar">
+          <span
+            ><span class="tiny-globe">◉</span>
+            <span id="windowtitle">时光首页</span> - 考古浏览器</span
+          >
+          <div class="window-controls">
+            <button aria-label="关于浏览器" data-action="about">?</button
+            ><button aria-label="切换全屏" data-action="fullscreen">□</button
+            ><button aria-label="回到首页" data-action="home">×</button>
+          </div>
+        </div>
+        <div class="menubar">
+          <button data-action="about">文件(F)</button
+          ><button data-action="history">查看(V)</button
+          ><button data-action="favorites">收藏夹(A)</button
+          ><button data-action="settings">工具(T)</button
+          ><button data-action="about">帮助(H)</button
+          ><span class="menu-mark">✥</span>
+        </div>
+        <div class="toolbar">
+          <button class="tool" id="back" aria-label="后退">
+            <span class="tool-icon green">⬅</span><small>后退</small></button
+          ><button class="tool" id="forward" aria-label="前进">
+            <span class="tool-icon muted">➜</span><small>前进</small></button
+          ><i></i
+          ><button class="tool" data-action="refresh">
+            <span class="tool-icon blue">⟳</span><small>刷新</small></button
+          ><button class="tool" data-action="home">
+            <span class="tool-icon house">⌂</span><small>主页</small></button
+          ><i></i
+          ><button class="tool" data-action="favorites">
+            <span class="tool-icon gold">★</span><small>收藏夹</small></button
+          ><button class="tool" data-action="history">
+            <span class="tool-icon blue">◷</span><small>历史</small>
+          </button>
+          <div class="toolbar-caption">
+            ARCHAEO / EXPLORER<br /><span>重新连接，那一年的世界。</span>
+          </div>
+        </div>
+        <form class="addressbar" id="addressform">
+          <label for="address">地址(D)</label><span class="page-icon">▤</span
+          ><input
+            id="address"
+            aria-label="输入历史网站网址"
+            value="archaeo://home"
+            autocomplete="off"
+            spellcheck="false"
+          /><button type="submit" class="go">➜ <span>转到</span></button>
+        </form>
+        <div class="timebar">
+          <div>
+            <span class="time-led"></span> 时间坐标
+            <strong id="timeLabel">2004.08.01</strong
+            ><span class="time-note">你正在浏览过去</span>
+          </div>
+          <button id="datebutton">◷ 更改时间 <span>⌄</span></button>
+        </div>
+        <main id="content"></main>
+        <footer class="statusbar">
+          <span id="status">✓ 完成</span><span>▣ 历史互联网 · 只读浏览</span
+          ><span class="connection">● Internet</span><span>◢</span>
+        </footer>
+      </div>
+      <div class="desktop-bottom">
+        <span>把时间留给记忆，把网页留给历史。</span
+        ><span>考古浏览器 / ARCHAEO BROWSER · FIRST EDITION</span>
+      </div>
+    </div>
+    <nav class="mobile-nav">
+      <button id="mback" aria-label="后退">‹</button
+      ><button id="mforward" aria-label="前进">›</button
+      ><button data-action="home" aria-label="主页">⌂</button
+      ><button data-action="favorites" aria-label="收藏夹">☆</button
+      ><button id="mdate" aria-label="选择年份">◷</button
+      ><button data-action="mobilemenu" aria-label="浏览器菜单">☰</button>
+    </nav>
+    <dialog id="modal">
+      <div class="dialog-top">
+        <strong id="dialogtitle"></strong
+        ><button id="closedialog" aria-label="关闭">×</button>
+      </div>
+      <div id="dialogbody"></div>
+    </dialog>
+    <div id="toast" role="status"></div>
+    <script src="annual-news.js"></script>
+    <script src="annual-news-extra.js"></script>
+    <script src="mobile-scenes.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

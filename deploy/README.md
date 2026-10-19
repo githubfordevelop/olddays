@@ -1,6 +1,6 @@
 # GitHub → Linux 服务器
 
-流程已经提供；尚未关联真实 GitHub 仓库或登录服务器。默认以支持 SSH、rsync、Nginx 的 Linux 服务器为目标。不包含数据库、付费服务或自动修改服务器配置。
+目标仓库为 githubfordevelop/olddays；当前采用本文末尾的公开 CI 拉取模式。前半部分保留支持 SSH、rsync、Nginx 的 Linux 服务器推送模式说明。不包含数据库、付费服务或自动修改服务器配置。
 
 ## 仓库配置
 
@@ -39,4 +39,20 @@
 
 ## 尚待确定
 
-GitHub 所属账号与仓库、是否公开、服务器地址与部署用户、域名、部署目录。真实连接前，工作流只能做语法和本地结构检查，不能声称已完成服务器发布验证。
+公开仓库 githubfordevelop/olddays；服务器 121.40.22.96；部署用户 olddays；目录 /srv/olddays。域名和 HTTPS 证书待用户选定。实际运行结果应以 GitHub Actions、服务器日志和 version.json 为准。
+
+## 当前服务器采用的公开 CI 拉取模式
+
+由于仓库公开，服务器可以通过 GitHub 公共 API 检查 main 分支的 `Check and deploy` 工作流是否成功，然后只下载该提交的 `dist/` 文件。这个模式不需要把维护私钥保存到 GitHub，也不需要为部署授予 GitHub 账号额外权限。
+
+- 服务器：121.40.22.96，部署用户 olddays，根目录 `/srv/olddays`。
+- `olddays-sync.timer` 约每两分钟触发一次；`olddays-sync.service` 以非 root 用户运行。
+- 同步器只接受当前仓库、main 分支、push 事件、结论为 success 的 CI 提交；不执行下载仓库中的任何脚本。
+- 只解包 `dist/` 的普通文件，拒绝路径穿越、软链接和超限负载。
+- 新版本先写入独立目录，再切换 current；后续发布的本机 HTTP 健康检查不通过时，恢复旧软链接。
+- GitHub 不可达、公共 API 限流或检查失败时，保留旧站，等下一次检查。
+- `version.json` 公开当前提交及对应 CI 记录，方便核验。
+
+安装文件来自本目录。首次切换站点前需先发布一个通过 CI 的版本，再更新 Nginx 并验证 HTTP；首次发布没有可回滚的旧 current，需人工完成首次 HTTP 核验。维护用 SSH 私钥保存在维护设备上，勿上传源码或聊天。
+
+SSH 推送模式仍可选：配置前文的变量和 Secrets 后启用 workflow 的 SSH 部署任务。**不要同时启用两种发布模式**；切换为 SSH 推送时先停用 `olddays-sync.timer`。

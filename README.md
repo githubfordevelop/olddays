@@ -1,65 +1,169 @@
-# 考古浏览器 · Archaeo Browser
+<div align="center">
+  <img src="dist/icon.svg" width="88" alt="考古浏览器图标">
+  <h1>Olddays · 考古浏览器</h1>
+  <p><strong>把记忆里的互联网，重新打开一次。</strong></p>
+  <p>旧网址、老浏览器、家园、菜园和文字江湖。选择一个年份，慢慢逛回去。</p>
+  <p>
+    <a href="http://121.40.22.96/">在线体验</a> ·
+    <a href="https://github.com/githubfordevelop/olddays/releases/latest">下载发布包</a> ·
+    <a href="https://github.com/githubfordevelop/olddays/archive/refs/heads/main.zip">下载源码</a> ·
+    <a href="https://github.com/githubfordevelop/olddays/issues">反馈与建议</a>
+  </p>
+  <p>
+    <a href="https://github.com/githubfordevelop/olddays/actions/workflows/deploy.yml"><img src="https://github.com/githubfordevelop/olddays/actions/workflows/deploy.yml/badge.svg" alt="CI 检查与部署"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-315542" alt="MIT license"></a>
+    <img src="https://img.shields.io/badge/runtime-HTML%20%2F%20CSS%20%2F%20JS-de891f" alt="HTML CSS JS">
+    <img src="https://img.shields.io/badge/build-zero%20dependencies-315542" alt="零构建依赖">
+  </p>
+</div>
 
-选择一个年份，重新走进那时的互联网。
+## 那时，我们怎样上网？
 
-零构建依赖的复古网页应用，提供桌面浏览器外壳、iPhone 触控布局、UC / Opera Mini 风格皮肤、年度大事记，以及可玩的怀旧互动空间。
+从一个网址导航开始，点进论坛，看看别人的签名档。用小小的手机屏幕翻小说，给菜地浇一次水，再去精武堂练几招。网速很慢，能逛的世界却很大。
 
-## 本地运行
+**考古浏览器**把这些体验装进一个可以直接打开的网页应用：电脑端是经典浏览器窗口，手机端可以换成 UC、Opera Mini 风格的外壳；地址栏连接真实网页存档，家园里的小游戏则让记忆重新有了可以动手玩的部分。
+
+本项目处于 **v0.1 初期体验版**。欢迎下载、自部署、改造，也欢迎带着你记得的旧网址来补充它。
+
+## 看一眼过去
+
+<div align="center">
+  <img src="docs/images/mobile-uc.png" width="30%" alt="UC 风格手机首页与年度大事记">
+  <img src="docs/images/settings.png" width="30%" alt="浏览器皮肤和阅读设置">
+  <img src="docs/images/jingwutang.png" width="30%" alt="精武堂风格回合制小游戏">
+</div>
+
+<details>
+<summary>查看桌面外观与站内新闻详情</summary>
+
+![经典桌面外观](docs/images/desktop.png)
+
+桌面截图展示首版窗口与导航布局；手机截图展示已加入互动入口的新版。
+
+![站内新闻详情](docs/images/news-detail.png)
+
+</details>
+
+## 可以做什么
+
+| 入口                     | 已有体验                                                                                 |
+| ------------------------ | ---------------------------------------------------------------------------------------- |
+| **时光地址栏**           | 选择 1996—2025 的日期，输入 HTTP(S) 网址，查询真实历史网页；不把今天的网页当作过去的快照 |
+| **年度大新闻**           | 每年至少 10 条事件，共 300 条年度记录，附政府、机构或百科年表出处；按全年回顾展示        |
+| **UC / Opera Mini 风格** | 手机浏览器外壳、标签栏、快捷导航、底部菜单；三种皮肤可切换                               |
+| **阅读设置**             | 夜间模式、大字模式，自动记住当前设备上的选择                                             |
+| **QQ 家园风格空间**      | 自定义昵称，查看游戏进度，从家园走进菜园、精武堂和书房                                   |
+| **开心菜园**             | 六块菜地，播种、浇水、成熟、收获；铜钱循环和本机进度保存                                 |
+| **精武堂风格小游戏**     | 练功、修为升级、挑战、出招、守势反击、撤退、打坐恢复                                     |
+| **朋友网风格同学录**     | 把老朋友的昵称和一段回忆留在本机，不需要注册账号                                         |
+| **掌上书房**             | 三回原创演示短篇《江湖来信》，章节翻页、自动续读，以及旧书站存档入口                     |
+| **旧日互联网**           | 猫扑、天涯、贴吧、门户和个人站点的候选历史入口                                           |
+| **时光收藏**             | 收藏“网址＋日期”；查看本次探索记录                                                       |
+
+### 真实资料与怀旧互动
+
+这两部分在界面中分别说明：
+
+- **历史网页**来自 Internet Archive；是否有存档、图片是否完整，以来源实际保存情况为准。
+- **大事记**是根据明确资料整理的全年精选，链接可能通向后来发表的回顾文章，不是当时的原始新闻流。
+- **家园、同学录、种菜、精武堂与阅读演示**是原创怀旧互动，不连接原站账号或服务。游戏与场景可以在任意选定年份体验，不代表这些产品当时都已存在。
+- **皮肤**参考旧式浏览器的视觉语言，不是 UC、Opera 或特定历史版本的精确复刻。
+
+## 三分钟开始使用
+
+### 直接体验
+
+打开 **[在线体验](http://121.40.22.96/)**，无需安装或注册。手机端点击菜单或顶部设置按钮，可以切换皮肤和阅读方式。
+
+### 下载到自己电脑
+
+从 [Releases](https://github.com/githubfordevelop/olddays/releases/latest) 下载网页包，或直接下载源码 ZIP。解压后启动一个静态 HTTP 服务：
 
 ```sh
-python3 -m http.server 4173 --directory dist
+# 克隆源码
+ git clone https://github.com/githubfordevelop/olddays.git
+ cd olddays
+
+# 启动网页，无需 npm install
+ python3 -m http.server 4173 --directory dist
 ```
 
-打开 http://localhost:4173。`dist/` 可部署到任意静态托管。没有 npm 依赖。
+然后打开 <http://localhost:4173>。需要 Node.js 的部分仅用于开发检查，不是网页运行依赖。
 
-## 当前功能
+> 部分浏览器会限制从 `file://` 页面发起请求，建议使用上面的 HTTP 服务。
 
-- 1996—2025 日期选择；2004、2005、2008、2010、2018 快捷入口。
-- 网页存档查询优先接受同年、所选日期及之前的快照；跨年或较晚结果会被拒绝。
-- 大事记改为**全年回顾**，不按具体月日截断。覆盖 1996—2025，每年有少量编辑精选事件，点击查看中国政府网、NASA、国家航天局等资料，不是完整新闻年鉴。
-- 手机端 UC 经典、Opera Mini、考古原版三种风格；设置页、菜单、夜间模式、大字模式与本机记忆。
-- QQ 家园风格空间：昵称、个人游戏进度、各互动模块入口。
-- 朋友网风格本机同学录：记录昵称与回忆。不连接真实用户。
-- 开心菜园：六块菜地，播种、两次浇水、收获、铜钱循环。
-- 精武堂风格原创小游戏：练功、修为升级、挑战、出招、守势反击、撤退和恢复。回合制对战及进度本机保存。
-- 小说书房：三回原创演示短篇、自动续读、旧书站历史存档入口。
-- 猫扑、天涯、贴吧等候选历史站点；带日期收藏、本次探索记录。
-- iPhone 安全区与底部导航；支持添加到主屏幕。
+### iPhone 添加到主屏幕
 
-## 复刻与史料的区别
+用 Safari 打开站点，选择“分享 → 添加到主屏幕”。支持触控导航、安全区和桌面图标。它是网页应用，尚无 App Store 原生客户端，也不缓存整片历史互联网供离线访问。
 
-本项目不是 UC、Opera、腾讯、朋友网、精武堂等产品的官方服务或精确原版。界面为风格参考，游戏与阅读演示为原创实现。历史站点采用外部存档入口，不包含原站完整程序或镜像。
+## 小游戏怎么玩
 
-家园、游戏、同学录与阅读演示可以在任意所选年份体验，是怀旧互动区，不代表这些产品在每一年都已存在。游戏进程与历史日期独立。
+**菜园**：点击空地花 5 文播种，浇水两次，收获获得 15 文。没有强制真实等待，随时回来都能继续。
 
-大事记属于全年回顾，有明确出处，链接可能指向后来发表的回顾资料。已移除逐日新闻收集和外部实时新闻读取。
+**精武堂**：练功积累修为并升级；挑战山门后，可以高伤出招或低伤守势反击。胜利获得修为和铜钱，落败后可以打坐恢复。它是原创小型回合制玩法，不是精武堂原版服务端。
 
-当前历史站点依靠 Internet Archive。Availability API 不可用、无合适快照或返回跨年/较晚快照时，仅提供年份日历入口，不会声称已核验具体页面。外部存档中的后续链接和图片由来源控制，可能跨日期；不能保证完整浏览链锁在同一天。
+**同学录与书房**：同学录只保存在本机；短篇阅读进度自动保存。更换浏览器、清除站点数据或换设备后，这些记录不会自动同步。
 
-iPhone 版是网页应用，不是 App Store 原生应用。收藏、外观、游戏和同学录保存在当前浏览器本机，不跨设备同步。
+## 自己部署
 
-## 检查
+这是静态应用，公开部署只需发布 `dist/`，可使用 Nginx、任意静态托管或 GitHub Pages。不要把整个源码仓库配置为 Web 文档根目录。
+
+仓库提供两条工作流：
+
+| 工作流             | 触发                    | 做什么                                                                                              |
+| ------------------ | ----------------------- | --------------------------------------------------------------------------------------------------- |
+| `Check and deploy` | PR、推送 main、手动运行 | 代码与资源检查；当前服务器在 CI 成功后拉取对应版本并切换 `current`；也提供可选 SSH + rsync 推送任务 |
+| `Publish release`  | 推送 `v*` 标签          | 检查后生成网页包、源码包、SHA-256 清单，并创建 GitHub Release                                       |
+
+服务器使用独立部署用户。当前拉取模式的维护私钥保留在维护设备；只有选择 SSH 推送模式时才把专用私钥存入 GitHub Secrets。主机公钥通过可信渠道核验，发布保留旧版本以便回滚。
+
+完整配置见 **[部署指南](deploy/README.md)**；Nginx 示例见 [deploy/nginx.conf.example](deploy/nginx.conf.example)。当前服务器使用公开 CI 拉取模式：成功的 main 分支检查后，服务器约两分钟内拉取对应静态版本，无需在 GitHub 保存维护私钥；SSH 推送方式作为可选配置。
+
+## 开发与检查
 
 ```sh
 node scripts/check.mjs
 bash -n scripts/deploy.sh
 ```
 
-检查 JS 语法、静态资源引用、移动端 manifest 和年度数据覆盖。交互验证另行在浏览器完成。
+检查覆盖 JS 语法、静态资源引用、移动端 manifest、年度数据范围。另有6项应用行为测试、4项发布行为测试，以及浏览器交互验证：皮肤记忆、夜间模式、种菜循环、精武堂升级与战斗、同学录和小说翻页。
 
-## GitHub CI/CD
+```text
+olddays/
+├── dist/                    # 可直接发布的网页
+│   ├── app.js               # 浏览器、日期、收藏、设置
+│   ├── annual-news.js       # 年度事件与出处
+│   ├── mobile-scenes.js     # 家园、小游戏、同学录、书房
+│   └── style.css            # 桌面与手机外观
+├── docs/images/             # 项目截图
+├── scripts/                 # 检查、发布与打包工具
+├── deploy/                  # 服务器说明和 Nginx 示例
+└── .github/workflows/       # CI/CD 与公开发布包
+```
 
-已提供 `.github/workflows/deploy.yml`。推送 main 后先检查，再通过 SSH + rsync 上传独立版本并原子切换服务器 `current` 软链接；PR 只检查。
+## 当前边界
 
-**尚未绑定 GitHub 仓库或真实服务器，远程部署没有经过验证。** 配置项、Secrets、Nginx 示例和回滚方式见 [deploy/README.md](deploy/README.md)。未配置 DEPLOY_HOST 时跳过部署。
+- 不是完整互联网镜像，不保证任意站点、任意日期都有内容。
+- 快照查询优先接受同年且不晚于目标日期的结果；无合适结果时提供来源日历，不自动伪造页面。
+- 外部存档页面的后续链接、图片和动态功能由来源控制，可能跨日期或失效；当前未实现完整浏览链的时间锁定。
+- 大事记每年至少 10 条，仍然是编辑筛选与年表事实索引，不是完整新闻库。当前不做逐日新闻采集。站内详情包含事件资料和来源，部分核心事件有扩展导读，其余为简要资料卡。
+- 游戏、收藏与同学录均为本机数据，没有多人互动、云存档、真实 QQ 登录或账号找回。
+- 公开试玩目前使用 HTTP；需要 HTTPS 的功能和生产用途，应绑定域名并配置证书。
 
-只上传 `dist/` 到网页目录，勿把整个源码仓库作为公开文档根目录。
+## 一起把记忆补回来
 
-## 主要资料
+欢迎提交 Issue 或 Pull Request：旧网址与可访问的存档、年度事件的可靠出处、手机排版问题、无障碍改进、原创小游戏，以及你记忆里的浏览器细节。
 
-- https://web.archive.org/ — 网页存档。
-- https://archive.org/wayback/available — 快照查询。
-- https://www.gov.cn/xinwen/2019-09/27/content_5434223.htm?allContent= — 历史大事记。
-- 年度事件的具体出处记录在 `dist/annual-news.js` 的链接中。
+提交历史资料时，请附网址、年份、来源，并说明是当时的记录还是后来的回顾。请勿上传私人账号数据、密钥、未获授权的小说全文或原站完整代码。详见 [贡献指南](CONTRIBUTING.md)。
 
-历史页面及资料归原权利人所有。仓库不含历史站点文章正文、原版游戏代码、QQ 登录功能或真实社交数据。
+## License / Credits
+
+年度补充索引记录了来源与修订号，见 [数据出处](docs/data-sources.json)。来自维基百科的事实索引归属于 Wikipedia contributors；相关衍生索引按 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) 标注，筛选和压缩不代表原站排名。该数据许可独立于代码许可。
+
+原创代码与原创演示内容采用 **[MIT License](LICENSE)**，可以下载、修改和自行部署。历史网页、外部资料、商标及其权利不因本仓库的许可而改变；本项目与 UC、Opera、腾讯、朋友网、精武堂等原产品无隶属或官方合作关系。
+
+主要资料入口：[Internet Archive](https://web.archive.org/)、[中国政府网大事记](https://www.gov.cn/xinwen/2019-09/27/content_5434223.htm?allContent=)、[NASA](https://science.nasa.gov/)、[国家航天局](https://www.cnsa.gov.cn/)。具体事件出处保存在 `dist/annual-news.js` 中。
+
+---
+
+**English:** Olddays is a lightweight, self-hostable web nostalgia project with retro desktop/mobile browser shells, real web-archive links, curated year highlights, and original local-only mini-games. No runtime packages, account registration, or original service credentials are required. Historical coverage is partial; the project is independent of the brands it references.

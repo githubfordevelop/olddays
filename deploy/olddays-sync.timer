@@ -1,0 +1,11 @@
+[Unit]
+Description=Check for a successful Olddays CI release every two minutes
+
+[Timer]
+OnBootSec=30s
+OnUnitInactiveSec=120s
+AccuracySec=5s
+Unit=olddays-sync.service
+
+[Install]
+WantedBy=timers.target

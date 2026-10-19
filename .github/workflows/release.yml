@@ -1,0 +1,33 @@
+name: Publish release
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing version tag (for example v0.1.0)
+        required: true
+permissions:
+  contents: write
+concurrency:
+  group: release-${{ github.ref }}-${{ inputs.tag }}
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.tag || github.ref }}
+          persist-credentials: false
+      - run: node scripts/check.mjs
+      - name: Package public downloads
+        env:
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        run: python3 scripts/package-release.py
+      - name: Publish GitHub release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+        run: python3 scripts/publish-release.py
