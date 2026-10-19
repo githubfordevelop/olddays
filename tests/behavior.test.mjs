@@ -727,3 +727,10 @@ test('Ordinary collected phones have distinct browsable albums with safe photo m
  b.run("tideView='lifephoto:1'");assert.match(b.run('tideAlbum()'),/原创人像/);assert.match(b.run('tideAlbum()'),/下一张/);
  b.run("tideView='lifephoto:999'");assert.match(b.run('tideAlbum()'),/生活照片/);assert.equal(b.run('tide.seen.length'),0);
 });
+
+test('Campus notebook only offers rereading discovered records and keeps bounded escaped notes',()=>{
+ const b=boot();b.run("campus.started=true;campusPanel='notebook';campusCollect('sms')");
+ const markup=b.run('campusMarkup()');assert.match(markup,/data-campus="review:sms"/);assert.doesNotMatch(markup,/data-campus="review:qq"/);assert.doesNotMatch(markup,/去短信找附件/);
+ b.run(`campusSaveNotes(${JSON.stringify('<script>private notes</script>')})`);assert.doesNotMatch(b.run('campusMarkup()'),/<script>private/);assert.match(b.run('campusMarkup()'),/&lt;script/);
+ const c=boot(Object.fromEntries(b.values));assert.equal(c.run('campus.notes'),'<script>private notes</script>');c.run("campusSaveNotes('x'.repeat(1400))");assert.equal(c.run('campus.notes.length'),1200);
+});

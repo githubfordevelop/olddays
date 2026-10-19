@@ -26,3 +26,5 @@ body.pocket-expanded .museum-device>.phone-hardware-gamepad{grid-column:2;grid-r
 .save-box{box-sizing:border-box;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow:auto;border:1px solid #a38c6e;border-radius:18px;padding:24px;background:#fff8e9;color:#352f27;box-shadow:0 24px 80px #0005}
 .save-box::backdrop{background:#211b17a6}.save-box p{line-height:1.7}.save-box button,.save-box-file{min-height:44px;padding:10px 14px;margin:6px 0;cursor:pointer}.save-box-file{display:block}.save-box-file input{display:block;max-width:100%;margin-top:8px}.save-box-close{float:right}.save-box [data-save-confirm]{background:#334d3c;color:white;border:0;border-radius:8px}.save-box [hidden]{display:none!important}
 body.pocket-expanded .save-box-entry{display:none}
+
+.campus-evidence{display:grid;grid-template-columns:1fr;gap:6px}.campus-evidence .campus-link{width:100%;min-height:44px;text-align:left}.campus-notes{padding:10px 0}.campus-notes summary{cursor:pointer;padding:10px}.campus-notes textarea{display:block;width:100%;box-sizing:border-box;min-height:110px;padding:10px;font:16px/1.6 sans-serif}.campus-notes button{min-height:44px;margin-top:8px}
