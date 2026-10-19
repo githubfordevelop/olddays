@@ -96,6 +96,9 @@ function boot(initial = {}, runtime = {}) {
     "playground-extras.js",
     "mystery-case.js",
     "handset-ui.js",
+    "campus-case.js",
+    "anime-pocket.js",
+    "pc-browser.js",
 
   ])
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
@@ -656,3 +659,8 @@ test("browser skins preserve content selection and replace handset branding",()=
  assert.equal(b.run("ucQuery"),'旧城');assert.equal(b.run("ucPage"),'nav');
  assert.equal(b.run("systemApps.find(a=>a.id==='browser').name"),'浏览器');
 });
+
+
+test('campus case requires six independent sources and correct owner, code and cause',()=>{const b=boot();assert.equal(b.run("campusCollect('sms')"),false);b.run("campus.started=true;campusCollect('sms');campusCollect('sms')");assert.equal(b.run('campus.evidence.length'),1);assert.match(b.run("campusSolve('chen','0612','broadcast')"),/没齐/);b.run('campusEvidenceKeys.forEach(campusCollect)');assert.match(b.run("campusSolve('zhou','0612','broadcast')"),/对不上/);assert.match(b.run("campusSolve('chen','0717','broadcast')"),/对不上/);assert.match(b.run("campusSolve('chen','0612','ghost')"),/对不上/);assert.match(b.run("campusSolve('chen','0612','broadcast')"),/陈默/);assert.equal(b.run('campus.solved'),true);const saved=Object.fromEntries(b.values);assert.equal(boot(saved).run('campus.solved'),true);});
+test('PC mode has its own browser without UC chrome and does not inherit MP3 restrictions',()=>{const b=boot();b.run("visitMode='pc';phoneState.model='mp3';phoneState.app='browser'");assert.equal(b.run("phoneAppAllowed('qq')"),true);assert.match(b.run('renderPcWorkbench()'),/Internet Explorer|pc-window/);assert.doesNotMatch(b.run('phoneUCMarkup()'),/uc-top|优视浏览器|handset-browser-settings/);b.run("visitMode='phone'");assert.equal(b.run("phoneAppAllowed('qq')"),false);});
+test('anime pocket catalogue gates later shows and keeps original clue sources distinct',()=>{const b=boot();b.run("date='2004-08-01'");assert.equal(b.run("pocketAnimeAvailable(pocketAnimeCards.find(c=>c.id==='bleach-card'))"),false);assert.match(b.run('animePocketMarkup()'),/数码宝贝/);assert.doesNotMatch(b.run('animePocketMarkup()'),/死神 BLEACH/);assert.match(b.run('campusClues.audio.body'),/原创合成示意音/);});
