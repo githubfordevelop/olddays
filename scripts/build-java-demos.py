@@ -12,3 +12,4 @@ for id,cls,title in [('snake','OldSnake','Olddays Snake'),('calculator','PocketC
  (dest.with_suffix('.jad')).write_text(manifest+f'MIDlet-Jar-URL: {id}.jar\nMIDlet-Jar-Size: {dest.stat().st_size}\n')
 with zipfile.ZipFile(root/'dist/javame/demos/sources.zip','w',zipfile.ZIP_DEFLATED) as z:
  for p in (root/'java-demos/src').glob('*.java'):z.write(p,p.name)
+ z.write(root/'dist/javame/LICENSE-GPL-2.txt','LICENSE.txt')
