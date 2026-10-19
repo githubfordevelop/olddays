@@ -28,3 +28,9 @@
 - 设备馆为原创交互模拟，非任何品牌原厂固件；20词词库是小型体验词库。USB、电池和容量仅界面设定；音频、音量、锁键、字典、视频操作有实际网页行为。
 
 旧手机报刊应用沿用同一原创阅读库：每段一页，实体4/6键翻页、2/8滚动、软键返回；手机与MP3等设备支持本机PNG场景导出。
+
+## Real periodical readers (v0.5.1)
+
+- 知音漫客 official title list https://www.zymk.cn/407/ links chapter 1 to https://www.kanman.com/5471/1.html. Anonymous reader visibly loads 44 pages. Embedded without copying panels or stripping headers. Historical work on the current platform, not a scanned issue. Conservative availability from 2009; not an assertion of first serialization date.
+- 故事会 official library https://app.touchread.cn/app/dt/pd/1454027812?s=1 links 1999 issue 1 to https://app.touchread.cn/app/dt/bi/1454027812/414177-386538696da9d5?s=1. Detail explicitly credits 上海故事会文化传媒有限公司 and costs CNY5. No public full text observed; preserve purchase restriction, no paid access bypass.
+- Other magazine interiors remain unavailable rather than substituting original work. Original night reading stays in a separate optional section. Publisher pages may contain contemporary recommendations. Cross-origin reader is not captured by built-in canvas export.

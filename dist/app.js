@@ -63,7 +63,7 @@ const eras = {
 function catalogMarkup(prefix) {
   const total = siteCatalog.reduce((n,c)=>n+c.sites.length,0);
   const eligible = siteCatalog.reduce((n,c)=>n+c.sites.filter(s=>s.since<=Number(year())).length,0);
-  return `<section class="old-catalog" id="${prefix}" data-catalog><h2>万维网旧址簿 <small>${eligible} 个候选入口 / 共 ${total} 个</small></h2><p>回到 ${year()} · 按建议浏览年代筛选。目录收录不代表已有可用快照；点击后查询真实存档。</p><label class="catalog-search">⌕ <input type="search" data-catalog-search placeholder="找旧站：梦网、易搜、天涯、QQ…" aria-label="搜索旧网站名称或域名"></label><div class="catalog-index">${siteCatalog.map(c=>`<a href="#${prefix}-${c.id}">${escapeHTML(c.title.split(" · ")[0])}</a>`).join("")}</div><p class="catalog-result" aria-live="polite">显示 ${eligible} 个年代候选入口</p>${siteCatalog.map(c=>{const sites=c.sites.filter(s=>s.since<=Number(year()));return `<details class="catalog-group" id="${prefix}-${c.id}" ${sites.length?'open':''}><summary>${escapeHTML(c.title)} <small>${sites.length}</small></summary><div class="catalog-links">${sites.map(s=>`<div class="catalog-entry" data-catalog-key="${escapeHTML(s.name+' '+s.url)}">${siteLink(s.name,s.url)}<small>${escapeHTML(s.url)}</small></div>`).join("")}</div>${sites.length?'':'<p>这个分类在所选年代暂无候选入口，可切换较晚年份。</p>'}</details>`}).join("")}<p class="catalog-empty" hidden>没有找到这个名称。可以直接在顶部地址栏输入旧网址。</p><p class="catalog-foot">旧网页是历史资料，部分登录、音乐、下载与游戏服务已失效。本站家园、菜园与精武堂为原创重制，和历史站点入口分开提供。记得更多旧网址？欢迎到 GitHub 提交站名、旧域名及来源。</p></section>`;
+  return `<section class="old-catalog" id="${prefix}" data-catalog><h2>万维网旧址簿 <small>${eligible} 个候选入口 / 共 ${total} 个</small></h2><p>回到 ${year()} · 按建议浏览年代筛选。目录收录不代表已有可用快照；点击后查询真实存档。</p><label class="catalog-search">⌕ <input type="search" data-catalog-search placeholder="找旧站：梦网、易搜、天涯、QQ…" aria-label="搜索旧网站名称或域名"></label><div class="catalog-index">${siteCatalog.map(c=>`<a href="#${prefix}-${c.id}">${escapeHTML(c.title.split(" · ")[0])}</a>`).join("")}</div><p class="catalog-result" aria-live="polite">显示 ${eligible} 个年代候选入口</p>${siteCatalog.map(c=>{const sites=c.sites.filter(s=>s.since<=Number(year()));return `<details class="catalog-group" id="${prefix}-${c.id}" ${sites.length?'open':''}><summary>${escapeHTML(c.title)} <small>${sites.length}</small></summary><div class="catalog-links">${sites.map(s=>`<div class="catalog-entry" data-catalog-key="${escapeHTML(s.name+' '+s.url)}">${siteLink(s.name,s.url)}<small>${escapeHTML(s.url)}</small></div>`).join("")}</div>${sites.length?'':'<p>这个分类在所选年代暂无候选入口，可切换较晚年份。</p>'}</details>`}).join("")}<p class="catalog-empty" hidden>没有找到这个名称。可以直接在顶部地址栏输入旧网址。</p><p class="catalog-foot">旧网页是历史资料，部分登录、音乐、下载与游戏服务已失效。本站家园、菜园与精武堂为原创重制，和历史站点入口分开提供。也可以直接在地址栏输入记得的旧域名。</p></section>`;
 }
 document.addEventListener("input", e=>{
   if (!e.target.matches?.("[data-catalog-search]")) return;
@@ -145,8 +145,8 @@ function applyAppearance() {
 }
 function settings() {
   dialog(
-    "浏览器设置",
-    `<div class="settings-heading"><span class="settings-logo">${mobileSkins[preferences.skin].mark}</span><div><b>找回熟悉的上网手感</b><small>外观选择只改变手机端，不改变历史日期。</small></div></div><h3 class="settings-label">浏览器皮肤</h3><div class="skin-options">${Object.entries(
+    "Internet 选项 — 考古浏览器",
+    `<div class="retro-options"><div class="retro-option-tabs"><button data-option-tab="appearance" aria-selected="true">外观(A)</button><button data-option-tab="reading" aria-selected="false">网页(W)</button></div><section data-option-panel="appearance"><div class="settings-heading"><span class="settings-logo">${mobileSkins[preferences.skin].mark}</span><div><b>找回熟悉的上网手感</b><small>外观选择只改变手机端，不改变历史日期。</small></div></div><h3 class="settings-label">浏览器皮肤</h3><div class="skin-options">${Object.entries(
       mobileSkins,
     )
       .map(
@@ -155,7 +155,7 @@ function settings() {
       )
       .join(
         "",
-      )}</div><h3 class="settings-label">阅读设置</h3><label class="setting-row" for="reading-font"><span>页面字号<small>仅影响本应用内的手机页面</small></span><select id="reading-font"><option value="standard" ${preferences.font === "standard" ? "selected" : ""}>标准</option><option value="large" ${preferences.font === "large" ? "selected" : ""}>大字</option></select></label><label class="setting-row" for="reading-night"><span>夜间模式<small>护眼深色界面</small></span><input id="reading-night" type="checkbox" ${preferences.night ? "checked" : ""}></label><button class="primary" id="finish-settings">完成设置</button><p class="settings-disclaimer">UC 与 Opera Mini 为风格参考，非官方产品，也不是某一版本的精确复刻。设置保存在当前设备。</p>`,
+      )}</div></section><section data-option-panel="reading" hidden><h3 class="settings-label">网页显示</h3><label class="setting-row" for="reading-font"><span>页面字号<small>仅影响本应用内的手机页面</small></span><select id="reading-font"><option value="standard" ${preferences.font === "standard" ? "selected" : ""}>标准</option><option value="large" ${preferences.font === "large" ? "selected" : ""}>大字</option></select></label><label class="setting-row" for="reading-night"><span>夜间模式<small>护眼深色界面</small></span><input id="reading-night" type="checkbox" ${preferences.night ? "checked" : ""}></label></section><div class="retro-option-footer"><span>设置将在本机保存</span><button class="primary" id="finish-settings">确定</button></div><p class="settings-disclaimer">UC 与 Opera Mini 为风格参考，非官方产品，也不是某一版本的精确复刻。设置保存在当前设备。</p></div>`,
   );
 }
 function mobileMenu() {
@@ -612,3 +612,5 @@ function clock() {
 clock();
 setInterval(clock, 60000);
 navigate({ type: "home" });
+
+document.addEventListener('click',e=>{const b=e.target.closest('[data-option-tab]');if(!b)return;document.querySelectorAll('[data-option-panel]').forEach(p=>p.hidden=p.dataset.optionPanel!==b.dataset.optionTab);document.querySelectorAll('[data-option-tab]').forEach(t=>t.setAttribute('aria-selected',String(t===b)));});
