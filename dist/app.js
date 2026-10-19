@@ -251,7 +251,7 @@ function setTheme() {
 }
 function renderHome() { return renderTimeHome(); }
 function renderWorldPage(page) {
- const renderers={magazines:renderMagazineKiosk,anime:renderAnimeClub,posters:renderPosterRoom,pictures:renderMemoryGallery,picturestory:()=>renderPictureStory(page),community:renderCommunity,javame:renderJavaRoom,phone:renderPhoneLab,admagazine:renderAdMagazine,arcade:()=>renderArcade(page),bookshelf:renderBookshelf,book:()=>renderBook(page),games:renderGamesHall,music:renderMusicSalon,videos:renderVideoSalon};
+ const renderers={devices:renderDeviceLab,magazines:renderMagazineKiosk,anime:renderAnimeClub,posters:renderPosterRoom,pictures:renderMemoryGallery,picturestory:()=>renderPictureStory(page),community:renderCommunity,javame:renderJavaRoom,phone:renderPhoneLab,admagazine:renderAdMagazine,arcade:()=>renderArcade(page),bookshelf:renderBookshelf,book:()=>renderBook(page),games:renderGamesHall,music:renderMusicSalon,videos:renderVideoSalon};
  return renderers[page.type]?.();
 }
 function navigate(page, push = true) {

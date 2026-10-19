@@ -82,8 +82,11 @@ function boot(initial = {}, runtime = {}) {
     "community-room.js",
     "javame-room.js",
     "era-posters.js",
+    "anime-progress.js",
     "anime-club.js",
+    "magazine-reading.js",
     "magazine-kiosk.js",
+    "device-lab.js",
     "era-home.js",
 
   ])
@@ -428,3 +431,10 @@ test('skin delegated buttons cannot match the body appearance attribute',()=>{co
 test('anime discussion respects era, stores only a local choice and never reveals future solutions',()=>{const {run}=boot();run('date="1996-08-01"');assert.doesNotMatch(run('renderAnimeClub()'),/鸣人的身世/);run('date="2004-08-01";animeTopic="onepiece-sky";animeChoices[animeTopic]=1');assert.match(run('renderAnimeClub()'),/空岛/);assert.match(run('renderAnimeClub()'),/不公布/);assert.match(run('renderAnimeClub()'),/class="selected"/);});
 
 test('magazine kiosk gates launches, searches titles and marks its original catalog cards',()=>{const {run}=boot();run('date="2004-08-01"');assert.equal(run('kioskAvailable().some(m=>m.id==="manke")'),false);run('date="2006-08-01";kioskQuery="故事会"');assert.equal(run('kioskVisible().length'),1);assert.match(run('renderMagazineKiosk()'),/非原刊封面/);run('kioskSelected="manke"');assert.match(run('renderMagazineKiosk()'),/不是该杂志原文/);});
+
+test('anime progress never includes a future broadcast',()=>{const {run}=boot();assert.equal(run('animeAtDate({episodes:[{date:"2004-10-05"},{date:"2004-10-12"}]},"2004-10-04").count'),0);assert.equal(run('animeAtDate({episodes:[{date:"2004-10-05"},{date:"2004-10-12"}]},"2004-10-05").count'),1);run('date="2004-08-01"');assert.equal(run('animeTopicAvailable(animeTopics.find(t=>t.id==="bleach-power"))'),false);});
+
+test('magazine reader has complete paged stories and a four-page original comic',()=>{const {run}=boot();assert.equal(run('kioskReadPages(kioskReads.find(r=>r.id==="lost-phone")).length'),4);assert.ok(run('kioskReads.filter(r=>r.kind==="故事阅读").every(r=>r.paragraphs.join("").length>500)'));run('date="2006-01-01"');assert.match(run('kioskCover(kioskMagazines[0]).label'),/原创/);run('date="2006-08-01"');assert.match(run('kioskCover(kioskMagazines[0]).label'),/真实/);});
+test('device lock blocks menu selection and MP4 retains the chosen video',()=>{const {run}=boot();run('retroDevice.on=true;retroDevice.locked=true;retroDevice.view="menu";gadgetSelect(0)');assert.equal(run('retroDevice.view'),'menu');run('date="2004-08-01";retroDevice.locked=false;retroDevice.model="mp4";retroDevice.view="video";retroDevice.index=1;deviceScreen()');assert.equal(run('retroDevice.index'),1);});
+
+test('physical phone magazine key 6 advances real paginated content',()=>{const {run}=boot();run('date="2004-08-01";phoneMagSelected="story";phoneMagRead="last-bus";phoneMagPage=0;phoneMagazineKey("6")');assert.equal(run('phoneMagPage'),1);assert.match(run('phoneMagazineMarkup()'),/2\/8 页/);assert.match(run('phoneMagazineMarkup()'),/小林不信/);});

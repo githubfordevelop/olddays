@@ -52,5 +52,11 @@
     "tool": "built-in image_gen",
     "asset": "images/posters/newsstand.jpg",
     "prompt": "Original nostalgic early-2000s rainy Chinese street newsstand, fictional comic, fashion and story magazine covers, fully clothed adult women, feature phones, headphones, warm incandescent light; 放学了去报刊亭看看, non-historical scene label."
+  },
+  {
+    "id": "rain-comic",
+    "tool": "built-in image_gen",
+    "asset": "images/reading/rain-comic.jpg",
+    "prompt": "Original complete wordless four-page nostalgic manga in exact 2x2 layout, each quarter three panels: student finds lost silver feature phone at rainy bus stop, elderly repairman discovers old photograph, visit old newsstand, two older friends reunite and walk with student under umbrella. Original fictional characters, fully clothed, no existing manga IP or text."
   }
 ]
