@@ -34,3 +34,13 @@
 - 知音漫客 official title list https://www.zymk.cn/407/ links chapter 1 to https://www.kanman.com/5471/1.html. Anonymous reader visibly loads 44 pages. Embedded without copying panels or stripping headers. Historical work on the current platform, not a scanned issue. Conservative availability from 2009; not an assertion of first serialization date.
 - 故事会 official library https://app.touchread.cn/app/dt/pd/1454027812?s=1 links 1999 issue 1 to https://app.touchread.cn/app/dt/bi/1454027812/414177-386538696da9d5?s=1. Detail explicitly credits 上海故事会文化传媒有限公司 and costs CNY5. No public full text observed; preserve purchase restriction, no paid access bypass.
 - Other magazine interiors remain unavailable rather than substituting original work. Original night reading stays in a separate optional section. Publisher pages may contain contemporary recommendations. Cross-origin reader is not captured by built-in canvas export.
+
+## Pocket expansion and open games (v0.6)
+
+- 5230 (2009), N97 (2009), N95 (2007) are CSS style recreations, not manufacturer firmware. Pocket mode fills browser viewport, retaining a device bezel. Physical orientation is controlled by the user; the layout button resizes the simulated display. N97 keyboard is a local note pad.
+- 12 Java ME games built from https://github.com/agneay/j2me-100-games, MIT license retained with sources.zip and NOTICE.txt under javame/open-games/. These are recent open-source recreations, NOT historical commercial game releases. Rebuild: clone upstream to work/j2me-open-games at the commit recorded in NOTICE, then run python3 scripts/build-open-games.py with the existing ecj compiler and MIDP library.
+- Added 偷星九月天 chapter 1: official https://www.zymk.cn/38/3811.html redirects to https://www.kanman.com/25935/1.html. Conservative availability from 2008, not an assertion of exact issue date.
+- Investigated 读者原创版 2015 anthology trial on Dangdang; live detail says withdrawn, so do not claim the trial is readable. Dooland historical 2011 reader failed to load and was not added as working content.
+- Automatic large home banner and pocket lab side advertisements are hidden. Ad magazine remains an intentional separate destination.
+
+Java gameplay QA: Brick Buster launch, play, ball launch, movement and pause checked after disabling native tone generation. Other JARs are build checked; full gameplay compatibility is not claimed. Initial automated screenshot sweep ran too early to confirm runtime readiness and is not treated as gameplay verification. Native tones disabled in modified Sfx.java; modified sources included.

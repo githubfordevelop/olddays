@@ -14,3 +14,11 @@ with tarfile.open(root/'dist/javame/runtime-sources.tar.gz') as z:
  for name in names:assert not name.startswith('/') and '..' not in Path(name).parts
  assert z.extractfile('runtime-build/wrapper.js').read()==(root/'dist/javame/wrapper.js').read_bytes()
 print('Classic chapter provenance, Java MIDlet bytecode and runtime source bundle checked.')
+
+for game in json.loads((root/'dist/javame/open-games/catalog.json').read_text()):
+ with zipfile.ZipFile(root/f'dist/javame/open-games/{game["id"]}.jar') as z:
+  assert game['cls'] in z.read('META-INF/MANIFEST.MF').decode()
+  code=z.read(game['cls'].replace('.','/')+'.class')
+  assert code[:4]==b'\xca\xfe\xba\xbe' and struct.unpack('>H',code[6:8])[0]<=48
+assert 'MIT' in (root/'dist/javame/open-games/LICENSE.txt').read_text()
+print('12 MIT open-source game archives and Java class entrypoints checked.')

@@ -44,6 +44,7 @@ function boot(initial = {}, runtime = {}) {
   const context = vm.createContext({
     document,
     window: {
+      addEventListener() {},
       scrollTo() {},
       location: { assign: runtime.onNavigate || (() => {}) },
     },
@@ -439,4 +440,6 @@ test('device lock blocks menu selection and MP4 retains the chosen video',()=>{c
 
 test('physical phone magazine key 6 advances original paginated content',()=>{const {run}=boot();run('date="2004-08-01";phoneMagazineOriginal=true;phoneMagSelected="story";phoneMagRead="last-bus";phoneMagPage=0;phoneMagazineKey("6")');assert.equal(run('phoneMagPage'),1);assert.match(run('phoneMagazineMarkup()'),/2\/8 页/);assert.match(run('phoneMagazineMarkup()'),/小林不信/);});
 
-test('real magazine sources are dated and original reading is optional',()=>{const {run}=boot();run('date="2008-12-31"');assert.equal(run('realMagazineItems({id:"manke"}).length'),0);run('date="2010-08-01";phoneMagSelected="manke"');assert.match(run('phoneMagazineMarkup()'),/kanman.com\/5471\/1.html/);assert.doesNotMatch(run('phoneMagazineMarkup()'),/雨停以前/);});
+test('real magazine sources are dated and original reading is optional',()=>{const {run}=boot();run('date="2007-12-31"');assert.equal(run('realMagazineItems({id:"manke"}).length'),0);run('date="2010-08-01";phoneMagSelected="manke"');assert.match(run('phoneMagazineMarkup()'),/kanman.com\/25935\/1.html/);assert.doesNotMatch(run('phoneMagazineMarkup()'),/雨停以前/);});
+
+test('classic Nokia models retain local apps and expose pocket expansion',()=>{const {run}=boot();for(const id of ['nokia5230','n97','n95'])assert.match(run('phoneModels['+JSON.stringify(id)+'].name'),/Nokia/);run('phoneState.model="n97"');assert.match(run('renderPhoneLab()'),/N97键盘便笺/);assert.match(run('renderPhoneLab()'),/data-pocket-expand/);assert.match(run('phoneJavaMarkup()'),/选择开源Java游戏/);assert.equal(run('pocketJavaGames.length'),12);});
