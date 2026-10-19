@@ -89,6 +89,7 @@ function boot(initial = {}, runtime = {}) {
     "magazine-kiosk.js",
     "device-lab.js",
     "era-home.js",
+    "system-shell.js",
 
   ])
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
@@ -185,7 +186,8 @@ test("annual news opens a readable local detail and year changes return to match
   assert.match(b.document.querySelector("#content").innerHTML, /维基百科/);
   b.run("applyDate('2005-06-18')");
   assert.equal(b.run("current.type"), "home");
-  assert.match(b.document.querySelector("#content").innerHTML, /2005 年大新闻/);
+  assert.match(b.document.querySelector("#content").innerHTML, /2005 \/ 06 \/ 18/);
+  assert.match(b.run("renderTimeHome()"), /2005 年大新闻/);
 });
 
 test("all supported years contain at least ten news cards with working local detail pages", () => {
@@ -367,7 +369,7 @@ test("old-web catalog has unique safe entries, year filtering and both screen la
   assert.match(early,/移动梦网/); assert.match(early,/一搜/); assert.match(early,/www.tianyaclub.com/);
   assert.doesNotMatch(early,/www.pengyou.com/);
   assert.match(app.run('date="2018-08-01"; catalogMarkup("test")'),/www.pengyou.com/);
-  const home=app.run('renderHome()');
+  const home=app.run('renderTimeHome()');
   assert.match(home,/id="mobile-catalog"/); assert.match(home,/id="desktop-catalog"/);
   assert.match(app.run('date="2004-08-01";siteLink("天涯","www.tianya.cn")'),/data-site="www.tianyaclub.com"/);
 });
@@ -495,4 +497,25 @@ test('changing music tracks preserves a muted volume',()=>{
  run('setMemoryTrack(1,false)');
  assert.equal(document.querySelector('#retro-audio').volume,0);
  assert.match(run('renderMusicSalon()'),/value="0" aria-label="随身听音量"/);
+});
+
+
+test('system installs persist once, reject unknown software and survive a reload',()=>{
+ const b=boot({'olddays-system-apps':'["unknown", "calculator", "calculator"]'});
+ assert.equal(b.run('systemInstalled.filter(id=>id==="calculator").length'),1);
+ assert.equal(b.run('systemInstalled.includes("unknown")'),false);
+ assert.equal(b.run('installSystemApp("not-an-app")'),false);
+ assert.equal(b.run('installSystemApp("notes")'),true);
+ assert.equal(b.run('installSystemApp("notes")'),false);
+ const reloaded=boot({'olddays-system-apps':b.values.get('olddays-system-apps')});
+ assert.match(reloaded.run('renderHome()'),/data-system-launch="notes"/);
+ assert.match(reloaded.run('phoneStoreMarkup()'),/javame\/demos\/notes.jar/);
+});
+test('UC search filters local destinations and safely renders query text',()=>{
+ const b=boot();b.run('ucQuery="小说"');
+ assert.match(b.run('phoneUCMarkup()'),/data-uc-open="books"/);
+ assert.doesNotMatch(b.run('phoneUCMarkup()'),/data-uc-open="music"/);
+ b.run('ucQuery="<img src=x onerror=alert(1)>"');
+ assert.doesNotMatch(b.run('phoneUCMarkup()'),/<img src=x/);
+ b.run('ucPage="saved"');assert.match(b.run('phoneUCMarkup()'),/我的书签/);
 });

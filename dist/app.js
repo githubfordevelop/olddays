@@ -249,9 +249,9 @@ function setTheme() {
     Number(year()) >= 2010 ? "#e8ebe5" : "#ece9d8",
   );
 }
-function renderHome() { return renderTimeHome(); }
+function renderHome() { return renderSystemHome(); }
 function renderWorldPage(page) {
- const renderers={devices:renderDeviceLab,magazines:renderMagazineKiosk,anime:renderAnimeClub,posters:renderPosterRoom,pictures:renderMemoryGallery,picturestory:()=>renderPictureStory(page),community:renderCommunity,javame:renderJavaRoom,phone:renderPhoneLab,admagazine:renderAdMagazine,arcade:()=>renderArcade(page),bookshelf:renderBookshelf,book:()=>renderBook(page),games:renderGamesHall,music:renderMusicSalon,videos:renderVideoSalon};
+ const renderers={portal:renderTimeHome,devices:renderDeviceLab,magazines:renderMagazineKiosk,anime:renderAnimeClub,posters:renderPosterRoom,pictures:renderMemoryGallery,picturestory:()=>renderPictureStory(page),community:renderCommunity,javame:renderJavaRoom,phone:renderPhoneLab,admagazine:renderAdMagazine,arcade:()=>renderArcade(page),bookshelf:renderBookshelf,book:()=>renderBook(page),games:renderGamesHall,music:renderMusicSalon,videos:renderVideoSalon};
  return renderers[page.type]?.();
 }
 function navigate(page, push = true) {
@@ -285,14 +285,14 @@ function navigate(page, push = true) {
           ? renderAnnualStory(page)
           : embeddedArchivePage(page));
   $("#address").value = page.type === "home" ? "archaeo://home" : page.url;
-  $("#windowtitle").textContent = page.type === "home" ? "时光首页" : page.name;
+  $("#windowtitle").textContent = page.type === "home" ? "系统桌面" : page.name;
   $("#status").textContent = page.type === "archive" ? "◷ 等待历史存档" : "✓ 完成";
-  document.title = `${page.type === "home" ? "时光首页" : page.name} · ${year()} — 考古浏览器`;
+  document.title = `${page.type === "home" ? "系统桌面" : page.name} · ${year()} — 考古浏览器`;
   updateNav();
   saveTabState();
   renderBrowserTabs();
   const appTitle=document.querySelector('#app-page-title'),appEra=document.querySelector('#app-era-label');
-  if(appTitle)appTitle.textContent=page.type==='home'?'时光首页':page.name;
+  if(appTitle)appTitle.textContent=page.type==='home'?'系统桌面':page.name;
   if(appEra)appEra.textContent=year();
   document.querySelector('.app-overflow')?.removeAttribute?.('open');
   if (page.type === "phone") layoutPhoneJavaKeypad();
