@@ -11,7 +11,7 @@ out.mkdir(exist_ok=True)
 with zipfile.ZipFile(out / f'olddays-{tag}-web.zip', 'w', zipfile.ZIP_DEFLATED) as z:
     for file in sorted(Path('dist').rglob('*')):
         if file.is_file(): z.write(file, str(file.relative_to('dist')))
-    for name in ['LICENSE', 'CHANGELOG.md']:
+    for name in ['LICENSE', 'CHANGELOG.md', 'docs/NEWS-LICENSE.md', 'docs/article-sources.json']:
         z.write(name, name)
     z.writestr('START-HERE.txt', 'Run: python3 -m http.server 4173\nOpen http://localhost:4173\nUse an HTTP server rather than opening index.html via file://.\n')
 subprocess.run(['git', 'archive', '--format=zip', f'--prefix=olddays-{tag}/', '-o', str(out / f'olddays-{tag}-source.zip'), 'HEAD'], check=True)

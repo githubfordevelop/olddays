@@ -59,6 +59,7 @@ function boot(initial = {}) {
   for (const file of [
     "annual-news.js",
     "annual-news-extra.js",
+    "news-articles.js",
     "mobile-scenes.js",
     "app.js",
   ])
@@ -148,8 +149,8 @@ test("annual news opens a readable local detail and year changes return to match
   const b = boot();
   b.run("openAnnualStory('2004',0)");
   assert.equal(b.run("current.type"), "news");
-  assert.match(b.document.querySelector("#content").innerHTML, /2004年1月/);
-  assert.match(b.document.querySelector("#content").innerHTML, /NASA/);
+  assert.match(b.document.querySelector("#content").innerHTML, /2004/);
+  assert.match(b.document.querySelector("#content").innerHTML, /维基百科/);
   b.run("applyDate('2005-06-18')");
   assert.equal(b.run("current.type"), "home");
   assert.match(b.document.querySelector("#content").innerHTML, /2005 年大新闻/);
@@ -173,4 +174,39 @@ test("all supported years contain at least ten news cards with working local det
       );
     }
   }
+});
+
+test("all 300 articles contain substantive attributed text and reader navigation", () => {
+  const b = boot();
+  assert.equal(b.run("researchedArticles.length"), 300);
+  for (const article of b.run("researchedArticles")) {
+    const text = article.sections.flatMap((s) => s.paragraphs).join("");
+    assert.ok(text.length >= 750, article.id);
+    assert.ok(
+      article.sources.every(
+        (s) =>
+          Number.isSafeInteger(s.revision) &&
+          s.source.startsWith("https://zh.wikipedia.org/w/index.php?oldid="),
+      ),
+      article.id,
+    );
+    const [year, index] = article.id.split("-");
+    b.run(`openAnnualStory('${year}',${index})`);
+    const html = b.document.querySelector("#content").innerHTML;
+    assert.match(html, /CC BY-SA 4.0/);
+    assert.match(html, /data-article-size="large"/);
+    assert.match(html, /正文目录/);
+    assert.match(html, /加入编辑部/);
+    assert.match(html, /article-pagination/);
+  }
+});
+
+test("source paragraphs and headlines cannot inject HTML into reader pages", () => {
+  const b = boot();
+  b.run(
+    `eventDetails['2004-0'].sections = [{title:'<script>alert(1)</script>',paragraphs:['<img src=x onerror=alert(1)>']}]; openAnnualStory('2004',0)`,
+  );
+  const html = b.document.querySelector("#content").innerHTML;
+  assert.ok(!html.includes("<script>alert(1)</script>"));
+  assert.ok(html.includes("&lt;img"));
 });

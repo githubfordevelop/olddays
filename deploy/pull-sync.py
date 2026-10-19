@@ -65,7 +65,7 @@ def sync():
                     destination.parent.mkdir(parents=True,exist_ok=True)
                     with z.open(member) as source,destination.open('wb') as target:shutil.copyfileobj(source,target)
                     destination.chmod(0o644)
-            for required in ['index.html','app.js','annual-news.js','annual-news-extra.js','mobile-scenes.js','style.css']:
+            for required in ['index.html','app.js','annual-news.js','annual-news-extra.js','news-articles.js','mobile-scenes.js','style.css']:
                 if not (stage/required).is_file() or not (stage/required).stat().st_size:raise RuntimeError('Incomplete release: '+required)
             version={'repository':REPO,'commit':sha,'ci_run':runs[0]['html_url'],'deployed_at':datetime.now(timezone.utc).isoformat()}
             (stage/'version.json').write_text(json.dumps(version)+'\n')

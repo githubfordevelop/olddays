@@ -14,6 +14,13 @@ for (const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
 const context = vm.createContext({ document: { addEventListener() {} } });
 vm.runInContext(readFileSync("dist/annual-news.js", "utf8"), context);
 vm.runInContext(readFileSync("dist/annual-news-extra.js", "utf8"), context);
+vm.runInContext(readFileSync("dist/news-articles.js", "utf8"), context);
+const editorial = JSON.parse(readFileSync("data/news-articles.json", "utf8"));
+if (
+  JSON.stringify(editorial) !==
+  JSON.stringify(vm.runInContext("researchedArticles", context))
+)
+  throw Error("Reading data changed; run node scripts/build-news.mjs");
 const data = vm.runInContext("yearEvents", context);
 for (let y = 1996; y <= 2025; y++) {
   if ((data[y]?.length || 0) < 10)

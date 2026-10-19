@@ -1,0 +1,28 @@
+name: 一起建设 / 认领任务
+description: 从一个旧网址、一条新闻或一个小改动开始。
+title: "[共建] 我想参与："
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: "欢迎加入考古浏览器！无需提供真实姓名、联系方式或账号凭据。先说说想做什么，维护者会在 Issue 中与你沟通。"
+  - type: dropdown
+    id: direction
+    attributes:
+      label: 想参与的方向
+      options:
+        - 历史新闻与资料核实
+        - 老网页与存档线索
+        - 手机界面与无障碍体验
+        - 原创小游戏
+        - 前端代码与测试
+        - 项目介绍、翻译与设计
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 想从哪件小事开始？
+      description: 提供年份、具体页面、资料链接或准备修改的功能。资料有版权时请只附链接。
+    validations:
+      required: true

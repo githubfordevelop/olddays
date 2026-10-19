@@ -3142,3 +3142,478 @@ dialog::backdrop {
     color: #b8ceec;
   }
 }
+
+/* Portal article: desktop newspaper columns and compact WAP reading. */
+.portal-article {
+  max-width: 1120px;
+  padding: 18px 26px 28px;
+  color: #222;
+  background: #fff;
+  --news-ink: #174c8c;
+  font-family: SimSun, "Songti SC", serif;
+}
+.portal-article[data-era="classic"] {
+  --news-ink: #a62a25;
+}
+.portal-article[data-era="modern"] {
+  --news-ink: #286397;
+}
+.portal-masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 2px 17px;
+  color: var(--news-ink);
+}
+.portal-masthead strong {
+  font:
+    italic bold 32px/1.2 SimSun,
+    serif;
+  letter-spacing: 2px;
+}
+.portal-masthead strong span {
+  display: block;
+  font: 10px Arial;
+  letter-spacing: 4px;
+  margin-top: 7px;
+}
+.portal-masthead small {
+  font:
+    12px SimSun,
+    serif;
+  color: #666;
+}
+.portal-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 8px 12px;
+  background: var(--news-ink);
+  color: white;
+  border-bottom: 3px solid #c3c3c3;
+  font:
+    13px/1.6 SimSun,
+    serif;
+}
+.portal-nav button,
+.portal-nav a {
+  color: white;
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.portal-nav a {
+  margin-left: auto;
+  text-decoration: underline;
+}
+.portal-article .article-paper-top {
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  letter-spacing: 0;
+  color: #666;
+  font:
+    12px/1.6 SimSun,
+    serif;
+}
+.portal-article .article-paper-top button {
+  color: #174c8c;
+  font: inherit;
+}
+.portal-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 26px;
+  padding-top: 22px;
+}
+.portal-main {
+  min-width: 0;
+}
+.portal-main > header {
+  text-align: center;
+  border-bottom: 1px dotted #aaa;
+  padding-bottom: 20px;
+}
+.portal-article h1 {
+  font:
+    bold 28px/1.5 SimSun,
+    "Songti SC",
+    serif;
+  color: #171717;
+  margin: 14px 0;
+  overflow-wrap: anywhere;
+}
+.portal-article .article-section {
+  color: var(--news-ink);
+  font:
+    12px SimSun,
+    serif;
+  letter-spacing: 1px;
+}
+.portal-article .article-meta {
+  justify-content: center;
+  color: #777;
+  font: 12px/1.6 Arial;
+  gap: 14px;
+}
+.article-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  font: 12px/1.7 Arial;
+  border-bottom: 1px solid #ddd;
+  color: #666;
+}
+.article-toolbar > span:last-child {
+  margin-left: auto;
+}
+.article-toolbar button {
+  background: #f7f7f7;
+  border: 1px solid #b8b8b8;
+  border-radius: 0;
+  color: #174c8c;
+  padding: 2px 9px;
+  cursor: pointer;
+}
+.portal-article .article-retrospective {
+  color: #6b604a;
+  background: #fbf8ed;
+  border: 1px solid #ded8c7;
+  font: 12px/1.8 Arial;
+}
+.article-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  padding: 12px 0;
+  border-bottom: 1px dotted #ccc;
+  font: 12px/1.8 Arial;
+}
+.portal-article a {
+  overflow-wrap: anywhere;
+}
+.article-toc a,
+.article-pagination a,
+.portal-article .article-related a {
+  color: #174c8c;
+  text-decoration: underline;
+}
+.portal-article .article-body {
+  padding-top: 5px;
+}
+.portal-article .article-body section {
+  scroll-margin-top: 20px;
+}
+.portal-article .article-body h2 {
+  font:
+    bold 17px/1.8 SimSun,
+    serif;
+  margin: 24px 0 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #c6c6c6;
+  color: var(--news-ink);
+}
+.portal-article .article-body p {
+  font:
+    16px/2 SimSun,
+    "Songti SC",
+    serif;
+  color: inherit;
+  margin: 16px 0;
+  text-align: justify;
+  overflow-wrap: anywhere;
+}
+.portal-article .article-body[data-reading-size="small"] p {
+  font-size: 14px;
+}
+.portal-article .article-body[data-reading-size="large"] p {
+  font-size: 20px;
+}
+.article-end {
+  text-align: center;
+  padding: 20px 0;
+  color: #999;
+  font:
+    12px/1.8 SimSun,
+    serif;
+}
+.portal-article .article-source,
+.portal-article .article-facts {
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  margin-top: 0;
+  padding: 13px;
+}
+.portal-article .article-source h2,
+.portal-article .article-facts h2,
+.portal-article .article-related h2 {
+  color: var(--news-ink);
+  font:
+    bold 14px/1.6 SimSun,
+    serif;
+}
+.portal-article .article-source p,
+.portal-article .article-facts dd {
+  color: #555;
+  font: 12px/1.9 Arial;
+}
+.portal-article .article-facts dl > div {
+  display: block;
+  border-color: #ddd;
+  padding: 6px 0;
+}
+.portal-article .article-facts dt {
+  color: #777;
+}
+.portal-article .article-source .primary {
+  background: #e8edf4;
+  color: #174c8c;
+  border: 1px solid #b8c4d3;
+  border-radius: 0;
+  padding: 6px 12px;
+}
+.portal-article .article-related {
+  border-top: 3px solid var(--news-ink);
+  margin-top: 20px;
+  padding: 10px;
+  background: #fafafa;
+}
+.portal-article .article-related a {
+  padding: 9px 0;
+  font:
+    13px/1.7 SimSun,
+    serif;
+  border-color: #ccc;
+}
+.portal-stamp {
+  text-align: center;
+  margin-top: 24px;
+  border: 4px double #ddd;
+  color: #a5a5a5;
+  font:
+    bold 27px/1.5 Georgia,
+    serif;
+  padding: 18px 4px;
+}
+.portal-stamp small {
+  display: block;
+  font:
+    11px/1.8 SimSun,
+    serif;
+}
+.article-pagination {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 20px 0;
+  border-bottom: 1px dotted #aaa;
+  font:
+    13px/1.8 SimSun,
+    serif;
+}
+.article-pagination > :last-child {
+  text-align: right;
+}
+.article-invite {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px dashed #aab5c3;
+  background: #f6f9fc;
+  font: 13px/1.9 Arial;
+}
+.article-invite h2 {
+  font-size: 15px;
+  color: #174c8c;
+  margin: 0;
+}
+.article-invite a {
+  display: inline-block;
+  color: #174c8c;
+  text-decoration: underline;
+  margin-right: 16px;
+  padding: 5px 0;
+}
+.portal-footer {
+  margin-top: 24px;
+  border-top: 2px solid var(--news-ink);
+  text-align: center;
+  color: #888;
+  padding-top: 15px;
+  font: 11px/1.9 Arial;
+}
+@media (max-width: 600px) {
+  .portal-article {
+    padding: 0 10px 18px;
+    background: var(--mobile-paper, #fff);
+    color: var(--mobile-text, #222);
+    --news-ink: var(--mobile-accent, #174c8c);
+  }
+  .portal-article[data-era] {
+    --news-ink: var(--mobile-accent, #174c8c);
+  }
+  .portal-masthead {
+    padding: 12px 0 9px;
+  }
+  .portal-masthead strong {
+    font: bold 20px/1.2 Arial;
+    letter-spacing: 0;
+  }
+  .portal-masthead strong span {
+    display: inline;
+    font: 10px Arial;
+    margin-left: 8px;
+    letter-spacing: 0;
+  }
+  .portal-masthead small {
+    display: none;
+  }
+  .portal-nav {
+    gap: 8px;
+    padding: 6px;
+    font: 12px/1.8 Arial;
+  }
+  .portal-nav > span {
+    font-size: 11px;
+  }
+  .portal-nav a {
+    white-space: nowrap;
+  }
+  .portal-article .article-paper-top {
+    padding: 4px 0;
+    font: 10px/1.5 Arial;
+  }
+  .portal-article .article-paper-top button {
+    padding: 7px 0;
+  }
+  .portal-columns {
+    display: block;
+    padding-top: 10px;
+  }
+  .portal-main > header {
+    padding-bottom: 10px;
+    text-align: left;
+  }
+  .portal-article h1 {
+    font: bold 21px/1.5 Arial;
+    color: inherit;
+    margin: 8px 0 10px;
+  }
+  .portal-article .article-meta {
+    justify-content: flex-start;
+    font: 10px/1.7 Arial;
+    gap: 8px;
+  }
+  .portal-article .article-section {
+    font: 11px Arial;
+  }
+  .article-toolbar {
+    padding: 5px 0;
+    font-size: 11px;
+  }
+  .article-toolbar button {
+    min-height: 32px;
+    min-width: 34px;
+  }
+  .portal-article .article-retrospective {
+    font: 10px/1.8 Arial;
+    margin-top: 10px;
+    padding: 7px;
+  }
+  .article-toc {
+    gap: 4px 14px;
+    font: 12px/1.8 Arial;
+    padding: 8px 0;
+  }
+  .article-toc a {
+    padding: 4px 0;
+  }
+  .portal-article .article-body h2 {
+    font: bold 15px/1.8 Arial;
+    margin-top: 18px;
+  }
+  .portal-article .article-body p {
+    font: 16px/1.95 Arial;
+    text-align: left;
+    text-indent: 2em;
+    margin: 13px 0;
+  }
+  .portal-article .article-source {
+    padding: 10px;
+  }
+  .portal-article .article-source p {
+    font-size: 11px;
+  }
+  .article-pagination {
+    grid-template-columns: 1fr;
+    font: 13px/1.9 Arial;
+    padding: 14px 0;
+  }
+  .article-pagination > :last-child {
+    text-align: left;
+  }
+  .portal-sidebar {
+    margin-top: 20px;
+  }
+  .portal-article .article-facts dl > div {
+    display: flex;
+  }
+  .portal-article .article-related a {
+    font: 13px/1.9 Arial;
+  }
+  .portal-stamp {
+    display: none;
+  }
+  .article-invite {
+    padding: 12px;
+  }
+  .mobile-night .portal-article .article-source,
+  .mobile-night .portal-article .article-facts,
+  .mobile-night .portal-article .article-related,
+  .mobile-night .portal-article .article-invite {
+    background: #24282b;
+    border-color: #50565a;
+  }
+  .mobile-night .portal-article .article-source p,
+  .mobile-night .portal-article .article-facts dd {
+    color: #c7cbd0;
+  }
+  .mobile-night .portal-article .article-retrospective {
+    background: #302e28;
+    color: #cec6b1;
+    border-color: #595342;
+  }
+  .mobile-night .portal-article a,
+  .mobile-night .portal-article h2,
+  .mobile-night .portal-masthead {
+    color: #9ac9f1;
+  }
+}
+.news-foot > a {
+  display: block;
+  color: inherit;
+  text-decoration: underline;
+  margin-top: 6px;
+  padding: 5px 0;
+}
+.article-attribution {
+  font: 12px/1.9 Arial;
+  color: #666;
+}
+.article-attribution ul {
+  padding-left: 18px;
+}
+.article-attribution li {
+  margin: 6px 0;
+}
+.article-attribution a,
+.section-citation {
+  color: #174c8c;
+  text-decoration: underline;
+}
+.portal-article .article-body .section-citation {
+  display: inline-block;
+  font: 11px/1.8 Arial;
+  padding: 4px 0;
+}

@@ -14,7 +14,7 @@ class DeployTests(unittest.TestCase):
     def payload(self,bad=False):
         out=io.BytesIO()
         with zipfile.ZipFile(out,'w') as z:
-            for name in ['index.html','app.js','annual-news.js','annual-news-extra.js','mobile-scenes.js','style.css']:z.writestr('repo/dist/'+name,'valid static file')
+            for name in ['index.html','app.js','annual-news.js','annual-news-extra.js','news-articles.js','mobile-scenes.js','style.css']:z.writestr('repo/dist/'+name,'valid static file')
             z.writestr('repo/README.md','must not be deployed')
             if bad:z.writestr('repo/dist/../../escape','unsafe')
         return out.getvalue()

@@ -263,7 +263,7 @@ const eventDetails = {
 
 function annualNewsMarkup(context) {
   const events = yearEvents[year()] || [];
-  return `<section class="daily-news annual-news" data-context="${context}"><header class="daily-news-head"><span>▤ ${year()} 年大新闻</span><small>${events.length} 条精选</small></header><div class="news-controls"><button data-year-step="-1">‹ 上一年</button><span>全年回顾 · 点击阅读详情</span><button data-year-step="1">下一年 ›</button></div><div class="news-feed">${events.length ? events.map((n, i) => `<article class="news-item ${i === 0 ? "news-top-story" : ""}"><time>${n[0]}</time><a href="archaeo://news/${year()}/${i}" data-news-year="${year()}" data-news-index="${i}">${i === 0 ? '<span class="headline-tag">年度焦点</span>' : ""}${n[1]}<span class="news-read-more">阅读详情 ›</span></a><small>${n[3] || "中国政府网"}</small></article>`).join("") : '<div class="news-empty">这个年份的大事记正在整理中。</div>'}</div><footer class="news-foot">编辑精选，非完整年鉴。站内导读附来源；部分资料为后来发表的历史回顾。</footer></section>`;
+  return `<section class="daily-news annual-news" data-context="${context}"><header class="daily-news-head"><span>▤ ${year()} 年大新闻</span><small>${events.length} 条精选</small></header><div class="news-controls"><button data-year-step="-1">‹ 上一年</button><span>全年回顾 · 点击阅读详情</span><button data-year-step="1">下一年 ›</button></div><div class="news-feed">${events.length ? events.map((n, i) => `<article class="news-item ${i === 0 ? "news-top-story" : ""}"><time>${n[0]}</time><a href="archaeo://news/${year()}/${i}" data-news-year="${year()}" data-news-index="${i}">${i === 0 ? '<span class="headline-tag">年度焦点</span>' : ""}${n[1]}<span class="news-read-more">阅读详情 ›</span></a><small>${n[3] || "中国政府网"}</small></article>`).join("") : '<div class="news-empty">这个年份的大事记正在整理中。</div>'}</div><footer class="news-foot">每年 10 篇历史资料，点击进入旧式新闻阅读页。<a href="https://github.com/githubfordevelop/olddays/issues/new/choose" target="_blank" rel="noopener noreferrer">一起补完这份互联网记忆 ›</a></footer></section>`;
 }
 
 function openAnnualStory(y, i) {
@@ -292,24 +292,60 @@ function renderAnnualStory(page) {
     return '<section class="archive-view"><h1>暂未收录这条新闻</h1></section>';
   const detail = eventDetails[`${y}-${i}`] || {};
   const source = detail.source || event[2] || CHRONICLE;
-  const sourceName =
-    detail.sourceName || event[3] || "中国政府网 · 中华人民共和国大事记";
-  const paragraphs = detail.paragraphs ||
-    (event[4] ? [event[4]] : null) || [
-      `${y}年，${event[1]}。这项事件以“${event[0]}”为时间标记收录在本年度精选中。`,
-    ];
-  const facts = detail.facts || [
-    ["年份", `${y}年`],
-    ["事件时间", event[0]],
-    ["事件", event[1]],
+  const sourceName = detail.sourceName || event[3] || "中国政府网";
+  const sections = detail.sections || [
+    {
+      title: "事件回顾",
+      paragraphs: detail.paragraphs || [event[4] || event[1]],
+    },
   ];
-  const related = (yearEvents[y] || [])
-    .map((n, j) => ({ n, j }))
-    .filter((x) => x.j !== i);
-  return `<article class="historical-article"><div class="article-paper-top"><span>考古资讯 / ${y}</span><button data-action="home">‹ 返回年度首页</button></div><header><div class="article-section">${escapeHTML(detail.category || "年度大事")} · 历史回顾</div><h1>${escapeHTML(event[1])}</h1>${detail.deck ? `<p class="article-deck">${escapeHTML(detail.deck)}</p>` : ""}<div class="article-meta"><span>事件：${y} · ${escapeHTML(event[0])}</span><span>考古浏览器整理</span></div></header><div class="article-retrospective">这是一篇编辑整理的历史导读，不是当年的原始报道。年度大新闻按全年回顾展示。</div><div class="article-body">${paragraphs.map((p) => `<p>${escapeHTML(p)}</p>`).join("")}</div><section class="article-facts"><h2>事件资料卡</h2><dl>${facts.map(([k, v]) => `<div><dt>${escapeHTML(k)}</dt><dd>${escapeHTML(v)}</dd></div>`).join("")}</dl></section><section class="article-source"><h2>查阅来源</h2><p>${escapeHTML(sourceName)}</p><a class="primary" href="${escapeHTML(source)}" target="_blank" rel="noopener noreferrer">查看完整资料 ↗</a><p class="scene-note">来源网站可能包含后续更新或相关内容；以原站标注为准。这里不复制整篇原报道。</p></section>${related.length ? `<section class="article-related"><h2>同一年，也发生了</h2>${related.map(({ n, j }) => `<a href="archaeo://news/${y}/${j}" data-news-year="${y}" data-news-index="${j}">${n[0]}　${escapeHTML(n[1])} ›</a>`).join("")}</section>` : ""}</article>`;
+  const textLength = sections.reduce(
+    (n, s) => n + s.paragraphs.join("").length,
+    0,
+  );
+  const facts = [
+    ["档案年份", `${y}年`],
+    ["时间标记", event[0]],
+    [
+      "阅读篇幅",
+      `${textLength}字 · 约${Math.max(1, Math.ceil(textLength / 400))}分钟`,
+    ],
+  ];
+  const rows = yearEvents[y] || [];
+  const storyLink = (j, label) =>
+    `<a href="archaeo://news/${y}/${j}" data-news-year="${y}" data-news-index="${j}">${label}${escapeHTML(rows[j][1])}</a>`;
+  const related = rows.map((n, j) => ({ n, j })).filter((x) => x.j !== i);
+  const license = detail.revision
+    ? `<div class="article-attribution"><p>以下正文资料由维基百科贡献者共同编写，本站做简体转换、段落节选和版式编排。</p><ul>${(detail.sources || [detail]).map((ref) => `<li>《${escapeHTML(ref.topic)}》 · <a href="${escapeHTML(ref.source)}" target="_blank" rel="noopener noreferrer">固定版本 ${ref.revision}</a> · <a href="${escapeHTML(ref.history)}" target="_blank" rel="noopener noreferrer">作者与修订历史</a></li>`).join("")}</ul><p>正文资料许可：<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh-hans" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a>。复古版式不表示这些文字在当年已经发表。</p></div>`
+    : "";
+  return `<article class="historical-article portal-article" data-era="${Number(y) < 2008 ? "early" : Number(y) < 2014 ? "classic" : "modern"}">
+    <div class="portal-masthead"><strong>考古资讯<span>NEWS · ${y}</span></strong><small>把那一年的世界，重新读一遍</small></div>
+    <nav class="portal-nav" aria-label="新闻栏目"><button data-action="home">新闻首页</button><span>国内 · 国际 · 科技 · 体育 · 社会</span><a href="https://github.com/githubfordevelop/olddays/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">加入编辑部</a></nav>
+    <div class="article-paper-top"><span>考古资讯 &gt; ${y}年档案 &gt; 正文</span><button data-action="home">返回年度首页</button></div>
+    <div class="portal-columns"><div class="portal-main"><header><div class="article-section">${y} 年度新闻档案</div><h1>${escapeHTML(event[1])}</h1><div class="article-meta"><span>${y}年 · ${escapeHTML(event[0])}</span><span>资料整理 / 考古浏览器</span></div></header>
+    <div class="article-toolbar"><span>正文阅读</span><button data-article-size="small" aria-label="小号正文字体">小</button><button data-article-size="normal" aria-label="标准正文字体">中</button><button data-article-size="large" aria-label="大号正文字体">大</button><span>约${Math.max(1, Math.ceil(textLength / 400))}分钟</span></div>
+    <p class="article-retrospective">历史资料版｜沿用旧网页的阅读版式，正文来自后来整理的百科资料，可能涉及后续发展；并非${y}年的即时报道。</p>
+    <nav class="article-toc" aria-label="正文目录">${sections.map((s, k) => `<a href="#story-section-${k}">${k + 1}. ${escapeHTML(s.title)}</a>`).join("")}</nav>
+    <div class="article-body" data-reading-size="normal">${sections.map((s, k) => `<section id="story-section-${k}"><h2>${escapeHTML(s.title)}</h2>${s.paragraphs.map((p) => `<p>${escapeHTML(p)}</p>`).join("")}${s.source ? `<a class="section-citation" href="${escapeHTML(s.source)}" target="_blank" rel="noopener noreferrer">本节资料出处 ↗</a>` : ""}</section>`).join("")}</div>
+    <div class="article-end">—— 本篇资料阅读完毕 ——</div>
+    <section class="article-source"><h2>资料来源与阅读说明</h2><p>${escapeHTML(sourceName)}</p><a class="primary" href="${escapeHTML(source)}" target="_blank" rel="noopener noreferrer">查看完整资料 ↗</a>${license}<p class="scene-note">事件标题为编辑拟定，正文为所列条目的节选，原条目可能讨论更长的时间范围。欢迎附可靠出处提交勘误。</p></section>
+    <nav class="article-pagination" aria-label="上一篇和下一篇">${i > 0 ? storyLink(i - 1, "上一篇：") : "<span>本年度第一篇</span>"}${i < rows.length - 1 ? storyLink(i + 1, "下一篇：") : "<span>本年度最后一篇</span>"}</nav>
+    <section class="article-invite"><h2>这份互联网记忆，等你来补完</h2><p>会写代码、记得旧网址、愿意查资料，或者只是想帮忙试一试手机，都欢迎加入。</p><a href="https://github.com/githubfordevelop/olddays/issues/new/choose" target="_blank" rel="noopener noreferrer">我要参与 / 提交线索</a><a href="https://github.com/githubfordevelop/olddays/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">查看参与指南</a></section></div>
+    <aside class="portal-sidebar"><section class="article-facts"><h2>事件资料卡</h2><dl>${facts.map(([k, v]) => `<div><dt>${escapeHTML(k)}</dt><dd>${escapeHTML(v)}</dd></div>`).join("")}</dl></section><section class="article-related"><h2>${y}年 · 其他大事</h2>${related.map(({ j }) => storyLink(j, "")).join("")}</section><div class="portal-stamp">OLD DAYS<br>${y}<small>历史资料 · 共同整理</small></div></aside></div>
+    <footer class="portal-footer">考古资讯 · 记忆可以重访，历史需要查证。<br>开源共建 / Olddays</footer></article>`;
 }
 
 document.addEventListener("click", (e) => {
+  const sizeButton = e.target.closest("[data-article-size]");
+  if (sizeButton) {
+    const body = document.querySelector(".article-body");
+    if (
+      body &&
+      ["small", "normal", "large"].includes(sizeButton.dataset.articleSize)
+    )
+      body.dataset.readingSize = sizeButton.dataset.articleSize;
+    return;
+  }
   const story = e.target.closest("[data-news-index]");
   if (story) {
     e.preventDefault();
