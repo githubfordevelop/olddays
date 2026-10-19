@@ -18416,6 +18416,9 @@ var Content = (function() {
   var getInvocationCalled = false;
 
   DumbPipe.open("mozActivityHandler", {}, function(message) {
+    // The offline museum bridge can reject unsupported share activities.
+    // Such replies are not file invocations and must not reach the filesystem.
+    if (!message || message.type === "error" || typeof message.fileName !== "string" || !message.fileName || message.data == null) return;
     var uniqueFileName = fs.createUniqueFile("/Private/j2meshare", message.fileName, new Blob([ message.data ]));
     // If ContentHandlerServer::.getRequest has already been called, we need
     // to destroy the MIDlet and restart it (because many MIDlets only check

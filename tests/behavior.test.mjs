@@ -445,3 +445,15 @@ test('real magazine sources are dated and original reading is optional',()=>{con
 test('classic Nokia models retain local apps and expose pocket expansion',()=>{const {run}=boot();for(const id of ['nokia5230','n97','n95'])assert.match(run('phoneModels['+JSON.stringify(id)+'].name'),/Nokia/);run('phoneState.model="n97"');assert.match(run('renderPhoneLab()'),/N97键盘便笺/);assert.match(run('renderPhoneLab()'),/data-pocket-expand/);assert.match(run('phoneJavaMarkup()'),/选择开源Java游戏/);assert.equal(run('pocketJavaGames.length'),15);});
 
 test('phone Java imports expose a local file picker and accept full numeric controls',()=>{const {run}=boot();assert.match(run('phoneJavaMarkup()'),/data-pocket-java-import/);for(const key of [-1,-5,35,42,48,49,57])assert.equal(run('validPocketJavaKey('+key+')'),true);for(const key of [0,1000,-99])assert.equal(run('validPocketJavaKey('+key+')'),false);assert.equal(run('pocketJavaChoice'),'grid-tactics');});
+
+test('unsupported Java share bridge replies do not reach the virtual filesystem',()=>{
+ const source=readFileSync('dist/javame/bld/main-all.js','utf8');
+ const start=source.indexOf('DumbPipe.open("mozActivityHandler", {}, function(message) {');
+ const end=source.indexOf('\n  });',start)+6;
+ const calls=[];let handler;
+ vm.runInNewContext(source.slice(start,end),{DumbPipe:{open(type,options,callback){handler=callback;}},fs:{createUniqueFile(...args){calls.push(args);return 'test.jar';}},Blob,getInvocationCalled:false,addInvocation(){}});
+ for(const reply of [undefined,null,{}, {type:'error',error:'Unavailable in offline museum'}, {fileName:'x.jar'}])handler(reply);
+ assert.equal(calls.length,0);
+ handler({fileName:'valid.jar',data:new Uint8Array([1,2])});
+ assert.equal(calls.length,1);assert.equal(calls[0][1],'valid.jar');
+});
