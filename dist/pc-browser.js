@@ -18,3 +18,7 @@ document.addEventListener('keydown',e=>{if(e.target.matches?.('[data-pc-address]
 const pcSelectBase=phoneSelectApp,pcOpenBase=openPhoneLab;
 phoneSelectApp=function(app){if(visitMode==='pc'&&app==='home'){phoneState.app='browser';ucContent='';return navigate({type:'home'},false);}return pcSelectBase(app);};
 openPhoneLab=function(app){if(visitMode==='pc'&&app){if(!phoneAppAllowed(app)){toast('电脑窗口未提供该模拟器');return;}phoneState.app=app;deskEntered=true;return navigate({type:'home'},false);}return pcOpenBase(app);};
+// Story handsets keep their own state; PC browsing temporarily displays the native app layer.
+const pcStoryScreenBase=phoneScreen;
+phoneScreen=function(){if(visitMode==='pc'&&typeof tide==='object'&&tide.active){tide.active=false;try{return pcStoryScreenBase();}finally{tide.active=true;}}return pcStoryScreenBase();};
+document.addEventListener('click',e=>{if(e.target.closest('[data-tide-start],[data-tide-resume],[data-tide-device]')){visitMode='phone';campusPanel='';mysteryPanel='';try{localStorage.setItem('olddays-visit-mode','phone');}catch{}}if(e.target.closest('[data-choose-phone]')&&typeof tide==='object'&&tide.active){tide.active=false;tideView='';tideSave();}},true);
