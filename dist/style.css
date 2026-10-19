@@ -3617,3 +3617,8 @@ dialog::backdrop {
   font: 11px/1.8 Arial;
   padding: 4px 0;
 }
+@media (max-width: 600px) {
+  .mobile-large .portal-article .article-body[data-reading-size="normal"] p {
+    font-size: 19px;
+  }
+}
