@@ -96,6 +96,7 @@ function boot(initial = {}, runtime = {}) {
     "playground-extras.js",
     "mystery-case.js",
     "handset-ui.js",
+    "tide-story.js",
 
   ])
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
@@ -655,4 +656,38 @@ test("browser skins preserve content selection and replace handset branding",()=
  assert.match(html,/browser-skin-opera/);assert.match(html,/工具 \/ 年代画风/);
  assert.equal(b.run("ucQuery"),'旧城');assert.equal(b.run("ucPage"),'nav');
  assert.equal(b.run("systemApps.find(a=>a.id==='browser').name"),'浏览器');
+});
+
+
+test('tide story requires independent traces, rejects guesses and preserves endings',()=>{
+ const b=boot();b.run("tide.active=true;tide.device='black'");
+ assert.match(b.run("tideJudge('xu','field','gate','0317','sealed')"),/太早/);
+ b.run("['qq','gate','back','forum','timetable','recording'].forEach(tideMark)");
+ assert.match(b.run("tideJudge('xu','birds','gate','0317','sealed')"),/不能互相/);
+ assert.match(b.run("tideJudge('xu','field','gate','0317','sealed')"),/纸袋/);
+ assert.equal(boot(Object.fromEntries(b.values)).run('tide.solved'),true);
+ assert.equal(boot(Object.fromEntries(b.values)).run('tide.ending'),'sealed');
+});
+test('tide devices differ by era and ordinary phones retain ordinary lives',()=>{
+ const b=boot();b.run("tide.device='silver'");assert.match(b.run('tideSms()'),/阿禾/);assert.doesNotMatch(b.run('tideSms()'),/许舟/);
+ b.run("tide.device='white'");assert.match(b.run('tideQQ()'),/全班/);assert.match(b.run('tideAlbum()'),/2010/);
+ b.run("tide.device='black';tideView='qq:chat'");assert.match(b.run('tideQQ()'),/许舟/);assert.equal(b.run('tideStage()'),0);
+ assert.equal(b.run("tideOpenDevice('untrusted')"),false);
+});
+
+test('tide suspense escalates from reading and supports the second ending',()=>{
+ const b=boot();b.run("tide.active=true;tide.device='black'");assert.equal(b.run('tideStage()'),0);
+ assert.doesNotMatch(b.run('tideSms()'),/本机号码/);
+ b.run("['qq','gate','back','forum','timetable','recording'].forEach(tideMark)");assert.equal(b.run('tideStage()'),2);
+ assert.match(b.run('tideSms()'),/本机号码/);
+ assert.match(b.run("tideJudge('xu','field','gate','0317','played')"),/第二遍/);
+ assert.equal(b.run('tide.ending'),'played');
+});
+test('tide notebooks stay with their handsets and entertainment stays available',()=>{
+ const b=boot();b.run("tideOpenDevice('black');tide.notes='潮声的笔记';tideOpenDevice('silver')");assert.equal(b.run('tide.notes'),'');
+ assert.doesNotMatch(b.run('tideJournal()'),/data-tide-finish/);
+ b.run("tide.notes='排练的笔记';tideOpenDevice('black')");assert.equal(b.run('tide.notes'),'潮声的笔记');
+ b.run("phoneState.app='games'");assert.match(b.run('phoneScreen()'),/贪吃蛇/);
+ b.run("phoneState.app='music'");assert.match(b.run('phoneScreen()'),/海堤_1018/);
+ assert.match(b.run('phoneScreen()'),/data-memory-track/);
 });
