@@ -446,7 +446,7 @@ test('real magazine sources are dated and original reading is optional',()=>{con
 
 test('classic Nokia models retain local apps and expose pocket expansion',()=>{const {run}=boot();for(const id of ['nokia5230','n97','n95'])assert.match(run('phoneModels['+JSON.stringify(id)+'].name'),/Nokia/);run('phoneState.model="n97"');assert.match(run('renderPhoneLab()'),/N97键盘便笺/);assert.match(run('renderPhoneLab()'),/data-pocket-expand/);assert.match(run('phoneJavaMarkup()'),/选择手机游戏/);assert.equal(run('pocketJavaGames.length'),15);});
 
-test('phone Java imports expose a local file picker and accept full numeric controls',()=>{const {run}=boot();assert.match(run('phoneJavaMarkup()'),/data-pocket-java-import/);for(const key of [-1,-5,35,42,48,49,57])assert.equal(run('validPocketJavaKey('+key+')'),true);for(const key of [0,1000,-99])assert.equal(run('validPocketJavaKey('+key+')'),false);assert.equal(run('pocketJavaChoice'),'ancient-empires-2');});
+test('phone Java imports expose a local file picker and accept full numeric controls',()=>{const {run}=boot();assert.match(run('phoneJavaMarkup()'),/data-pocket-java-import/);for(const key of [-1,-5,35,42,48,49,57])assert.equal(run('validPocketJavaKey('+key+')'),true);for(const key of [0,1000,-99])assert.equal(run('validPocketJavaKey('+key+')'),false);assert.equal(run('pocketJavaChoice'),'grid-tactics');});
 
 test('unsupported Java share bridge replies do not reach the virtual filesystem',()=>{
  const source=readFileSync('dist/javame/bld/main-all.js','utf8');
@@ -518,4 +518,12 @@ test('UC search filters local destinations and safely renders query text',()=>{
  b.run('ucQuery="<img src=x onerror=alert(1)>"');
  assert.doesNotMatch(b.run('phoneUCMarkup()'),/<img src=x/);
  b.run('ucPage="saved"');assert.match(b.run('phoneUCMarkup()'),/我的书签/);
+});
+
+
+test('quarantined historical game is absent from all playable menus and defaults',()=>{
+ const b=boot();assert.equal(b.run('pocketJavaChoice'),'grid-tactics');
+ assert.doesNotMatch(b.run('phoneJavaMarkup()'),/value="ancient-empires-2"/);
+ assert.doesNotMatch(b.run('renderGamesHall()'),/data-launch-java="ancient-empires-2"/);
+ assert.doesNotMatch(readFileSync('dist/javame/index.html','utf8'),/option value="ancient-empires-2"/);
 });
