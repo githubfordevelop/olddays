@@ -378,3 +378,11 @@ body[data-world-skin]:not([data-chrome="classic"]) .computer{border-color:var(--
 body[data-world-skin]:not([data-chrome="classic"]) .world-main-nav{background:var(--world-accent)!important;border-color:var(--world-dark)}
 body[data-world-skin]:not([data-chrome="classic"]) .app-page-title{color:var(--world-dark);opacity:.75}
 @media(max-width:600px){body[data-chrome="classic"] .addressbar{top:56px}}
+/* Keep the preferences sheet inside its dialog at narrow widths. */
+body:not([data-chrome="classic"]) #modal .dialog-top{background:#365944!important;color:#f5f6e8!important}
+body:not([data-chrome="classic"]) #modal .dialog-content{padding:18px;box-sizing:border-box;max-width:100%}
+body:not([data-chrome="classic"]) #modal .retro-options{margin:0;padding:0;max-width:100%;box-sizing:border-box}
+body:not([data-chrome="classic"]) .retro-option-footer{display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
+body:not([data-chrome="classic"]) .retro-option-footer>span{flex:1;min-width:0;line-height:1.7}
+body:not([data-chrome="classic"]) .retro-option-footer .primary{width:auto!important;min-width:100px;max-width:130px;flex:0 0 auto;margin:0;padding:9px 18px}
+body:not([data-chrome="classic"]) #modal .primary{background:#365944!important;color:#fff!important;border:1px solid #294831;border-radius:3px;min-height:42px;box-shadow:none;text-shadow:none}
