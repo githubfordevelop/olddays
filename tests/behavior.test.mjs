@@ -719,3 +719,11 @@ test('Campus evidence overlays never leak into a collected Tide handset',()=>{
  const b=boot();b.run("tide.active=true;tide.device='black';campus.started=true;campusPanel='photo';phoneState.app='photos';visitMode='phone'");assert.doesNotMatch(b.run('phoneScreen()'),/广播社|第02案/);assert.match(b.run('phoneScreen()'),/DSC0018/);
  b.run("tide.active=false;campusPanel='';phoneState.app='photos'");assert.match(b.run('phoneScreen()'),/广播社报名单/);
 });
+
+test('Ordinary collected phones have distinct browsable albums with safe photo metadata',()=>{
+ const b=boot();b.run("tide.device='silver';tideView=''");assert.match(b.run('tideAlbum()'),/排练以后/);assert.doesNotMatch(b.run('tideAlbum()'),/毕业的夏天/);
+ b.run("tideView='lifeback:1'");assert.match(b.run('tideAlbum()'),/忘了带午饭/);assert.equal(b.run('tide.seen.length'),0);
+ b.run("tide.device='white';tideView='lifemeta:0'");assert.match(b.run('tideAlbum()'),/2010-06-05/);assert.match(b.run('tideAlbum()'),/并非人物实拍/);
+ b.run("tideView='lifephoto:1'");assert.match(b.run('tideAlbum()'),/原创人像/);assert.match(b.run('tideAlbum()'),/下一张/);
+ b.run("tideView='lifephoto:999'");assert.match(b.run('tideAlbum()'),/生活照片/);assert.equal(b.run('tide.seen.length'),0);
+});
