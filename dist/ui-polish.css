@@ -1,0 +1,198 @@
+/* Content first; the classic browser remains an optional view. */
+.app-navigation{display:flex;align-items:center;gap:16px;min-height:64px;padding:10px 20px;background:#faf8ef;border-bottom:1px solid #c9c9b9;color:#29493b;font-family:Tahoma,"Microsoft YaHei",sans-serif;position:relative;z-index:25}
+.app-navigation button{background:transparent;border:0;color:inherit;min-height:40px}
+.app-back{font:28px/1 Arial;min-width:36px;border:1px solid #d1d5c8!important;border-radius:4px}
+.app-brand{display:flex;align-items:baseline;gap:8px;white-space:nowrap;padding:0 4px}
+.app-brand b{font:bold 23px "Songti SC",SimSun,serif;letter-spacing:2px}
+.app-brand span{font:9px Tahoma,sans-serif;letter-spacing:1px;color:#7b826d}
+.app-page-title{font-size:13px;color:#647461;border-left:1px solid #c7cbbb;padding-left:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
+.app-era{display:grid;grid-template-columns:auto auto;column-gap:9px;align-items:center;text-align:left;padding:0 10px;border-left:1px solid #d7d9ca!important}
+.app-era small{font-size:9px;color:#7b826d;grid-column:1}
+.app-era b{font:bold 18px/1.2 Georgia,serif;grid-column:1}
+.app-era>span{grid-column:2;grid-row:1/3;font-size:14px}
+.app-overflow{position:relative;flex:none}
+.app-overflow summary{list-style:none;cursor:pointer;display:grid;place-items:center;width:40px;height:40px;border:1px solid #cbd0bf;border-radius:4px;font-size:19px}
+.app-overflow summary::-webkit-details-marker{display:none}
+.app-overflow[open] summary{background:#e3e9dd}
+.app-overflow nav{position:absolute;top:48px;right:0;min-width:230px;padding:6px;background:#fffef8;border:1px solid #b5beaa;box-shadow:0 8px 24px #1f332e26;display:grid;z-index:50}
+.app-overflow nav button{font:13px/1.6 Tahoma,"Microsoft YaHei",sans-serif;text-align:left;padding:10px 12px;border-bottom:1px solid #e7e9df}
+.app-overflow nav button:last-child{border-bottom:0}
+.app-overflow nav button:hover{background:#edf1e6}
+body:not([data-chrome="classic"]){background:#dce1d3}
+body:not([data-chrome="classic"]) .desktop{padding:22px 3vw;background:linear-gradient(135deg,#e7e9df,#c7d2c3)}
+body:not([data-chrome="classic"]) .computer{border:1px solid #a9b8a1;border-radius:6px;box-shadow:0 12px 40px #203b2920;max-width:1240px}
+body:not([data-chrome="classic"]) .computer>.titlebar,body:not([data-chrome="classic"]) .computer>.menubar,body:not([data-chrome="classic"]) .computer>.toolbar,body:not([data-chrome="classic"]) .computer>.addressbar,body:not([data-chrome="classic"]) .computer>.timebar,body:not([data-chrome="classic"]) .computer>.browser-tabs,body:not([data-chrome="classic"]) .computer>.phone-header,body:not([data-chrome="classic"]) .computer>.statusbar,body:not([data-chrome="classic"]) .mobile-nav{display:none}
+body:not([data-chrome="classic"]) .world-topline{display:none}
+body:not([data-chrome="classic"]) .world-masthead{min-height:150px;padding:28px 32px}
+body:not([data-chrome="classic"]) .world-main-nav{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));padding:0 10px}
+body:not([data-chrome="classic"]) .world-main-nav button{min-height:42px;white-space:normal;line-height:1.5;padding:8px 5px}
+.world-directory summary{min-height:46px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer}
+.world-directory summary>span{font-size:11px;font-weight:normal}
+.world-directory[open] summary>span{font-size:0}
+.world-directory[open] summary>span::after{content:'收起目录';font-size:11px}
+.world-home .world-side-ad,.world-home .world-middle-ad{display:none}
+.world-home .world-channel-row{margin-top:14px}
+.world-home .world-channel{min-height:88px}
+.world-home .world-feature-news>button{line-height:1.5}
+.world-home .world-news-list a{min-height:42px;align-items:center}
+.world-home .world-footer{line-height:1.8}
+body.pocket-expanded .app-navigation{display:none}
+/* Shared controls in content views; handset hardware keeps its own sizing. */
+:is(.book-room,.magazine-kiosk,.memory-gallery,.community-room,.games-hall,.gadget-lab,.era-media,.news-center) :is(button,input,select){font-family:Tahoma,"Microsoft YaHei",sans-serif}
+:is(.book-room,.magazine-kiosk,.memory-gallery,.community-room,.games-hall,.gadget-lab,.era-media,.news-center)>:is(header,nav){line-height:1.7}
+:is(.book-room,.magazine-kiosk,.memory-gallery,.community-room,.games-hall,.gadget-lab,.era-media,.news-center) :is(input[type="search"],input[type="text"]){min-width:0;font-size:16px;min-height:40px}
+:is(.book-room,.magazine-kiosk,.memory-gallery,.community-room,.games-hall,.gadget-lab,.era-media,.news-center) button{min-height:36px}
+.book-reader-toolbar{gap:6px;align-items:center;flex-wrap:wrap}
+.book-reader-toolbar button{min-height:38px;padding:7px 12px}
+.book-paper{width:min(100%,800px);margin-inline:auto}
+.book-prose{line-height:2.05;overflow-wrap:break-word}
+.book-pagination{gap:12px;align-items:center}
+.book-pagination button{min-height:44px;min-width:100px}
+.book-reader footer{line-height:1.8;overflow-wrap:anywhere}
+#modal{max-height:calc(100dvh - 32px);overscroll-behavior:contain}
+#dialogbody{overflow-wrap:anywhere}
+#modal::backdrop{background:#11271e80;backdrop-filter:blur(2px)}
+@media(max-width:800px){
+ .app-navigation{gap:10px;padding:8px 12px;min-height:58px}
+ .app-brand span{display:none}
+ body:not([data-chrome="classic"]) .desktop{padding:10px}
+ body:not([data-chrome="classic"]) .world-main-nav{grid-template-columns:repeat(5,minmax(0,1fr))}
+ .center-list article{min-width:0}
+ .center-list a{overflow-wrap:anywhere}
+}
+@media(max-width:600px){
+ body:not([data-chrome="classic"]) .desktop{padding:0;min-height:100dvh}
+ body:not([data-chrome="classic"]) .computer{border:0;border-radius:0;box-shadow:none}
+ .app-navigation{position:sticky;top:0;gap:8px;min-height:56px;padding:6px 10px;padding-top:max(6px,env(safe-area-inset-top))}
+ .app-back{min-width:32px}
+ .app-brand b{font-size:20px;letter-spacing:1px}
+ .app-page-title{padding-left:8px;font-size:12px}
+ .app-era{padding:0 6px;column-gap:4px}
+ .app-era small{font-size:8px}
+ .app-era b{font-size:17px}
+ .app-overflow summary{width:36px}
+ body:not([data-chrome="classic"]) .world-masthead{min-height:132px;padding:23px 18px}
+ body:not([data-chrome="classic"]) .world-main-nav{grid-template-columns:repeat(4,minmax(0,1fr));padding:0}
+ body:not([data-chrome="classic"]) .world-main-nav button{min-height:44px}
+ .world-marquee{display:none}
+ .world-directory{margin:12px 0}
+ .world-directory summary{padding:9px 12px;font-size:12px;min-height:44px}
+ .world-directory summary>span{font-size:10px;white-space:nowrap}
+ .world-channel-row{gap:5px}
+ .world-home .world-channel{min-height:72px;padding:8px 3px}
+ .world-channel small{display:none}
+ .world-channel b{font-size:12px}
+ .world-news-list a span{line-height:1.7}
+ :is(.book-room,.magazine-kiosk,.memory-gallery,.community-room,.games-hall,.gadget-lab,.era-media,.news-center) button{min-height:42px}
+ :is(.book-room,.magazine-kiosk,.memory-gallery,.community-room,.games-hall,.gadget-lab)>header h1{font-size:25px;line-height:1.5;letter-spacing:0}
+ :is(.book-room,.magazine-kiosk,.memory-gallery,.community-room,.games-hall,.gadget-lab)>header p{font-size:13px;line-height:1.8}
+ :is(.book-room,.magazine-kiosk,.memory-gallery,.community-room,.games-hall,.gadget-lab)>nav{display:flex;gap:6px;flex-wrap:wrap}
+ .book-reader-toolbar{position:sticky;top:56px;z-index:5;padding:8px;box-shadow:0 2px 5px #182c1820}
+ .book-reader-toolbar button{min-height:36px;font-size:12px;padding:6px 10px}
+ .book-paper{padding:22px 18px}
+ .book-paper header h1{font-size:25px;line-height:1.5}
+ .book-prose p{font-size:18px;line-height:2;margin-block:1.2em}
+ .book-reader.text-small .book-prose p{font-size:16px}
+ .book-reader.text-large .book-prose p{font-size:21px}
+ .book-pagination{padding-block:18px}
+ .bookshelf-grid{grid-template-columns:minmax(0,1fr)}
+ .shelf-book{gap:15px}
+ .kiosk-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 10px}
+ .kiosk-scene img{max-height:180px;object-fit:cover}
+ .kiosk-filters{gap:6px;display:flex;flex-wrap:wrap}
+ .kiosk-filters button{padding:8px 12px}
+ #kiosk-search{flex-wrap:wrap;gap:7px}
+ #kiosk-search label{width:100%}
+ #kiosk-search input{flex:1;min-width:0;width:100px}
+ .memory-utility{gap:8px;flex-wrap:wrap}
+ .memory-utility input{flex:1;min-width:100px}
+ .memory-picture-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .memory-picture-card{min-width:0}
+ .memory-picture-card b{font-size:13px;line-height:1.6}
+ .memory-tags{gap:6px;flex-wrap:wrap}
+ .memory-tags button{padding:7px 12px}
+ #modal{width:calc(100% - 24px);max-width:480px;margin:auto;max-height:calc(100dvh - 24px)}
+ .retro-options .skin-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .retro-option-tabs button{min-height:42px}
+ .retro-options .skin-option{min-width:0}
+ .retro-options section{padding:12px}
+}
+.home-entries{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:14px;margin:20px 0}
+.home-entry{border:1px solid #b9c8b4;background:#eef1e6;color:#2a493a;text-align:left;padding:22px 20px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0;transition:background .15s}
+.home-entry:hover{background:#e1e9d9}
+.home-entry>small{font:9px Tahoma,sans-serif;letter-spacing:1.5px;color:#788569}
+.home-entry>b{font:bold 22px/1.4 SimSun,"Songti SC",serif}
+.home-entry>span{font:12px/1.7 Tahoma,"Microsoft YaHei",sans-serif;color:#6a7761}
+.home-entry>em{font:12px/1.5 Tahoma,"Microsoft YaHei",sans-serif;margin-top:auto;padding-top:8px;color:#365d3c;font-style:normal}
+.entry-phone{background:#e0e9d5;border-color:#9ab18f}
+.entry-games{background:#e6edf0;border-color:#a9bbc2;color:#29495e}
+.entry-books{background:#f0e8d5;border-color:#cbbd9e;color:#604f30}
+@media(max-width:600px){
+ .home-entries{grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+ .home-entry{padding:16px 12px;gap:7px}
+ .home-entry>b{font-size:19px}
+ .home-entry>span{font-size:11px}
+ .home-entry.entry-phone{grid-column:1 / -1;display:grid;grid-template-columns:1fr auto;align-items:center;padding:18px}
+ .entry-phone>small,.entry-phone>b,.entry-phone>span{grid-column:1}
+ .entry-phone>em{grid-column:2;grid-row:1 / 4;align-self:center;margin:0;padding:10px;background:#365b3f;color:#fff}
+}
+@media(prefers-reduced-motion:reduce){.home-entry{transition:none}}
+.browser-skin-details{border-top:1px solid #c8caba;margin-top:18px;padding-top:10px}
+.browser-skin-details>summary{cursor:pointer;padding:8px 0;min-height:40px;font-size:12px}
+.retro-options .setting-row{display:flex;align-items:center;gap:18px;justify-content:space-between;padding:16px 0}
+.retro-options .setting-row>span{font-size:13px;line-height:1.6}
+.retro-options .setting-row small{display:block;font-size:11px;color:#6b7463}
+.retro-options .setting-row select{min-height:40px;padding:7px;font-size:13px;max-width:145px}
+#simple-address-form{display:grid;gap:16px;padding:4px 0}
+#simple-address-form label{line-height:1.7}
+#simple-address-form input{width:100%;min-width:0;min-height:46px;font-size:16px;padding:10px;border:1px solid #9eae98;background:#fffef7}
+#simple-address-form button{min-height:44px}
+body.mobile-night:not([data-chrome="classic"]) .app-navigation{background:#252e29;color:#dbe4d1;border-color:#526049}
+body.mobile-night:not([data-chrome="classic"]) .app-page-title,body.mobile-night:not([data-chrome="classic"]) .app-era small{color:#b1bea6}
+body.mobile-night:not([data-chrome="classic"]) .app-overflow nav{background:#26332b;color:#e0e5d5}
+body.mobile-night:not([data-chrome="classic"]) .app-overflow nav button:hover{background:#3b4a3b}
+body:not([data-chrome="classic"]) #modal{border:1px solid #899d84;border-radius:6px;box-shadow:0 15px 60px #0c251c55;background:#f7f6ed;color:#2c3d2f;padding:0}
+body:not([data-chrome="classic"]) .dialog-top{background:#365944;color:#f5f6e8;min-height:46px;padding:10px 14px;position:sticky;top:0;z-index:3;text-shadow:none;font:14px Tahoma,"Microsoft YaHei",sans-serif}
+body:not([data-chrome="classic"]) #closedialog{width:30px;height:30px;background:#ffffff14;border:1px solid #ffffff50;border-radius:3px;color:#fff;font-size:20px}
+body:not([data-chrome="classic"]) .retro-options{background:#f7f6ed;font-family:Tahoma,"Microsoft YaHei",sans-serif;color:#2c3d2f}
+body:not([data-chrome="classic"]) .retro-options section{border:0;box-shadow:none;min-height:200px;padding:18px 4px}
+body:not([data-chrome="classic"]) .retro-option-tabs{padding:0;border-color:#c5cdbb;gap:20px}
+body:not([data-chrome="classic"]) .retro-option-tabs button{border:0;border-bottom:2px solid transparent;background:transparent;box-shadow:none;border-radius:0;padding:10px 4px;color:#71806b;font:14px Tahoma,"Microsoft YaHei",sans-serif;min-height:44px}
+body:not([data-chrome="classic"]) .retro-option-tabs button[aria-selected="true"]{color:#2d5537;border-bottom-color:#365944;top:0;font-weight:bold}
+body:not([data-chrome="classic"]) .settings-logo{background:#e3ead9;color:#34543b;border:1px solid #b8c9ad;border-radius:4px;font-size:14px}
+body:not([data-chrome="classic"]) .retro-options .settings-heading{gap:12px;border-color:#d5d9ca;align-items:center}
+body:not([data-chrome="classic"]) .retro-options .settings-heading b{font-size:14px}
+body:not([data-chrome="classic"]) .retro-options .settings-heading small{font-size:11px;line-height:1.7}
+body:not([data-chrome="classic"]) .retro-option-footer{border-top:1px solid #d1d8c8;padding-top:12px;gap:12px;font-size:11px}
+body:not([data-chrome="classic"]) .retro-option-footer .primary{flex:0 0 auto;min-width:100px;min-height:40px;background:#365944;color:#fff;border:1px solid #294831;box-shadow:none;font:14px Tahoma,"Microsoft YaHei",sans-serif}
+body:not([data-chrome="classic"]) .retro-options .settings-disclaimer{font:10px/1.7 Tahoma,"Microsoft YaHei",sans-serif;color:#7d8774}
+.java-featured{margin:24px 0 32px;padding:24px;background:#e6ebdd;border:1px solid #acbca3}
+.java-featured-heading>small{font:10px Tahoma,sans-serif;letter-spacing:2px;color:#6c7b61}
+.java-featured-heading h2{font:24px/1.5 SimSun,"Songti SC",serif;margin:8px 0}
+.java-featured-heading p{font:13px/1.7 Tahoma,"Microsoft YaHei",sans-serif;color:#667660;margin:8px 0 20px}
+.java-featured-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.java-featured-grid>button{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:20px;border:1px solid #a7baa0;background:#fafbf3;color:#2a4631;min-width:0}
+.java-feature-icon{display:grid;place-items:center;width:60px;height:60px;border:2px solid #91a681;background:#ccd9b6;color:#2b4430;font:36px/1 Georgia,serif;margin-bottom:15px;box-shadow:3px 3px #b2c29d}
+.java-featured-grid small{font-size:10px;color:#7b8a6e}
+.java-featured-grid b{font:22px/1.6 SimSun,"Songti SC",serif;margin-top:4px}
+.java-featured-grid p{font:12px/1.8 Tahoma,"Microsoft YaHei",sans-serif;color:#6c7c63}
+.java-featured-grid em{font:13px/1.5 Tahoma,"Microsoft YaHei",sans-serif;font-style:normal;border-top:1px solid #d4deca;padding-top:12px;margin-top:auto;width:100%;color:#3d6542}
+.java-featured-note{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:15px;font-size:11px;color:#6d7c62}
+.java-featured-note button{border:1px solid #b4c1ab;background:#f4f6eb;padding:7px 12px;font-size:12px;color:#345a3b}
+.games-original-heading{font:22px/1.6 SimSun,"Songti SC",serif}
+@media(max-width:600px){
+ .java-featured{padding:16px 12px;margin:20px 0}
+ .java-featured-heading h2{font-size:22px}
+ .java-featured-grid{grid-template-columns:1fr;gap:10px}
+ .java-featured-grid>button{display:grid;grid-template-columns:60px minmax(0,1fr) auto;column-gap:14px;align-items:center;padding:15px 12px}
+ .java-feature-icon{grid-column:1;grid-row:1 / 4;width:52px;height:60px;margin:0;font-size:32px}
+ .java-featured-grid small{grid-column:2;grid-row:1}
+ .java-featured-grid b{grid-column:2;grid-row:2;font-size:20px;margin:0}
+ .java-featured-grid p{grid-column:2;grid-row:3;font-size:11px;margin:3px 0 0}
+ .java-featured-grid p br{display:none}
+ .java-featured-grid em{grid-column:3;grid-row:1 / 4;border:0;width:auto;padding:0;max-width:48px;font-size:12px;margin:0;line-height:1.8}
+ .games-hall-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .games-hall-grid>button{padding:10px;min-width:0}
+ .games-hall-grid>button>b{font-size:17px}
+ .games-hall-grid>button>small{font-size:11px;line-height:1.7}
+}
