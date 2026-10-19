@@ -287,6 +287,12 @@ function setTheme() {
 }
 function navigate(page, push = true) {
   requestId++;
+  if (page.type === "archive") {
+    setTheme();
+    $("#status").textContent = "◷ 正在查找历史页面，找到后直接打开…";
+    toast("正在连接历史网页，无需再次点击");
+    return resolveSnapshot(page, requestId);
+  }
   current = page;
   setTheme();
   if (push) {
@@ -301,7 +307,7 @@ function navigate(page, push = true) {
         ? renderScene(page)
         : page.type === "news"
           ? renderAnnualStory(page)
-          : archivePage(page);
+          : renderHome();
   $("#address").value = page.type === "home" ? "archaeo://home" : page.url;
   $("#windowtitle").textContent = page.type === "home" ? "时光首页" : page.name;
   $("#phone-tab-title").textContent =
@@ -310,7 +316,6 @@ function navigate(page, push = true) {
   document.title = `${page.type === "home" ? "时光首页" : page.name} · ${year()} — 考古浏览器`;
   updateNav();
   window.scrollTo({ top: 0, behavior: "instant" });
-  if (page.type === "archive") resolveSnapshot(page, requestId);
 }
 function updateNav() {
   for (const id of ["back", "mback"]) $("#" + id).disabled = cursor <= 0;
@@ -324,58 +329,61 @@ function move(n) {
   date = history[cursor].date;
   navigate(history[cursor].page, false);
 }
-function archivePage(p) {
-  const calendar = `https://web.archive.org/web/${year()}*/${p.url}`;
-  return `<section class="archive-view"><div class="archive-kicker">HISTORICAL WEB / ${year()}</div><h1>${escapeHTML(p.name)}</h1><p class="archive-url">${escapeHTML(p.url)}</p><span class="source-pill">SOURCE: INTERNET ARCHIVE / WAYBACK MACHINE</span><div class="archive-info" id="archive-result">◷ 正在查询 ${date} 及之前、同一年内的最近快照……</div><div class="archive-actions"><a class="primary" href="${escapeHTML(calendar)}" target="_blank" rel="noopener noreferrer">在存档日历中查看 ${year()} 年 ↗</a><button class="secondary" id="savebookmark">☆ 收藏这个时间坐标</button></div><p class="archive-note">当前版本提供真实存档查询与跳转。完整历史网页在来源网站打开；其链接和图片可能使用其他日期的快照，请以来源时间栏为准。未找到合适快照时，我们不会用今天的页面代替。</p><div id="snapshot-actions"></div><div style="margin-top:30px;border-top:1px solid #d5d7c9;padding-top:18px"><button class="secondary" data-action="home">⌂ 回到时光首页</button><button class="secondary" id="retry" style="margin-left:8px">⟳ 重新查询</button></div></section>`;
+function archiveFailure(page, message) {
+  $("#status").textContent = "存档未能直接打开";
+  const calendar = `https://web.archive.org/web/${year()}*/${page.url}`;
+  dialog(
+    "暂时无法打开历史网页",
+    `<p>${escapeHTML(message)}</p><p>当前页面保持不变。可以尝试其他日期，或自行查看所选年份的存档日历。</p><p><a class="primary" href="${escapeHTML(calendar)}" target="_blank" rel="noopener noreferrer">查看 ${year()} 年存档日历 ↗</a></p>`,
+  );
 }
 async function resolveSnapshot(p, id) {
   try {
     const cutoff = date.replaceAll("-", "") + "235959";
+    const requestedYear = year();
     const endpoint = new URL("https://archive.org/wayback/available");
     endpoint.searchParams.set("url", p.url);
     endpoint.searchParams.set("timestamp", cutoff);
     const response = await fetch(endpoint, {
       signal: AbortSignal.timeout(8500),
     });
+    if (id !== requestId) return;
     if (!response.ok) throw Error("unavailable");
     const data = await response.json();
     if (id !== requestId) return;
     const snap = data.archived_snapshots?.closest;
     if (!snap || !snap.available) {
-      $("#archive-result").textContent =
-        "没有查到可用快照。你仍可以打开该年份的存档日历，检查其他地址或日期。";
+      archiveFailure(p, "没有找到这个网址的可用存档。");
       return;
     }
     if (
       !/^\d{14}$/.test(snap.timestamp) ||
       snap.timestamp > cutoff ||
-      !snap.timestamp.startsWith(year())
+      !snap.timestamp.startsWith(requestedYear)
     ) {
-      $("#archive-result").textContent =
-        "返回的最近快照不在所选年份或晚于目标日期，已跳过。请到存档日历选择实际可用的日期。";
+      archiveFailure(
+        p,
+        "最近快照不在所选年份，或晚于目标日期，因此没有自动打开。",
+      );
       return;
     }
-    const u = new URL(snap.url);
-    if (u.hostname !== "web.archive.org") throw Error("invalid-source");
-    u.protocol = "https:";
-    const stamp = snap.timestamp;
-    $("#archive-result").textContent =
-      `✓ 找到真实快照：${stamp.slice(0, 4)}-${stamp.slice(4, 6)}-${stamp.slice(6, 8)} ${stamp.slice(8, 10)}:${stamp.slice(10, 12)} UTC。目标日期：${date}；存档时间与目标日期可能不同。`;
-    const link = document.createElement("a");
-    link.className = "primary";
-    link.href = u.href;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.textContent = "打开已核验日期的历史快照 ↗";
-    $("#snapshot-actions").append(link);
-    $("#status").textContent = "✓ 已找到历史快照";
-  } catch (e) {
+    const target = new URL(snap.url);
+    if (
+      target.hostname !== "web.archive.org" ||
+      target.username ||
+      target.password ||
+      !target.pathname.startsWith(`/web/${snap.timestamp}/`)
+    )
+      throw Error("invalid-source");
+    target.protocol = "https:";
+    $("#status").textContent = "✓ 已找到历史网页，正在直接打开…";
+    window.location.assign(target.href);
+  } catch (error) {
     if (id !== requestId) return;
-    $("#archive-result").textContent =
-      "暂时无法连接存档查询服务。可打开上方存档日历继续查找；当前未核验具体快照是否存在。";
-    $("#status").textContent = "存档查询暂不可用 · 可使用日历入口";
+    archiveFailure(p, "暂时无法连接历史存档服务，请稍后重试。");
   }
 }
+
 function toast(msg) {
   $("#toast").textContent = msg;
   $("#toast").classList.add("show");

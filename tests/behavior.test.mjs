@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import vm from "node:vm";
 import { readFileSync } from "node:fs";
 
-function boot(initial = {}) {
+function boot(initial = {}, runtime = {}) {
   const values = new Map(Object.entries(initial));
   const elements = new Map();
   const listeners = new Map();
@@ -43,14 +43,18 @@ function boot(initial = {}) {
   };
   const context = vm.createContext({
     document,
-    window: { scrollTo() {} },
+    window: {
+      scrollTo() {},
+      location: { assign: runtime.onNavigate || (() => {}) },
+    },
     localStorage: {
       getItem: (k) => values.get(k) ?? null,
       setItem: (k, v) => values.set(k, v),
     },
     URL,
     AbortSignal,
-    fetch: () => Promise.reject(Error("No network in tests")),
+    fetch:
+      runtime.fetch || (() => Promise.reject(Error("No network in tests"))),
     console,
     setTimeout: () => 0,
     clearTimeout() {},
@@ -209,4 +213,104 @@ test("source paragraphs and headlines cannot inject HTML into reader pages", () 
   const html = b.document.querySelector("#content").innerHTML;
   assert.ok(!html.includes("<script>alert(1)</script>"));
   assert.ok(html.includes("&lt;img"));
+});
+
+test("old sites open verified snapshots directly without replacing the homepage", async () => {
+  const opened = [];
+  const b = boot(
+    {},
+    {
+      onNavigate: (url) => opened.push(url),
+      fetch: async () => ({
+        ok: true,
+        json: async () => ({
+          archived_snapshots: {
+            closest: {
+              available: true,
+              timestamp: "20040731120000",
+              url: "http://web.archive.org/web/20040731120000/http://www.sina.com.cn/",
+            },
+          },
+        }),
+      }),
+    },
+  );
+  const before = b.document.querySelector("#content").innerHTML;
+  await b.run(
+    "navigate({type:'archive',name:'新浪',url:'http://www.sina.com.cn/'})",
+  );
+  assert.deepEqual(opened, [
+    "https://web.archive.org/web/20040731120000/http://www.sina.com.cn/",
+  ]);
+  assert.equal(b.document.querySelector("#content").innerHTML, before);
+  assert.equal(b.run("current.type"), "home");
+});
+
+test("direct archive navigation rejects wrong dates, foreign hosts, and stale responses", async () => {
+  for (const [timestamp, url] of [
+    [
+      "20040802000000",
+      "https://web.archive.org/web/20040802000000/http://example.com/",
+    ],
+    [
+      "20030701000000",
+      "https://web.archive.org/web/20030701000000/http://example.com/",
+    ],
+    ["20040701000000", "https://example.com/web/20040701000000/"],
+    [
+      "20040701000000",
+      "https://web.archive.org/web/20040601000000/http://example.com/",
+    ],
+  ]) {
+    const opened = [];
+    const b = boot(
+      {},
+      {
+        onNavigate: (u) => opened.push(u),
+        fetch: async () => ({
+          ok: true,
+          json: async () => ({
+            archived_snapshots: {
+              closest: { available: true, timestamp, url },
+            },
+          }),
+        }),
+      },
+    );
+    await b.run(
+      "navigate({type:'archive',name:'旧站',url:'http://example.com/'})",
+    );
+    assert.equal(opened.length, 0);
+    assert.equal(b.run("current.type"), "home");
+  }
+  let resolve;
+  const opened = [];
+  const b = boot(
+    {},
+    {
+      onNavigate: (u) => opened.push(u),
+      fetch: () =>
+        new Promise((r) => {
+          resolve = r;
+        }),
+    },
+  );
+  const pending = b.run(
+    "navigate({type:'archive',name:'旧站',url:'http://example.com/'})",
+  );
+  b.run("navigate({type:'home'})");
+  resolve({
+    ok: true,
+    json: async () => ({
+      archived_snapshots: {
+        closest: {
+          available: true,
+          timestamp: "20040701000000",
+          url: "https://web.archive.org/web/20040701000000/http://example.com/",
+        },
+      },
+    }),
+  });
+  await pending;
+  assert.equal(opened.length, 0);
 });
