@@ -46,5 +46,11 @@
     "tool": "built-in image_gen",
     "prompt": "Original nostalgic after-school anime club poster, original fictional anime characters, 放学以后动漫见 and 本周剧情猜测; no existing manga panels or official characters.",
     "asset": "images/posters/anime.jpg"
+  },
+  {
+    "id": "newsstand",
+    "tool": "built-in image_gen",
+    "asset": "images/posters/newsstand.jpg",
+    "prompt": "Original nostalgic early-2000s rainy Chinese street newsstand, fictional comic, fashion and story magazine covers, fully clothed adult women, feature phones, headphones, warm incandescent light; 放学了去报刊亭看看, non-historical scene label."
   }
 ]
