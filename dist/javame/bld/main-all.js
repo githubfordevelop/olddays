@@ -9791,8 +9791,8 @@ var MIDP = (function() {
   };
 
   function onWindowResize(evt) {
-    var newPhysicalScreenWidth = window.outerWidth - horizontalChrome;
-    var newPhysicalScreenHeight = window.outerHeight - verticalChrome;
+    var newPhysicalScreenWidth = window.frameElement ? window.innerWidth : window.outerWidth - horizontalChrome;
+    var newPhysicalScreenHeight = window.frameElement ? window.innerHeight : window.outerHeight - verticalChrome;
 
     if (newPhysicalScreenWidth != physicalScreenWidth || newPhysicalScreenHeight != physicalScreenHeight) {
       physicalScreenWidth = newPhysicalScreenWidth;

@@ -21,4 +21,4 @@ for game in json.loads((root/'dist/javame/open-games/catalog.json').read_text())
   code=z.read(game['cls'].replace('.','/')+'.class')
   assert code[:4]==b'\xca\xfe\xba\xbe' and struct.unpack('>H',code[6:8])[0]<=48
 assert 'MIT' in (root/'dist/javame/open-games/LICENSE.txt').read_text()
-print('12 MIT open-source game archives and Java class entrypoints checked.')
+print('15 MIT open-source game archives and Java class entrypoints checked.')
