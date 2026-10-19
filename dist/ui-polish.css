@@ -386,3 +386,5 @@ body:not([data-chrome="classic"]) .retro-option-footer{display:flex;align-items:
 body:not([data-chrome="classic"]) .retro-option-footer>span{flex:1;min-width:0;line-height:1.7}
 body:not([data-chrome="classic"]) .retro-option-footer .primary{width:auto!important;min-width:100px;max-width:130px;flex:0 0 auto;margin:0;padding:9px 18px}
 body:not([data-chrome="classic"]) #modal .primary{background:#365944!important;color:#fff!important;border:1px solid #294831;border-radius:3px;min-height:42px;box-shadow:none;text-shadow:none}
+
+body .phone-java-player [data-pocket-java-rotate]{display:none!important}
