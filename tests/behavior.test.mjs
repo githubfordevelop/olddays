@@ -90,6 +90,9 @@ function boot(initial = {}, runtime = {}) {
     "device-lab.js",
     "era-home.js",
     "system-shell.js",
+    "desk-experience.js",
+    "device-profiles.js",
+    "dreamnet-game.js",
 
   ])
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
@@ -508,7 +511,7 @@ test('system installs persist once, reject unknown software and survive a reload
  assert.equal(b.run('installSystemApp("notes")'),true);
  assert.equal(b.run('installSystemApp("notes")'),false);
  const reloaded=boot({'olddays-system-apps':b.values.get('olddays-system-apps')});
- assert.match(reloaded.run('renderHome()'),/data-system-launch="notes"/);
+ assert.match(reloaded.run('deskEntered=true;renderHome()'),/data-system-launch="notes"/);
  assert.match(reloaded.run('phoneStoreMarkup()'),/javame\/demos\/notes.jar/);
 });
 test('UC search filters local destinations and safely renders query text',()=>{
@@ -526,4 +529,65 @@ test('quarantined historical game is absent from all playable menus and defaults
  assert.doesNotMatch(b.run('phoneJavaMarkup()'),/value="ancient-empires-2"/);
  assert.doesNotMatch(b.run('renderGamesHall()'),/data-launch-java="ancient-empires-2"/);
  assert.doesNotMatch(readFileSync('dist/javame/index.html','utf8'),/option value="ancient-empires-2"/);
+});
+
+
+test('3310 and 1100 expose native text functions and reject color or Java apps',()=>{
+ const b=boot();
+ for(const model of ['nokia3310','nokia1100']){
+  b.run('phoneState.model='+JSON.stringify(model)+';phoneState.app="home";deskEntered=true');
+  for(const app of ['sms','contacts','snake','calculator'])assert.equal(b.run('phoneAppAllowed('+JSON.stringify(app)+')'),true);
+  for(const app of ['browser','qq','java','ads','videos','comics','store'])assert.equal(b.run('phoneAppAllowed('+JSON.stringify(app)+')'),false);
+  assert.doesNotMatch(b.run('phoneScreen()'),/data-system-launch="browser"|phone-java-frame/);
+  assert.doesNotMatch(b.run('renderMonoWorkbench()'),/data-desk-open="browser"|data-sms-offer/);
+ }
+ b.run('phoneState.model="fullscreen"');assert.equal(b.run('phoneAppAllowed("browser")'),true);
+ assert.ok(b.run('Object.keys(phoneModels).length')>=13);
+});
+test('SMS download only installs the requested asset after an explicit claim and persists it',()=>{
+ const b=boot();assert.equal(b.run('systemInstalled.includes("comics")'),false);
+ assert.equal(b.run('sendPhoneSms("漫画01")'),true);
+ assert.equal(b.run('systemInstalled.includes("comics")'),false);
+ assert.equal(b.run('claimSmsDownload("软件01")'),false);
+ assert.equal(b.run('claimSmsDownload("漫画01")'),true);
+ assert.equal(b.run('systemInstalled.includes("comics")'),true);
+ assert.equal(b.run('claimSmsDownload("漫画01")'),false);
+ const restored=boot({'archaeo-phone-lab':b.values.get('archaeo-phone-lab'),'olddays-system-apps':b.values.get('olddays-system-apps')});
+ assert.equal(restored.run('phoneState.sent[0].claimed'),true);
+ assert.equal(restored.run('systemInstalled.includes("comics")'),true);
+ restored.run('phoneState.model="nokia3310";sendPhoneSms("软件01")');
+ assert.equal(restored.run('claimSmsDownload("软件01")'),false);
+});
+test('native calculator evaluates keys without Java and handles division by zero',()=>{
+ const b=boot();for(const key of ['1','3','+','2','9','='])b.run('monoCalculatorKey('+JSON.stringify(key)+')');
+ assert.equal(b.run('monoCalcValue'),'42');
+ for(const key of ['C','9','÷','0','='])b.run('monoCalculatorKey('+JSON.stringify(key)+')');
+ assert.equal(b.run('monoCalcValue'),'错误');
+});
+test('memory stamps only accept known milestones and never count twice',()=>{
+ const b=boot();assert.equal(b.run('unlockDeskStamp("arbitrary")'),false);
+ assert.equal(b.run('unlockDeskStamp("comic")'),true);assert.equal(b.run('unlockDeskStamp("comic")'),false);
+ assert.equal(b.run('deskStamps.length'),1);
+});
+
+
+test('virtual dreamnet starts with 100 yuan and a welcome SMS, and never double-charges one download',()=>{
+ const b=boot();assert.equal(b.run('dreamnet.balance'),10000);assert.equal(b.run('walletUnreadCount()'),1);
+ assert.equal(b.run('walletPurchase("火影01").ok'),true);assert.equal(b.run('dreamnet.balance'),9700);
+ assert.equal(b.run('walletPurchase("火影01").charged'),0);assert.equal(b.run('dreamnet.balance'),9700);
+ b.run('markWalletMessageRead(1)');assert.equal(b.run('dreamnet.messages.find(m=>m.id===1).unread'),false);
+});
+test('monthly billing advances only on a game turn and closing dreamnet stops all future charges',()=>{
+ const b=boot();b.run('walletPurchase("铃声01","monthly")');assert.equal(b.run('dreamnet.balance'),9500);
+ assert.equal(b.run('walletAdvanceMonth()'),500);assert.equal(b.run('dreamnet.balance'),9000);
+ b.run('walletDisable()');assert.equal(b.run('walletAdvanceMonth()'),0);assert.equal(b.run('dreamnet.balance'),9000);
+ assert.equal(b.run('walletPurchase("海贼01").ok'),false);assert.equal(b.run('dreamnet.balance'),9000);
+ assert.equal(b.run('walletPurchase("铃声01").charged'),0);
+});
+test('insufficient virtual credit cannot go negative and SMS TD cancels recurring services',()=>{
+ const b=boot();b.run('dreamnet.balance=100');assert.equal(b.run('walletPurchase("游戏01").ok'),false);
+ assert.equal(b.run('dreamnet.balance'),100);assert.equal(b.run('walletTopUp(999)'),false);
+ assert.equal(b.run('walletTopUp(2000)'),true);assert.equal(b.run('dreamnet.balance'),2100);
+ b.run('walletPurchase("铃声01","monthly");sendPhoneSms("TD")');
+ assert.equal(b.run('dreamnet.enabled'),false);assert.match(b.run('phoneState.sent.at(-1).reply'),/关闭成功/);assert.equal(b.run('walletAdvanceMonth()'),0);
 });

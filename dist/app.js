@@ -249,13 +249,13 @@ function setTheme() {
     Number(year()) >= 2010 ? "#e8ebe5" : "#ece9d8",
   );
 }
-function renderHome() { return renderSystemHome(); }
+function renderHome() { return deskEntered?renderWorkbench():renderPhoneEntrance(); }
 function renderWorldPage(page) {
  const renderers={portal:renderTimeHome,devices:renderDeviceLab,magazines:renderMagazineKiosk,anime:renderAnimeClub,posters:renderPosterRoom,pictures:renderMemoryGallery,picturestory:()=>renderPictureStory(page),community:renderCommunity,javame:renderJavaRoom,phone:renderPhoneLab,admagazine:renderAdMagazine,arcade:()=>renderArcade(page),bookshelf:renderBookshelf,book:()=>renderBook(page),games:renderGamesHall,music:renderMusicSalon,videos:renderVideoSalon};
  return renderers[page.type]?.();
 }
 function navigate(page, push = true) {
-  if(current.type==='phone'&&page.type!=='phone'){
+  if((current.type==='phone'&&page.type!=='phone')||(current.type==='home'&&page.type!=='home')){
     pocketJavaReleaseAll();
     document.body.classList.remove('pocket-expanded','pocket-landscape');
   }
@@ -263,7 +263,9 @@ function navigate(page, push = true) {
   requestId++;
   if(pendingArchive) pendingArchive.abort();
   pendingArchive=null;
+  if(page.type==='home'&&current.type!=='home')phoneState.app='home';
   current = page;
+  document.body.classList.toggle("workbench-mode",page.type==='home'&&deskEntered);
   setTheme();
   if (push) {
     history = history.slice(0, cursor + 1);
@@ -295,9 +297,9 @@ function navigate(page, push = true) {
   if(appTitle)appTitle.textContent=page.type==='home'?'系统桌面':page.name;
   if(appEra)appEra.textContent=year();
   document.querySelector('.app-overflow')?.removeAttribute?.('open');
-  if (page.type === "phone") layoutPhoneJavaKeypad();
+  if (page.type === "phone"||page.type === "home") layoutPhoneJavaKeypad();
   if (page.type === "phone" && window.innerWidth <= 600 && !document.body.classList.contains("pocket-expanded")) pocketExpand();
-  if(page.type === "phone") syncPocketControls();
+  if(page.type === "phone"||page.type === "home"){syncPocketControls();syncPhoneSmsSoftkeys();}
   window.scrollTo({ top: 0, behavior: "instant" });
   if (page.type === "archive") return resolveSnapshot(page, requestId);
 }
@@ -436,7 +438,7 @@ function action(a) {
   }
   if (a === "settings") settings();
   if (a === "mobilemenu") mobileMenu();
-  if (a === "home") navigate({ type: "home" });
+  if (a === "home") {deskEntered=false;phoneState.app="home";document.body.classList.remove("pocket-expanded","pocket-landscape");navigate({ type: "home" });}
   if (a === "favorites") favorites();
   if (a === "refresh") navigate(current, false);
   if (a === "newtab") newBrowserTab();
