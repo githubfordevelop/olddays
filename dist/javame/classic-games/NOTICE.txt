@@ -1,0 +1,2 @@
+Historical game data from third-party archives, not original Olddays games and not covered by the MIT license of open-games. Original copyright notices are retained. Source, exact version and SHA-256 are in catalog.json.
+Pokemon Crystal GBC data was extracted from the MeBoy archive. No MeBoy emulator class files are redistributed here. Game data is not part of the GameBoy-Online license.

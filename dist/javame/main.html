@@ -16,7 +16,7 @@
   <script type="text/javascript" src="config/default.js" defer></script>
   <!-- #if CONFIG -->
   <!-- #endif -->
-  <script type="text/javascript" src="config/build.js" defer></script>
+  <script type="text/javascript" src="config/build.js?v=rms2" defer></script>
   <script type="text/javascript" src="config/urlparams.js" defer></script>
 
   <!-- #if PROFILE > 0 -->
@@ -30,7 +30,7 @@
   <script type="text/javascript" src="polyfill/IndexedDB-getAll-shim.js" defer></script>
 
   <!-- Load compiled-method-cache.js separately because j2me.js depends on it. -->
-  <script type="text/javascript" src="libs/compiled-method-cache.js" defer></script>
+  <script type="text/javascript" src="libs/compiled-method-cache.js?v=rms2" defer></script>
 
   <!-- Load bld/native.js separately because adding it to main-all.js
      - throws an "asm.js type error". -->
@@ -50,7 +50,7 @@
   <!-- Load the rest of the scripts from the combined script main-all.js
      - to improve startup and runtime performance.  See Makefile for the list
      - of files that get combined into this one. -->
-  <script type="text/javascript" src="bld/main-all.js" defer></script>
+  <script type="text/javascript" src="bld/main-all.js?v=0.8.6" defer></script>
 </head>
 
 <body>

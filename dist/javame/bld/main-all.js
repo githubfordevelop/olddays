@@ -4446,7 +4446,8 @@ var fs = (function() {
     this.db = null;
   };
 
-  Store.DBNAME = "asyncStorage";
+  var museumStorageKey = new URLSearchParams(location.search).get("storageKey");
+  Store.DBNAME = "asyncStorage" + (museumStorageKey && /^[a-zA-Z0-9_-]{1,100}$/.test(museumStorageKey) ? "-" + museumStorageKey : "");
   Store.DBVERSION = 4;
   Store.DBSTORENAME_1 = "keyvaluepairs";
   Store.DBSTORENAME_2 = "fs";
@@ -19013,7 +19014,7 @@ var getMobileInfo = new Promise(function(resolve, reject) {
 var loadingMIDletPromises = [getMobileInfo];
 var loadingPromises = [initFS];
 
-loadingPromises.push(load("java/classes.jar", "arraybuffer").then(function(data) {
+loadingPromises.push(load("java/classes.jar?v=rms-inline-1", "arraybuffer").then(function(data) {
   JARStore.addBuiltIn("java/classes.jar", data);
   CLASSES.initializeBuiltinClasses();
 }));
@@ -19021,6 +19022,7 @@ loadingPromises.push(load("java/classes.jar", "arraybuffer").then(function(data)
 jars.forEach(function(jar) {
   loadingMIDletPromises.push((jar === "local.jar" && parent.localJarData ? Promise.resolve(parent.localJarData) : load(jar, "arraybuffer")).then(function(data) {
     JARStore.addBuiltIn(jar, data);
+    if (jar === "local.jar" && typeof parent.localJarManifest === "string") processJAD(parent.localJarManifest);
   }));
 });
 

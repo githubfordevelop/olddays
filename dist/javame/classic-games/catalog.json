@@ -1,0 +1,19 @@
+[
+  {
+    "id": "ancient-empires-2",
+    "title": "古代帝国 II",
+    "version": "1.0.2",
+    "source": "https://github.com/ancient-empires/games-download/blob/main/Java/AE2-en.jar",
+    "sha256": "98f6af1dd266dec081fe744f0f4298e0125e7ff3beb5b0970ff09f48350ba7f4",
+    "notice": "第三方历史存档，非官方发布；原游戏权利归原作者。"
+  },
+  {
+    "id": "pokemon-crystal",
+    "title": "宠物小精灵 · 水晶",
+    "version": "Crystal English / GBC compatible core",
+    "source": "https://boostapps.com/games/pokemon-crystal/",
+    "sha256": "fdcc3c8c43813cf8731fc037d2a6d191bac75439c34b24ba1c27526e6acdc8a2",
+    "notice": "第三方历史存档，非官方发布；原游戏权利归原作者。",
+    "format": "GBC"
+  }
+]

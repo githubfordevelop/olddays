@@ -1,1 +1,1 @@
-config.release=true;config.version="olddays-javame-1";
+config.release=true;config.version="olddays-javame-rms2";

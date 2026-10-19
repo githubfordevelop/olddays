@@ -1,0 +1,16 @@
+'use strict';
+var storageKey=parent.localJarStorage;
+var canvas=document.getElementById('screen'),notice=document.getElementById('notice');
+function cout(message,level){if(level===2)console.warn(message);}
+function findValue(key){try{return JSON.parse(localStorage.getItem('olddays-gb-'+storageKey+'-'+key));}catch(_){return null;}}
+function setValue(key,value){localStorage.setItem('olddays-gb-'+storageKey+'-'+key,JSON.stringify(value));}
+function deleteValue(key){localStorage.removeItem('olddays-gb-'+storageKey+'-'+key);}
+settings[0]=false;settings[1]=false;settings[13]=false;
+var noticeTimer;function say(s){clearTimeout(noticeTimer);notice.style.display="block";notice.textContent=s;noticeTimer=setTimeout(()=>notice.style.display="none",4500);}
+function database(){return new Promise((resolve,reject)=>{var r=indexedDB.open('olddays-gb-slots',1);r.onupgradeneeded=()=>r.result.createObjectStore('states');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
+async function saveSlot(){try{autoSave();var state=gameboy.saveState(),db=await database();await new Promise((resolve,reject)=>{var tx=db.transaction('states','readwrite');tx.objectStore('states').put({state:state,time:Date.now()},storageKey);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});db.close();say('即时存档已保存 · 3 读档');}catch(e){say('存档失败：'+e.message);}}
+async function loadSlot(){try{var db=await database();var saved=await new Promise((resolve,reject)=>{var r=db.transaction('states').objectStore('states').get(storageKey);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});db.close();if(!saved){say('尚无即时存档 · 1 保存');return;}clearLastEmulation();gameboy=new GameBoyCore(canvas,'');gameboy.openMBC=openSRAM;gameboy.openRTC=openRTC;gameboy.returnFromState(saved.state);run();say('已恢复 '+new Date(saved.time).toLocaleTimeString()+' 的存档');}catch(e){say('读档失败：'+e.message);}}
+function input(code,down){if(code===57&&down){gameboy.setSpeed(gameboy.emulatorSpeed===1?3:1);say(gameboy.emulatorSpeed+" 倍速 · 9 切换");return;}if(code===49&&down){saveSlot();return;}if(code===51&&down){loadSlot();return;}if(code===42&&down){if(GameBoyEmulatorPlaying()){pause();say('已暂停 · * 继续');}else{run();say('继续游戏');}return;}var key=({'-1':'up','-2':'down','-3':'left','-4':'right','-5':'a','-6':'select','-7':'b',48:'b',35:'start',50:'up',52:'left',54:'right',56:'down',53:'a'})[code];if(key)(down?GameBoyKeyDown:GameBoyKeyUp)(key);}
+window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==parent||!e.data||e.data.type!=='olddays-gb-key')return;input(e.data.code,e.data.down===true);});
+window.addEventListener('pagehide',()=>{autoSave();});document.addEventListener('visibilitychange',()=>{if(document.hidden){autoSave();for(var key of ['up','down','left','right','a','b','start','select'])GameBoyKeyUp(key);}});
+try{var bytes=parent.localGBData;if(!(ArrayBuffer.isView(bytes)))throw Error('请从Java游戏工具栏导入MeBoy JAR');var chunks=[];for(var i=0;i<bytes.length;i+=8192)chunks.push(String.fromCharCode.apply(null,bytes.subarray(i,i+8192)));start(canvas,chunks.join(''));say('5=A · 0=B · #=开始 · 左软键=选择 · 1存档 / 3读档');parent.publishGameStatus('GBC兼容模式 · 1存档 / 3读档',true);}catch(e){say(e.message);}

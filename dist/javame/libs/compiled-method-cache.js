@@ -5,7 +5,8 @@
 
 var CompiledMethodCache = (function() {
   var DEBUG = false;
-  var DATABASE = "CompiledMethodCache";
+  var museumJarIdentity = new URLSearchParams(location.search).get("storageKey") || new URLSearchParams(location.search).get("jars") || "default";
+  var DATABASE = "CompiledMethodCache-olddays-rms2-" + museumJarIdentity.replace(/[^a-zA-Z0-9_.-]/g,"_").slice(0,140);
   var VERSION = 1;
   var OBJECT_STORE = "methods";
   var KEY_PATH = "key";
