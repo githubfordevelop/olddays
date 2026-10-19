@@ -215,7 +215,7 @@ test("source paragraphs and headlines cannot inject HTML into reader pages", () 
   assert.ok(html.includes("&lt;img"));
 });
 
-test("old sites open verified snapshots directly without replacing the homepage", async () => {
+test("old sites embed verified snapshots while keeping the browser shell", async () => {
   const opened = [];
   const b = boot(
     {},
@@ -239,11 +239,24 @@ test("old sites open verified snapshots directly without replacing the homepage"
   await b.run(
     "navigate({type:'archive',name:'新浪',url:'http://www.sina.com.cn/'})",
   );
-  assert.deepEqual(opened, [
-    "https://web.archive.org/web/20040731120000/http://www.sina.com.cn/",
-  ]);
-  assert.equal(b.document.querySelector("#content").innerHTML, before);
-  assert.equal(b.run("current.type"), "home");
+  assert.deepEqual(opened, []);
+  assert.match(
+    b.document.querySelector("#content").innerHTML,
+    /embedded-archive/,
+  );
+  assert.match(
+    b.document.querySelector("#archive-frame-holder").innerHTML,
+    /<iframe/,
+  );
+  assert.match(
+    b.document.querySelector("#archive-frame-holder").innerHTML,
+    /sandbox="allow-scripts allow-same-origin"/,
+  );
+  assert.match(
+    b.document.querySelector("#archive-frame-holder").innerHTML,
+    /20040731120000/,
+  );
+  assert.equal(b.run("current.type"), "archive");
 });
 
 test("direct archive navigation rejects wrong dates, foreign hosts, and stale responses", async () => {
@@ -281,7 +294,7 @@ test("direct archive navigation rejects wrong dates, foreign hosts, and stale re
       "navigate({type:'archive',name:'旧站',url:'http://example.com/'})",
     );
     assert.equal(opened.length, 0);
-    assert.equal(b.run("current.type"), "home");
+    assert.equal(b.run("current.type"), "archive");
   }
   let resolve;
   const opened = [];

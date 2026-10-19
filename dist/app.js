@@ -287,12 +287,6 @@ function setTheme() {
 }
 function navigate(page, push = true) {
   requestId++;
-  if (page.type === "archive") {
-    setTheme();
-    $("#status").textContent = "◷ 正在查找历史页面，找到后直接打开…";
-    toast("正在连接历史网页，无需再次点击");
-    return resolveSnapshot(page, requestId);
-  }
   current = page;
   setTheme();
   if (push) {
@@ -307,7 +301,7 @@ function navigate(page, push = true) {
         ? renderScene(page)
         : page.type === "news"
           ? renderAnnualStory(page)
-          : renderHome();
+          : embeddedArchivePage(page);
   $("#address").value = page.type === "home" ? "archaeo://home" : page.url;
   $("#windowtitle").textContent = page.type === "home" ? "时光首页" : page.name;
   $("#phone-tab-title").textContent =
@@ -316,6 +310,7 @@ function navigate(page, push = true) {
   document.title = `${page.type === "home" ? "时光首页" : page.name} · ${year()} — 考古浏览器`;
   updateNav();
   window.scrollTo({ top: 0, behavior: "instant" });
+  if (page.type === "archive") return resolveSnapshot(page, requestId);
 }
 function updateNav() {
   for (const id of ["back", "mback"]) $("#" + id).disabled = cursor <= 0;
@@ -329,13 +324,14 @@ function move(n) {
   date = history[cursor].date;
   navigate(history[cursor].page, false);
 }
+function embeddedArchivePage(page) {
+  return `<section class="embedded-archive"><div class="embedded-toolbar"><span id="embedded-stamp">正在连接 ${escapeHTML(page.name)} 的历史页面…</span><button data-action="home">返回首页</button><button id="retry">重新载入</button></div><div id="archive-frame-holder" class="archive-frame-holder"><div class="archive-loading">◷ 正在查找 ${date} 及之前、同一年内的快照。找到后会在这里显示。</div></div><p class="embedded-note">历史网页在复古外壳内显示，页面中的链接由存档站提供，后续页面的存档日期可能不同。若显示空白或拒绝连接，可重新载入或换一个时间。</p></section>`;
+}
 function archiveFailure(page, message) {
-  $("#status").textContent = "存档未能直接打开";
-  const calendar = `https://web.archive.org/web/${year()}*/${page.url}`;
-  dialog(
-    "暂时无法打开历史网页",
-    `<p>${escapeHTML(message)}</p><p>当前页面保持不变。可以尝试其他日期，或自行查看所选年份的存档日历。</p><p><a class="primary" href="${escapeHTML(calendar)}" target="_blank" rel="noopener noreferrer">查看 ${year()} 年存档日历 ↗</a></p>`,
-  );
+  $("#status").textContent = "历史页面暂时不可用";
+  $("#embedded-stamp").textContent = message;
+  $("#archive-frame-holder").innerHTML =
+    `<div class="archive-loading"><h2>这页历史暂时没有打开</h2><p>${escapeHTML(message)}</p><p>可以重新载入、换一个时间，或返回首页继续探索。</p></div>`;
 }
 async function resolveSnapshot(p, id) {
   try {
@@ -376,8 +372,11 @@ async function resolveSnapshot(p, id) {
     )
       throw Error("invalid-source");
     target.protocol = "https:";
-    $("#status").textContent = "✓ 已找到历史网页，正在直接打开…";
-    window.location.assign(target.href);
+    $("#embedded-stamp").textContent =
+      `存档日期 ${snap.timestamp.slice(0, 4)}-${snap.timestamp.slice(4, 6)}-${snap.timestamp.slice(6, 8)} · ${p.name}`;
+    $("#archive-frame-holder").innerHTML =
+      `<iframe class="history-frame" title="${escapeHTML(p.name)}历史网页" src="${escapeHTML(target.href)}" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" allow="fullscreen" loading="eager"></iframe>`;
+    $("#status").textContent = "✓ 已连接快照 · 在考古浏览器内阅读";
   } catch (error) {
     if (id !== requestId) return;
     archiveFailure(p, "暂时无法连接历史存档服务，请稍后重试。");
@@ -460,7 +459,7 @@ function action(a) {
   if (a === "about" || a === "sources")
     dialog(
       a === "about" ? "关于考古浏览器" : "历史资料来源",
-      `<p><b>考古浏览器 / FIRST EDITION</b><br>选择一个年份，重新走进那时的互联网。</p><p>浏览器外壳与首页为年代风格重制；站点链接指向 Internet Archive 的真实存档。这里没有生成的历史新闻，也不保证候选站点每年都有存档。</p><p><a href="https://web.archive.org/" target="_blank" rel="noopener noreferrer">Wayback Machine ↗</a> · 快照查询与历史页面<br><a href="https://commoncrawl.org/overview" target="_blank" rel="noopener noreferrer">Common Crawl ↗</a> · 后续可扩展的数据源，尚未接入</p><p>第一版：日期选择、网址查询、跨年份导航、本机收藏、iPhone 适配。外部存档内的后续跳转由来源网站控制，当前不能保证整段浏览严格停留在同一天。</p>`,
+      `<p><b>考古浏览器 / FIRST EDITION</b><br>选择一个年份，重新走进那时的互联网。</p><p>浏览器外壳与首页为年代风格重制；站点链接指向 Internet Archive 的真实存档。这里没有生成的历史新闻，也不保证候选站点每年都有存档。</p><p><a href="https://web.archive.org/" target="_blank" rel="noopener noreferrer">Wayback Machine ↗</a> · 快照查询与历史页面<br><a href="https://commoncrawl.org/overview" target="_blank" rel="noopener noreferrer">Common Crawl ↗</a> · 后续可扩展的数据源，尚未接入</p><p>第一版：日期选择、网址查询、跨年份导航、本机收藏、iPhone 适配。历史网页在外壳内展示，电脑与手机均保留工具栏。部分来源可能限制内嵌；内页后续跳转由存档站控制，不能保证整段浏览严格停留在同一天。</p>`,
     );
   if (a === "install")
     dialog(
