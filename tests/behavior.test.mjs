@@ -83,6 +83,7 @@ function boot(initial = {}, runtime = {}) {
     "javame-room.js",
     "era-posters.js",
     "anime-club.js",
+    "magazine-kiosk.js",
     "era-home.js",
 
   ])
@@ -425,3 +426,5 @@ test('community choices respect the selected year and escape local replies',()=>
 test('skin delegated buttons cannot match the body appearance attribute',()=>{const source=readFileSync('dist/capture-studio.js','utf8');assert.match(source,/button\[data-world-skin\]/);assert.doesNotMatch(source,/closest\('\[data-open-skins\],\[data-world-skin\]/);});
 
 test('anime discussion respects era, stores only a local choice and never reveals future solutions',()=>{const {run}=boot();run('date="1996-08-01"');assert.doesNotMatch(run('renderAnimeClub()'),/鸣人的身世/);run('date="2004-08-01";animeTopic="onepiece-sky";animeChoices[animeTopic]=1');assert.match(run('renderAnimeClub()'),/空岛/);assert.match(run('renderAnimeClub()'),/不公布/);assert.match(run('renderAnimeClub()'),/class="selected"/);});
+
+test('magazine kiosk gates launches, searches titles and marks its original catalog cards',()=>{const {run}=boot();run('date="2004-08-01"');assert.equal(run('kioskAvailable().some(m=>m.id==="manke")'),false);run('date="2006-08-01";kioskQuery="故事会"');assert.equal(run('kioskVisible().length'),1);assert.match(run('renderMagazineKiosk()'),/非原刊封面/);run('kioskSelected="manke"');assert.match(run('renderMagazineKiosk()'),/不是该杂志原文/);});
