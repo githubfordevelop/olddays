@@ -17,7 +17,7 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="stylesheet" href="style.css?v=0.3.0" />
+    <link rel="stylesheet" href="style.css?v=0.3.1" />
     <title>考古浏览器 — 回到互联网的从前</title>
   </head>
   <body>
@@ -31,7 +31,7 @@
           <span class="phone-wordmark"
             ><b id="phone-mark">UC</b
             ><span id="phone-name">考古 · UC 经典</span></span
-          ><button data-action="settings" aria-label="浏览器设置">⚙</button>
+          ><button data-music-toggle data-music-compact aria-label="切换配乐">♪</button><button data-action="settings" aria-label="浏览器设置">⚙</button>
         </header>
         <div class="titlebar">
           <span
@@ -65,7 +65,7 @@
           ><i></i
           ><button class="tool" data-action="favorites">
             <span class="tool-icon gold">★</span><small>收藏夹</small></button
-          ><button class="tool" data-action="history">
+          ><button class="tool" data-music-toggle data-music-compact aria-label="切换配乐">♪ 配乐</button><button class="tool" data-action="history">
             <span class="tool-icon blue">◷</span><small>历史</small>
           </button>
           <div class="toolbar-caption">
@@ -117,15 +117,17 @@
       </div>
       <div id="dialogbody"></div>
     </dialog>
+    <audio id="retro-audio" src="audio/nostalgia-original.mp3" loop preload="none"></audio>
     <div id="toast" role="status"></div>
-    <script src="annual-news.js?v=0.3.0"></script>
-    <script src="annual-news-extra.js?v=0.3.0"></script>
-    <script src="news-articles.js?v=0.3.0"></script>
-    <script src="mobile-scenes.js?v=0.3.0"></script>
-    <script src="site-catalog.js?v=0.3.0"></script>
-    <script src="yearbook.js?v=0.3.0"></script>
-    <script src="news-center.js?v=0.3.0"></script>
-    <script src="browser-features.js?v=0.3.0"></script>
-    <script src="app.js?v=0.3.0"></script>
+    <script src="annual-news.js?v=0.3.1"></script>
+    <script src="annual-news-extra.js?v=0.3.1"></script>
+    <script src="news-articles.js?v=0.3.1"></script>
+    <script src="mobile-scenes.js?v=0.3.1"></script>
+    <script src="site-catalog.js?v=0.3.1"></script>
+    <script src="yearbook.js?v=0.3.1"></script>
+    <script src="news-center.js?v=0.3.1"></script>
+    <script src="browser-features.js?v=0.3.1"></script>
+    <script src="era-media.js?v=0.3.1"></script>
+    <script src="app.js?v=0.3.1"></script>
   </body>
 </html>

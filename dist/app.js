@@ -160,11 +160,11 @@ function settings() {
 function mobileMenu() {
   dialog(
     "浏览器菜单",
-    `<div class="phone-menu"><button data-menu-action="newtab"><span>＋</span>新建标签页</button><button data-menu-action="newscenter"><span>▤</span>新闻中心</button><button data-menu-action="stop"><span>✕</span>停止加载</button><button data-menu-action="home"><span>⌂</span>时光首页</button><button data-menu-action="favorites"><span>☆</span>我的收藏</button><button data-menu-action="history"><span>◷</span>浏览记录</button><button data-menu-action="date"><span>▦</span>穿越日期</button><button data-menu-action="refresh"><span>⟳</span>刷新页面</button><button data-menu-action="settings"><span>⚙</span>浏览器设置</button><button data-scene="homeworld"><span>⌂</span>家园空间</button><button data-scene="garden"><span>❀</span>开心菜园</button><button data-scene="wutang"><span>武</span>精武堂闯关</button></div><div class="menu-foot">${mobileSkins[preferences.skin].name}风格 · ${date}</div>`,
+    `<div class="phone-menu"><button data-era-media><span>♫</span>影音与软件</button><button data-menu-action="newtab"><span>＋</span>新建标签页</button><button data-menu-action="newscenter"><span>▤</span>新闻中心</button><button data-menu-action="stop"><span>✕</span>停止加载</button><button data-menu-action="home"><span>⌂</span>时光首页</button><button data-menu-action="favorites"><span>☆</span>我的收藏</button><button data-menu-action="history"><span>◷</span>浏览记录</button><button data-menu-action="date"><span>▦</span>穿越日期</button><button data-menu-action="refresh"><span>⟳</span>刷新页面</button><button data-menu-action="settings"><span>⚙</span>浏览器设置</button><button data-scene="homeworld"><span>⌂</span>家园空间</button><button data-scene="garden"><span>❀</span>开心菜园</button><button data-scene="wutang"><span>武</span>精武堂闯关</button></div><div class="menu-foot">${mobileSkins[preferences.skin].name}风格 · ${date}</div>`,
   );
 }
 function mobileHome() {
-  return `<section class="wap-home"><div class="wap-welcome"><b>时光导航</b><span>${date.replaceAll("-", ".")} · 历史互联网</span></div><div class="wap-search"><span>⌕</span><button id="focus-address">输入旧网址，回到那一年…</button><button data-action="settings" aria-label="切换浏览器皮肤">换肤</button></div><nav class="nostalgia-channels"><button data-scroll-news>大事记</button><button data-section="mobile-catalog">旧站大全</button><button data-scene="homeworld">家园</button><button data-scene="friends">朋友</button><button data-scene="garden">种菜</button><button data-scene="wutang">精武堂</button><button data-scene="novels">小说</button><a href="https://web.archive.org/web/${year()}*/http://www.mop.com/" data-site="www.mop.com" data-name="猫扑大杂烩">猫扑</a></nav><div class="wap-caption">常用网址<span>经典入口 · 存档覆盖以来源为准</span></div><div class="speed-dial">${[
+  return `<section class="wap-home"><div class="wap-welcome"><b>时光导航</b><span>${date.replaceAll("-", ".")} · 历史互联网</span></div><div class="wap-search"><span>⌕</span><button id="focus-address">输入旧网址，回到那一年…</button><button data-action="settings" aria-label="切换浏览器皮肤">换肤</button></div><nav class="nostalgia-channels"><button data-scroll-news>大事记</button><button data-era-media>影音软件</button><button data-section="mobile-catalog">旧站大全</button><button data-scene="homeworld">家园</button><button data-scene="friends">朋友</button><button data-scene="garden">种菜</button><button data-scene="wutang">精武堂</button><button data-scene="novels">小说</button><a href="https://web.archive.org/web/${year()}*/http://www.mop.com/" data-site="www.mop.com" data-name="猫扑大杂烩">猫扑</a></nav><div class="wap-caption">常用网址<span>经典入口 · 存档覆盖以来源为准</span></div><div class="speed-dial">${[
     ["新浪", "www.sina.com.cn", "新"],
     ["网易", "www.163.com", "网"],
     ["搜狐", "www.sohu.com", "狐"],
@@ -209,7 +209,7 @@ function siteLink(name, url, extra = "") {
 }
 function renderHome() {
   const e = era();
-  return `${mobileHome()}<div class="portal"><div class="portal-topline"><span>欢迎回来，远方的网友。</span><span class="online">● 时光连接已建立 · ${year()}</span></div><header class="portal-head"><div class="wordmark"><div class="logo" aria-hidden="true"></div><div><div class="brand">考古浏览器</div><div class="brand-en">ARCHAEO BROWSER</div></div></div><div class="tagline">在地址栏输入一个网址，<br>在时间里找回一段记忆。</div><div class="head-date"><b>${year()}</b><small>THE INTERNET, THEN.</small></div></header><nav class="portal-nav"><button class="active" data-action="home">时光首页</button><button data-news-center>新闻中心</button><button data-section="desktop-catalog-forum">论坛社区</button><button data-section="desktop-catalog-life">个人天地</button><button data-section="desktop-catalog">旧站大全</button><button data-action="favorites">我的收藏</button></nav><div class="welcome-strip"><span>✉ 欢迎来到过去。<b> 今天，你想回到哪一年？</b></span><span>EST. IN MEMORIES / 001</span></div><section class="retro-bulletin"><b>欢迎来到 ${year()} 年的互联网</b><span>${e.memo}</span><button data-news-center>新闻中心 &gt;&gt;</button></section><div class="year-selector"><span>选择你的年代 →</span>${Object.keys(
+  return `${mobileHome()}<div class="portal"><div class="portal-topline"><span>欢迎回来，远方的网友。</span><span class="online">● 时光连接已建立 · ${year()}</span></div><header class="portal-head"><div class="wordmark"><div class="logo" aria-hidden="true"></div><div><div class="brand">考古浏览器</div><div class="brand-en">ARCHAEO BROWSER</div></div></div><div class="tagline">在地址栏输入一个网址，<br>在时间里找回一段记忆。</div><div class="head-date"><b>${year()}</b><small>THE INTERNET, THEN.</small></div></header><nav class="portal-nav"><button class="active" data-action="home">时光首页</button><button data-news-center>新闻中心</button><button data-era-media>影音软件</button><button data-section="desktop-catalog-forum">论坛社区</button><button data-section="desktop-catalog-life">个人天地</button><button data-section="desktop-catalog">旧站大全</button><button data-action="favorites">我的收藏</button></nav><div class="welcome-strip"><span>✉ 欢迎来到过去。<b> 今天，你想回到哪一年？</b></span><span>EST. IN MEMORIES / 001</span></div><section class="retro-bulletin"><b>欢迎来到 ${year()} 年的互联网</b><span>${e.memo}</span><button data-news-center>新闻中心 &gt;&gt;</button></section><div class="year-selector"><span>选择你的年代 →</span>${Object.keys(
     eras,
   )
     .map(
@@ -264,7 +264,9 @@ function navigate(page, push = true) {
       ? renderHome()
       : page.type === "scene"
         ? renderScene(page)
-        : page.type === "newscenter"
+        : page.type === "media"
+          ? renderEraMedia()
+          : page.type === "newscenter"
           ? renderNewsCenter(page)
           : page.type === "yearrecord"
             ? renderYearRecord(page)
@@ -527,6 +529,7 @@ function persist() {
 $("#addressform").addEventListener("submit", (e) => {
   e.preventDefault();
   const v = $("#address").value.trim();
+  if(v === "archaeo://media"){openEraMedia();return;}
   if (v === "archaeo://home" || v === "") {
     navigate({ type: "home" });
     return;

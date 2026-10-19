@@ -70,6 +70,7 @@ function boot(initial = {}, runtime = {}) {
     "yearbook.js",
     "news-center.js",
     "browser-features.js",
+    "era-media.js",
   ])
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
       filename: file,
@@ -390,4 +391,13 @@ test("lazy yearbook loads just one requested year and ignores a stale screen", a
  other.run('delete yearbook["2004"];openNewsCenter();navigate({type:"home"})');
  resolve({ok:true,json:async()=>rows});await other.run('ensureYearbook("2004")');
  assert.equal(other.run('current.type'),'home');
+});
+
+test("media room filters later films and links real historical site entries",()=>{
+ const app=boot();
+ const early=app.run('date="2004-08-01";renderEraMedia()');
+ assert.match(early,/原创8位合成旋律/);assert.match(early,/www.ttplayer.com/);assert.match(early,/www.qidian.com/);assert.doesNotMatch(early,/<video /);
+ const later=app.run('date="2008-08-01";renderEraMedia()');
+ assert.equal((later.match(/<video /g)||[]).length,2);assert.match(later,/CC BY/);assert.match(later,/preload="none"/);
+ app.run('openEraMedia()');assert.equal(app.run('current.type'),'media');assert.equal(app.run('current.url'),'archaeo://media');
 });

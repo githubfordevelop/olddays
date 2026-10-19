@@ -3787,3 +3787,27 @@ body { font-family:Tahoma,"SimSun","Songti SC",serif; background:#3a6ea5; }
  .center-pagination { gap:8px; }
  .year-record h1 { font-size:21px; }
 }
+.era-media { padding:16px; background:white; color:#202020; }
+.media-head { border-bottom:4px double #133c77; padding:15px 0; display:flex; flex-wrap:wrap; gap:20px; align-items:baseline; color:#123c78; }
+.media-head strong { font-size:27px; }
+.era-media h2 { font-size:17px; border-bottom:1px solid #8da4c3; background:#edf3fc; padding:8px; margin-top:25px; color:#143e7b; }
+.era-media-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+.era-media-entry { padding:10px; border-bottom:1px dotted #bbb; min-width:0; }
+.era-media-entry a { display:block; text-decoration:underline; }
+.era-media-entry small { display:block; color:#777; line-height:1.8; margin-top:5px; }
+.winamp-player { background:#22252e; color:#a0f653; max-width:440px; padding:7px; border:3px outset #8c8d99; font-family:monospace; margin:20px auto; }
+.winamp-title { color:#e0d6c6; border-bottom:2px groove #999; padding:4px; font-size:13px; }
+.winamp-title small { float:right; font-size:10px; }
+.winamp-display { margin:10px 2px; padding:10px; background:#061007; border:2px inset #777; }
+.winamp-display span,.winamp-display b,.winamp-display i { display:block; margin:5px 0; }
+.winamp-display i { color:#29dd5a; font-size:24px; letter-spacing:4px; }
+.winamp-controls { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.winamp-controls button { padding:7px; background:#c4c5c8; border:2px outset #eee; color:#222; }
+.winamp-controls input { max-width:110px; }
+.winamp-player p { color:#bbb; font-size:10px; line-height:1.7; }
+.era-film { border:1px solid #aaa; padding:12px; margin:14px 0; }
+.era-film video { display:block; width:100%; max-height:480px; background:#151515; aspect-ratio:16/9; }
+.era-film p,.era-film small { font-size:11px; color:#666; line-height:1.7; }
+.media-play-scenes { display:flex; gap:10px; flex-wrap:wrap; margin:20px 0; }
+.media-play-scenes button { padding:10px; }
+@media(max-width:600px){.era-media{padding:10px}.media-head strong{font-size:22px}.era-media-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.era-media-entry{padding:8px 4px}.era-media-entry a{min-height:25px}.era-media h2{font-size:15px}.era-film{padding:7px}.winamp-player{width:100%}}
