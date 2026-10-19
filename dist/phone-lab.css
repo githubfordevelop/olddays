@@ -157,3 +157,16 @@
 .device-iphone .device-viewport.wallpaper-blue>.phone-standby{background:radial-gradient(ellipse at 50% 25%,#405067,#07121a 78%)!important;color:#fff}
 .device-mono .device-viewport{filter:grayscale(1) sepia(1) hue-rotate(30deg) saturate(.8)}
 .device-mono .device-viewport>.phone-standby{background:#aebd81!important}
+.museum-device:has(.phone-hardware-gamepad) .device-softkeys{display:none}
+@media(orientation:landscape) and (max-height:600px){
+ .pocket-expanded .museum-device:has(.phone-hardware-gamepad){padding:4px}
+ .pocket-expanded .museum-device:has(.phone-hardware-gamepad) .device-top{display:none}
+ .pocket-expanded .museum-device:has(.phone-hardware-gamepad) .device-screen{border-width:3px}
+ .pocket-expanded .phone-hardware-gamepad{flex-basis:78px;min-height:78px;padding:4px 10px}
+ .hardware-navigation{height:68px;grid-template-columns:50px 108px 50px}
+ .hardware-direction{grid-template-rows:repeat(3,21px);gap:2px}
+ .phone-hardware-gamepad .hardware-direction button{height:21px;min-height:21px;font-size:10px}
+ .phone-hardware-gamepad .hardware-soft-left,.phone-hardware-gamepad .hardware-soft-right{height:30px;min-height:30px}
+ .hardware-numbers{grid-template-rows:repeat(2,30px);gap:6px}
+ .phone-hardware-gamepad .hardware-numbers button{height:30px;min-height:30px}
+}
