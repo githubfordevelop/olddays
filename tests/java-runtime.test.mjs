@@ -45,3 +45,15 @@ test('short taps have a minimum hold and repeated taps do not get swallowed',()=
  ctx.setJavaKey(53,true);assert.deepEqual(events,[[53,true],[53,false],[53,true]]);
  ctx.releaseJavaKeys();assert.deepEqual(events.at(-1),[53,false]);assert.equal(timers.size,0);
 });
+
+
+test('silent audio bridge resolves time queries instead of leaving Java threads waiting',()=>{
+ const source=readFileSync('dist/javame/wrapper.js','utf8');
+ const a=source.indexOf('var silentAudioPipes='),b=source.indexOf('function launchDemo()',a);const callbacks=[],replies=[];
+ const ctx=vm.createContext({Set,JSON,location:{origin:'http://museum'},console,frame:{contentWindow:{postMessage:r=>replies.push(r)}},setTimeout:f=>callbacks.push(f)});
+ vm.runInContext(source.slice(a,b),ctx);
+ const send=x=>ctx.DumbPipe.handleEvent({detail:{message:JSON.stringify(x)}});
+ send({command:'open',type:'audioplayer',pipeID:2});send({command:'message',pipeID:2,message:{type:'getDuration'}});send({command:'message',pipeID:2,message:{type:'getMediaTime'}});callbacks.splice(0).forEach(f=>f());
+ assert.equal(replies[0].message.type,'duration');assert.equal(replies[0].message.data,-1);assert.equal(replies[1].message.type,'mediaTime');assert.equal(replies[1].message.data,0);
+ send({command:'close',pipeID:2});send({command:'message',pipeID:2,message:{type:'getDuration'}});assert.equal(callbacks.length,0);
+});
