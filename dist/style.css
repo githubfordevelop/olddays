@@ -3835,7 +3835,7 @@ body { font-family:Tahoma,"SimSun","Songti SC",serif; background:#3a6ea5; }
  .time-note { margin-left:8px; padding-left:8px; }
 }
 @media (max-width:600px) {
- .computer .addressbar input { font-size:16px; }
+ body .computer .addressbar input { font-size:16px; }
  .addressbar .go { min-width:44px; height:36px; }
  .phone-header .phone-wordmark { margin-right:auto; min-width:0; }
  .phone-header > button { flex-shrink:0; min-width:40px; min-height:36px; margin-left:6px; }
