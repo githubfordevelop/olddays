@@ -1,0 +1,2 @@
+/* Public-domain classics; Wikisource attribution is preserved per chapter. */
+const classicShelf = [{"id":"journey","title":"西游记","author":"吴承恩","label":"公版经典 · 前五回","license":"经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。","chapterCount":5,"characters":29304},{"id":"kingdoms","title":"三国演义","author":"罗贯中","label":"公版经典 · 前五回","license":"经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。","chapterCount":5,"characters":23663},{"id":"redchamber","title":"红楼梦","author":"曹雪芹","label":"公版经典 · 前五回","license":"经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。","chapterCount":5,"characters":35897}];

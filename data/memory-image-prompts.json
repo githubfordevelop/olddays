@@ -1,0 +1,20 @@
+[
+  {
+    "id": "night",
+    "tool": "built-in image_gen",
+    "prompt": "2004 Chinese student bedroom at 01:17, glowing silver feature phone under blue quilt, rainy amber-lit window, notebook, wired earbuds, grainy nostalgic photo illustration. No legible text, logos, modern gadgets or watermark.",
+    "asset": "images/memories/night.jpg"
+  },
+  {
+    "id": "campus",
+    "tool": "built-in image_gen",
+    "prompt": "2005 Chinese secondary school after evening study, empty worn basketball court, bicycle, warm classroom windows, orange-pink dusk, early digital camera grain. No text, modern gadgets or watermark.",
+    "asset": "images/memories/campus.jpg"
+  },
+  {
+    "id": "station",
+    "tool": "built-in image_gen",
+    "prompt": "2003 Chinese county bus station at night, green coach, wet pavement under tungsten lamps, public telephone booth, suitcase and paper ticket, grainy early digital camera nostalgia. No legible text, logos or watermark.",
+    "asset": "images/memories/station.jpg"
+  }
+]

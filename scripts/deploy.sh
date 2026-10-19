@@ -31,7 +31,17 @@ sha="$2"
 release="$root/releases/$sha"
 test -s "$release/index.html"
 test -s "$release/app.js"
+previous="$(readlink "$root/current" || true)"
+printf '{"commit":"%s","deployedAt":"%s","transport":"ssh"}\n' "$sha" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$release/version.json"
 ln -sfn "$release" "$root/.current-$sha"
 mv -Tf "$root/.current-$sha" "$root/current"
-printf 'Deployed release %s\n' "$sha"
+if ! curl -fsS --max-time 15 http://127.0.0.1/version.json | grep -Fq "$sha" || ! curl -fsS --max-time 15 http://127.0.0.1/ >/dev/null; then
+  if [ -n "$previous" ] && [ -d "$previous" ]; then
+    ln -sfn "$previous" "$root/.rollback-$sha"
+    mv -Tf "$root/.rollback-$sha" "$root/current"
+  fi
+  echo 'Health check failed; previous release restored when available' >&2
+  exit 1
+fi
+printf 'Deployed and verified release %s\n' "$sha"
 REMOTE

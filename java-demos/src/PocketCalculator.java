@@ -1,0 +1,12 @@
+import javax.microedition.midlet.MIDlet;
+import javax.microedition.lcdui.*;
+/** Original Canvas calculator for the offline MIDP museum. */
+public class PocketCalculator extends MIDlet {
+ public void startApp(){Display.getDisplay(this).setCurrent(new Pad());}public void pauseApp(){}public void destroyApp(boolean b){}
+ class Pad extends Canvas {String input="0",status="READY";double first;char op=' ';boolean fresh=true;String[] keys={"7","8","9","/","4","5","6","x","1","2","3","-","C","0","=","+"};Pad(){setFullScreenMode(true);}
+ void press(String k){try{if(k.equals("C")){input="0";fresh=true;op=' ';status="CLEARED";}else if("+-x/".indexOf(k)>=0){first=Double.parseDouble(input);op=k.charAt(0);fresh=true;status=input+" "+op;}else if(k.equals("=")){double n=Double.parseDouble(input),v=n;if(op=='+')v=first+n;if(op=='-')v=first-n;if(op=='x')v=first*n;if(op=='/'){if(n==0){input="DIV / 0";fresh=true;repaint();return;}v=first/n;}input=String.valueOf(v);if(input.endsWith(".0"))input=input.substring(0,input.length()-2);op=' ';fresh=true;status="RESULT";}else{if(fresh||input.equals("0")){input=k;fresh=false;}else if(input.length()<14)input+=k;}}catch(Exception e){input="ERROR";fresh=true;}repaint();}
+ protected void keyPressed(int k){if(k==119)k='2';if(k==115)k='8';if(k==97)k='4';if(k==100)k='6';if(k==32)k='=';if(k>='0'&&k<='9')press(String.valueOf((char)k));else if(k=='*')press("C");else if(k=='#')press("+");else if(k=='=')press("=");}
+ protected void pointerPressed(int x,int y){int top=100,ch=(getHeight()-top-20)/4,cw=getWidth()/4;if(y>=top&&y<top+ch*4&&x>=0&&x<cw*4)press(keys[(y-top)/ch*4+x/cw]);}
+ protected void paint(Graphics g){int w=getWidth(),h=getHeight(),top=100,ch=(h-top-20)/4,cw=w/4;g.setColor(0xc8cfb7);g.fillRect(0,0,w,h);g.setColor(0x354b3a);g.drawString("POCKET CALCULATOR",w/2,8,Graphics.TOP|Graphics.HCENTER);g.drawString(status,10,30,Graphics.TOP|Graphics.LEFT);g.setColor(0xe5ead3);g.fillRect(8,49,w-16,36);g.setColor(0x273a2b);g.setFont(Font.getFont(Font.FACE_MONOSPACE,Font.STYLE_BOLD,Font.SIZE_LARGE));g.drawString(input,w-15,55,Graphics.TOP|Graphics.RIGHT);g.setFont(Font.getDefaultFont());for(int i=0;i<16;i++){int x=i%4*cw,y=top+i/4*ch;g.setColor(i%4==3?0x8caa8d:0xe4e4d3);g.fillRoundRect(x+3,y+3,cw-6,ch-6,7,7);g.setColor(0x344b38);g.drawString(keys[i],x+cw/2,y+ch/2-7,Graphics.TOP|Graphics.HCENTER);}g.drawString("TAP KEYS / * CLEAR / # PLUS",w/2,h-16,Graphics.TOP|Graphics.HCENTER);}
+ }
+}

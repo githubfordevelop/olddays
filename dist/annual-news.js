@@ -320,7 +320,7 @@ function renderAnnualStory(page) {
     : "";
   return `<article class="historical-article portal-article" data-era="${Number(y) < 2008 ? "early" : Number(y) < 2014 ? "classic" : "modern"}">
     <div class="portal-masthead"><strong>考古资讯<span>NEWS · ${y}</span></strong><small>把那一年的世界，重新读一遍</small></div>
-    <nav class="portal-nav" aria-label="新闻栏目"><button data-action="home">新闻首页</button><span>国内 · 国际 · 科技 · 体育 · 社会</span><a href="https://github.com/githubfordevelop/olddays/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">加入编辑部</a></nav>
+    <nav class="portal-nav" aria-label="新闻栏目"><button data-action="home">新闻首页</button><span>国内 · 国际 · 科技 · 体育 · 社会</span><button data-community="tianya">社区客厅</button></nav>
     <div class="article-paper-top"><span>考古资讯 &gt; ${y}年档案 &gt; 正文</span><button data-action="home">返回年度首页</button></div>
     <div class="portal-columns"><div class="portal-main"><header><div class="article-section">${y} 年度新闻档案</div><h1>${escapeHTML(event[1])}</h1><div class="article-meta"><span>${y}年 · ${escapeHTML(event[0])}</span><span>资料整理 / 考古浏览器</span></div></header>
     <div class="article-toolbar"><span>正文阅读</span><button data-article-size="small" aria-label="小号正文字体">小</button><button data-article-size="normal" aria-label="标准正文字体">中</button><button data-article-size="large" aria-label="大号正文字体">大</button><span>约${Math.max(1, Math.ceil(textLength / 400))}分钟</span></div>
@@ -330,7 +330,7 @@ function renderAnnualStory(page) {
     <div class="article-end">—— 本篇资料阅读完毕 ——</div>
     <section class="article-source"><h2>资料来源与阅读说明</h2><p>${escapeHTML(sourceName)}</p><a class="primary" href="${escapeHTML(source)}" target="_blank" rel="noopener noreferrer">查看完整资料 ↗</a>${license}<p class="scene-note">事件标题为编辑拟定，正文为所列条目的节选，原条目可能讨论更长的时间范围。欢迎附可靠出处提交勘误。</p></section>
     <nav class="article-pagination" aria-label="上一篇和下一篇">${i > 0 ? storyLink(i - 1, "上一篇：") : "<span>本年度第一篇</span>"}${i < rows.length - 1 ? storyLink(i + 1, "下一篇：") : "<span>本年度最后一篇</span>"}</nav>
-    <section class="article-invite"><h2>这份互联网记忆，等你来补完</h2><p>会写代码、记得旧网址、愿意查资料，或者只是想帮忙试一试手机，都欢迎加入。</p><a href="https://github.com/githubfordevelop/olddays/issues/new/choose" target="_blank" rel="noopener noreferrer">我要参与 / 提交线索</a><a href="https://github.com/githubfordevelop/olddays/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">查看参与指南</a></section></div>
+    <section class="article-invite"><h2>读完新闻，去社区坐一坐</h2><p>那一年，你在哪里，又记得哪些故事？在本机社区留下一句回忆，或去图文馆继续夜读。</p><button data-community="tianya">进入社区客厅</button><button data-memory-gallery>深夜图文馆</button></section></div>
     <aside class="portal-sidebar"><section class="article-facts"><h2>事件资料卡</h2><dl>${facts.map(([k, v]) => `<div><dt>${escapeHTML(k)}</dt><dd>${escapeHTML(v)}</dd></div>`).join("")}</dl></section><section class="article-related"><h2>${y}年 · 其他大事</h2>${related.map(({ j }) => storyLink(j, "")).join("")}</section><div class="portal-stamp">OLD DAYS<br>${y}<small>历史资料 · 共同整理</small></div></aside></div>
     <footer class="portal-footer">考古资讯 · 记忆可以重访，历史需要查证。<br>开源共建 / Olddays</footer></article>`;
 }

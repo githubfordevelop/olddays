@@ -71,6 +71,18 @@ function boot(initial = {}, runtime = {}) {
     "news-center.js",
     "browser-features.js",
     "era-media.js",
+    "classic-shelf.js",
+    "era-adverts.js",
+    "phone-lab.js",
+    "pocket-games.js",
+    "reading-room.js",
+    "capture-studio.js",
+    "media-salon.js",
+    "memory-gallery.js",
+    "community-room.js",
+    "javame-room.js",
+    "era-home.js",
+
   ])
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
       filename: file,
@@ -209,7 +221,7 @@ test("all 300 articles contain substantive attributed text and reader navigation
     assert.match(html, /CC BY-SA 4.0/);
     assert.match(html, /data-article-size="large"/);
     assert.match(html, /正文目录/);
-    assert.match(html, /加入编辑部/);
+    assert.match(html, /社区客厅/);
     assert.match(html, /article-pagination/);
   }
 });
@@ -396,9 +408,16 @@ test("lazy yearbook loads just one requested year and ignores a stale screen", a
 test("media room filters later films and links real historical site entries",()=>{
  const app=boot();
  const early=app.run('date="2004-08-01";renderEraMedia()');
- assert.match(early,/原创8位合成旋律/);assert.match(early,/www.ttplayer.com/);assert.match(early,/www.qidian.com/);assert.doesNotMatch(early,/<video /);
+ assert.match(early,/原创8位合成旋律/);assert.match(early,/www.ttplayer.com/);assert.match(early,/www.qidian.com/);assert.match(early,/NASA/);assert.doesNotMatch(early,/Elephants Dream/);
  const later=app.run('date="2008-08-01";renderEraMedia()');
- assert.equal((later.match(/<video /g)||[]).length,2);assert.match(later,/CC BY/);assert.match(later,/preload="none"/);
+ assert.equal((later.match(/<video /g)||[]).length,4);assert.match(later,/CC BY/);assert.match(later,/preload="none"/);
  app.run('openEraMedia()');assert.equal(app.run('current.type'),'media');assert.equal(app.run('current.url'),'archaeo://media');
  app.run('applyDate("2010-08-01")');assert.match(app.run('current.name'),/2010/);
 });
+
+test('snake moves, rejects reversal, scores food and ends on a wall',()=>{const {run}=boot();run('resetSnake();snake.running=true;snakeTurn("left");stepSnake()');assert.equal(run('snake.body[0].x'),5);run('snake.food={x:6,y:5};stepSnake()');assert.equal(run('snake.score'),10);assert.equal(run('snake.body.length'),4);run('for(let i=0;i<20;i++)stepSnake()');assert.equal(run('snake.over'),true);assert.equal(run('snake.running'),false);});
+test('mines guarantee a safe first click and never create duplicate mines',()=>{const {run}=boot();run('resetMines();revealMine(0)');assert.equal(run('arcade.mines.includes(0)'),false);assert.equal(run('new Set(arcade.mines).size'),8);assert.equal(run('arcade.revealed.includes(0)'),true);run('revealMine(NaN)');assert.equal(run('arcade.revealed.every(Number.isInteger)'),true);});
+test('SMS remains local, bounded and safely rendered',()=>{const {run}=boot();run('sendPhoneSms("壁纸01");sendPhoneSms("<img src=x onerror=1>");phoneState.app="sms"');assert.equal(run('phoneState.wallpaper'),'blue');assert.match(run('phoneScreen()'),/&lt;img/);assert.doesNotMatch(run('phoneScreen()'),/<img src=x/);run('for(let i=0;i<20;i++)sendPhoneSms("hello")');assert.equal(run('phoneState.sent.length'),12);});
+test('picture search matches story text, filters tags and returns full local detail',()=>{const {run}=boot();run('galleryQuery="短信";galleryTag="全部"');assert.ok(run('filteredPictures().length')>=1);run('galleryTag="校园"');assert.equal(run('filteredPictures().every(s=>s.tag==="校园")'),true);run('galleryQuery="no-such-memory-2384"');assert.equal(run('filteredPictures().length'),0);assert.match(run('renderPictureStory({story:"one-seventeen"})'),/草稿箱/);assert.ok(run('pictureStories.every(s=>s.text.join("").length>500)'));});
+test('community choices respect the selected year and escape local replies',()=>{const {run}=boot({'archaeo-community-replies':JSON.stringify({'tianya-0':['<script>alert(1)</script>']})});run('date="2004-08-01"');assert.equal(run('communityAvailable().some(c=>c.id==="qzone")'),false);run('communityThread=0');assert.match(run('renderCommunity()'),/&lt;script&gt;/);assert.doesNotMatch(run('renderCommunity()'),/<script>alert/);run('date="2011-01-01"');assert.equal(run('communityAvailable().some(c=>c.id==="pengyou")'),true);});
+test('skin delegated buttons cannot match the body appearance attribute',()=>{const source=readFileSync('dist/capture-studio.js','utf8');assert.match(source,/button\[data-world-skin\]/);assert.doesNotMatch(source,/closest\('\[data-open-skins\],\[data-world-skin\]/);});

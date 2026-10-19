@@ -1,58 +1,30 @@
-# GitHub → Linux 服务器
+# 私有 GitHub 仓库 → Linux 服务器
 
-目标仓库为 githubfordevelop/olddays；当前采用本文末尾的公开 CI 拉取模式。前半部分保留支持 SSH、rsync、Nginx 的 Linux 服务器推送模式说明。不包含数据库、付费服务或自动修改服务器配置。
+项目：githubfordevelop/olddays（private）。服务器：121.40.22.96；部署用户 olddays；根目录 /srv/olddays；Nginx 指向 /srv/olddays/current。
 
-## 仓库配置
+## GitHub Actions
 
-在 GitHub 仓库 Settings → Secrets and variables → Actions 中配置：
+检查任务在 PR、main 推送和手动运行时执行。部署任务依赖检查成功，只接受 main 非 PR 事件，使用 production 环境。
 
-| 类型 | 名称 | 示例 / 用途 |
+| 类型 | 名称 | 配置 |
 |---|---|---|
-| Variable | DEPLOY_HOST | 服务器 IPv4 或主机名 |
-| Variable | DEPLOY_USER | 专用 SSH 部署用户，例如 deploy |
-| Variable | DEPLOY_PORT | SSH 端口，省略为 22 |
-| Variable | DEPLOY_ROOT | 例如 /var/www/archaeo |
-| Secret | DEPLOY_SSH_KEY | 仅对部署目录有写权限的专用 SSH 私钥 |
-| Secret | DEPLOY_KNOWN_HOSTS | 通过可信渠道核验的服务器 SSH 主机公钥记录 |
+| Variable | DEPLOY_HOST | 121.40.22.96 |
+| Variable | DEPLOY_USER | olddays |
+| Variable | DEPLOY_PORT | 22 |
+| Variable | DEPLOY_ROOT | /srv/olddays |
+| Secret | DEPLOY_SSH_KEY | 项目专用 SSH 私钥；不写入源码 |
+| Secret | DEPLOY_KNOWN_HOSTS | 已核验服务器主机公钥记录 |
 
-密钥只填 GitHub Secrets，不放进源码，也不需要发到聊天里。非默认 SSH 端口的 known_hosts 记录通常使用 `[host]:port` 格式。
+发布脚本再次检查本地资源，然后 rsync 至 releases/<完整提交>，原子切换 current，核验本机 HTTP 与 version.json。健康检查失败时尝试恢复旧链接。首次部署没有旧链接可回滚，需核验公网 HTTP。
 
-创建 `production` Environment；如需审批，可在 GitHub 自行配置环境保护。`DEPLOY_HOST` 未设置时，只执行检查，部署任务跳过。
+部署用户没有 root 权限。GitHub runner 临时密钥文件会在任务结束删除。仓库协作者能够修改 main 工作流，因此私钥仅授予这个项目所需的部署账号权限。
 
-## 服务器准备
+## 旧模式
 
-由有权限的管理员安装 Nginx、rsync，创建部署目录并授权给部署用户。将 `nginx.conf.example` 改为真实域名、根目录，配置 HTTPS。Nginx 应读取 `DEPLOY_ROOT/current`，其中 `current` 为发布脚本管理的软链接，不要预先创建成普通目录。
+之前的 olddays-sync.timer 使用 GitHub 公共 API 和匿名 codeload。仓库私有后无法继续更新，切换 SSH 推送后应停用，避免两种模式竞争 current。安装器与拉取同步器保留为历史维护代码，不是当前私有仓库推荐发布方式。
 
-目录结构：
+## 核验与回滚
 
-```
-/var/www/archaeo/
-  releases/<commit SHA>/  # 每个版本独立目录
-  current -> releases/<commit SHA>/
-```
+公网 http://121.40.22.96/version.json 显示当前提交与部署时间。回滚到 releases/ 中上一份完整静态版本后，仍需检查公网入口。不要将整个仓库用作 Web 根目录。
 
-## 触发与回滚
-
-推送 `main` 自动运行；PR 只检查。也可在 Actions 手动触发 main 分支。脚本先上传独立版本，检查主要文件，然后原子切换 `current`；上传失败时不切换。保留旧版本，不自动删除。
-
-回滚时选择已有的旧 SHA，在服务器上新建临时软链接，再通过 `mv -Tf` 切换到 `current`。请使用已验证的版本目录。切换之后的 HTTP 检查与域名、HTTPS 配置应在服务器确定后接入；当前流程没有上线后自动健康检查或自动回滚。
-
-## 尚待确定
-
-公开仓库 githubfordevelop/olddays；服务器 121.40.22.96；部署用户 olddays；目录 /srv/olddays。域名和 HTTPS 证书待用户选定。实际运行结果应以 GitHub Actions、服务器日志和 version.json 为准。
-
-## 当前服务器采用的公开 CI 拉取模式
-
-由于仓库公开，服务器可以通过 GitHub 公共 API 检查 main 分支的 `Check and deploy` 工作流是否成功，然后只下载该提交的 `dist/` 文件。这个模式不需要把维护私钥保存到 GitHub，也不需要为部署授予 GitHub 账号额外权限。
-
-- 服务器：121.40.22.96，部署用户 olddays，根目录 `/srv/olddays`。
-- `olddays-sync.timer` 约每两分钟触发一次；`olddays-sync.service` 以非 root 用户运行。
-- 同步器只接受当前仓库、main 分支、push 事件、结论为 success 的 CI 提交；不执行下载仓库中的任何脚本。
-- 只解包 `dist/` 的普通文件，拒绝路径穿越、软链接和超限负载。
-- 新版本先写入独立目录，再切换 current；后续发布的本机 HTTP 健康检查不通过时，恢复旧软链接。
-- GitHub 不可达、公共 API 限流或检查失败时，保留旧站，等下一次检查。
-- `version.json` 公开当前提交及对应 CI 记录，方便核验。
-
-安装文件来自本目录。首次切换站点前需先发布一个通过 CI 的版本，再更新 Nginx 并验证 HTTP；首次发布没有可回滚的旧 current，需人工完成首次 HTTP 核验。维护用 SSH 私钥保存在维护设备上，勿上传源码或聊天。
-
-SSH 推送模式仍可选：配置前文的变量和 Secrets 后启用 workflow 的 SSH 部署任务。**不要同时启用两种发布模式**；切换为 SSH 推送时先停用 `olddays-sync.timer`。
+目前访问入口为 HTTP。绑定域名及 HTTPS 需要另行确定域名与证书；本流程不购买服务、不修改云账号权限。

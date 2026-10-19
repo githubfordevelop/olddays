@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+MIDlet-Name: Pocket Calculator
+MIDlet-Version: 1.0.0
+MIDlet-Vendor: Olddays
+MIDlet-1: Pocket Calculator,,PocketCalculator
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.0
+
+MIDlet-Jar-URL: calculator.jar
+MIDlet-Jar-Size: 2821

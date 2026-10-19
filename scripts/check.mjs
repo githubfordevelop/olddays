@@ -51,3 +51,6 @@ execFileSync(
   ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"],
   { stdio: "inherit" },
 );
+
+execFileSync("python3",["scripts/check-pocket-data.py"],{stdio:"inherit"});
+for(const name of ["wrapper.js","bld/j2me.js","bld/main-all.js"])execFileSync(process.execPath,["--check",`dist/javame/${name}`],{stdio:"inherit"});

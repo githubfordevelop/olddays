@@ -133,6 +133,7 @@ try {
   preferences.night = p.night === true;
 } catch {}
 function applyAppearance() {
+  applyWorldAppearance();
   document.body.dataset.mobileSkin = preferences.skin;
   document.body.classList.toggle("mobile-large", preferences.font === "large");
   document.body.classList.toggle("mobile-night", preferences.night);
@@ -207,7 +208,7 @@ function siteLink(name, url, extra = "") {
   if(url === "www.tianya.cn" && date < "2005-11-01") url="www.tianyaclub.com";
   return `<a href="https://web.archive.org/web/${year()}*/http://${escapeHTML(url)}/" data-site="${escapeHTML(url)}" data-name="${escapeHTML(name)}">${escapeHTML(name)}${extra}</a>`;
 }
-function renderHome() {
+function renderDirectoryHome() {
   const e = era();
   return `${mobileHome()}<div class="portal"><div class="portal-topline"><span>欢迎回来，远方的网友。</span><span class="online">● 时光连接已建立 · ${year()}</span></div><header class="portal-head"><div class="wordmark"><div class="logo" aria-hidden="true"></div><div><div class="brand">考古浏览器</div><div class="brand-en">ARCHAEO BROWSER</div></div></div><div class="tagline">在地址栏输入一个网址，<br>在时间里找回一段记忆。</div><div class="head-date"><b>${year()}</b><small>THE INTERNET, THEN.</small></div></header><nav class="portal-nav"><button class="active" data-action="home">时光首页</button><button data-news-center>新闻中心</button><button data-era-media>影音软件</button><button data-section="desktop-catalog-forum">论坛社区</button><button data-section="desktop-catalog-life">个人天地</button><button data-section="desktop-catalog">旧站大全</button><button data-action="favorites">我的收藏</button></nav><div class="welcome-strip"><span>✉ 欢迎来到过去。<b> 今天，你想回到哪一年？</b></span><span>EST. IN MEMORIES / 001</span></div><section class="retro-bulletin"><b>欢迎来到 ${year()} 年的互联网</b><span>${e.memo}</span><button data-news-center>新闻中心 &gt;&gt;</button></section><div class="year-selector"><span>选择你的年代 →</span>${Object.keys(
     eras,
@@ -248,6 +249,11 @@ function setTheme() {
     Number(year()) >= 2010 ? "#e8ebe5" : "#ece9d8",
   );
 }
+function renderHome() { return renderTimeHome(); }
+function renderWorldPage(page) {
+ const renderers={pictures:renderMemoryGallery,picturestory:()=>renderPictureStory(page),community:renderCommunity,javame:renderJavaRoom,phone:renderPhoneLab,admagazine:renderAdMagazine,arcade:()=>renderArcade(page),bookshelf:renderBookshelf,book:()=>renderBook(page),games:renderGamesHall,music:renderMusicSalon,videos:renderVideoSalon};
+ return renderers[page.type]?.();
+}
 function navigate(page, push = true) {
   requestId++;
   if(pendingArchive) pendingArchive.abort();
@@ -259,7 +265,7 @@ function navigate(page, push = true) {
     history.push({ page: { ...page }, date });
     cursor = history.length - 1;
   } else if(history[cursor]) history[cursor]={page:{...page},date};
-  $("#content").innerHTML =
+  $("#content").innerHTML = renderWorldPage(page) ?? (
     page.type === "home"
       ? renderHome()
       : page.type === "scene"
@@ -272,7 +278,7 @@ function navigate(page, push = true) {
             ? renderYearRecord(page)
             : page.type === "news"
           ? renderAnnualStory(page)
-          : embeddedArchivePage(page);
+          : embeddedArchivePage(page));
   $("#address").value = page.type === "home" ? "archaeo://home" : page.url;
   $("#windowtitle").textContent = page.type === "home" ? "时光首页" : page.name;
   $("#status").textContent = page.type === "archive" ? "◷ 等待历史存档" : "✓ 完成";
