@@ -781,7 +781,7 @@ test('new SMS wallpaper survives reload without a second virtual charge',()=>{
 
 test('night shop locations and calls are navigable fiction, ownership needs corroboration',()=>{
  const b=boot({}, {deep:true});assert.equal(b.run("shopVisit('unknown')"),false);assert.equal(b.run("shopVisit('counter')"),true);
- assert.equal(b.run("shopCall('ask')"),false);b.run("shopCall('answer');shopCall('ask')");assert.match(b.run('shopCallMarkup()'),/旧手机能修好吗/);
+ assert.equal(b.run("shopCall('ask')"),false);assert.equal(b.run("shopCall('answer')"),false);b.run("shopInspect('tray');shopTake('key');shopInspect('drawer');shopAct('unlock');shopTake('case');deepMark('recorder');tideDeep.talk.push('hello');shopAdvance();shopCall('answer');shopCall('ask')");assert.match(b.run('shopCallMarkup()'),/旧手机能修好吗/);
  assert.match(b.run("shopReturn('许舟','field')"),/不够|没有足够/);assert.equal(b.run('nightShop.returned'),false);
  b.run("tideDeep.talk.push('hello');tide.device='black';tideMark('qq')");assert.match(b.run("shopReturn('阿巡','field')"),/对不上/);
  assert.match(b.run("shopReturn('许舟','field')"),/已登记/);
@@ -791,4 +791,16 @@ test('night shop locations and calls are navigable fiction, ownership needs corr
 test('expanded late-night change waits for the recovered page, label exchange and mirror',()=>{
  const b=boot({}, {deep:true});b.run("tide.device='black';['qq','gate','back','forum','timetable','recording'].forEach(tideMark)");assert.equal(b.run('tideStage()'),1);
  b.run("deepMark('archive2');deepMark('mirror');tideDeep.talk.push('tape')");assert.equal(b.run('tideStage()'),2);
+});
+
+test('shop scene locks items and stages messages across saved discoveries',()=>{
+ const b=boot({}, {deep:true});
+ assert.equal(b.run("shopTake('case')"),false);b.run("shopInspect('drawer')");assert.equal(b.run("shopAct('unlock')"),false);
+ b.run("shopInspect('tray');shopTake('key');shopInspect('drawer');shopAct('unlock');shopTake('case');shopAdvance()");assert.equal(b.run("nightShop.events.length"),0);
+ b.run("tide.device='black';deepMark('recorder');tideDeep.talk.push('hello');shopAdvance()");assert.equal(b.run("nightShop.events.join(',')"),'ring');assert.equal(b.run("shopCall('answer')"),true);
+ b.run("deepMark('repairlog');shopAdvance()");assert.equal(b.run("nightShop.events.includes('sms')"),false);
+ b.run("shopCall('hang');shopAdvance()");assert.equal(b.run("nightShop.events.includes('sms')"),true);
+ b.run("deepMark('mirror');deepMark('ledger');shopAdvance()");assert.equal(b.run("nightShop.events.includes('second')"),true);
+ const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run('nightShop.drawer'),true);assert.equal(c.run('nightShop.items.length'),2);assert.equal(c.run('nightShop.events.length'),3);
+ c.run("tide.device='black';tideView='shop:message'");assert.match(c.run('tideSms()'),/2005-11-02/);assert.match(c.run('shopMap()'),/手机店内景/);
 });
