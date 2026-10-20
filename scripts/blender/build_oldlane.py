@@ -23,6 +23,17 @@ def box(name,size,loc,ma,bevel=.03,action=None,parent=None):
  if action:o['action']=action
  if parent:o.parent=parent
  return o
+def ovalbody(name,size,loc,ma):
+ w,h,d=size;verts=[];N=64
+ for z in [-d/2,d/2]:
+  for i in range(N):
+   a=2*math.pi*i/N;c=math.cos(a);t=math.sin(a)
+   x=w/2*math.copysign(abs(c)**.3,c);y=h/2*math.copysign(abs(t)**.3,t)
+   verts.append((x+loc[0],-(z+loc[2]),y+loc[1]))
+ faces=[tuple(range(N-1,-1,-1)),tuple(range(N,2*N))]+[(i,(i+1)%N,(i+1)%N+N,i+N) for i in range(N)]
+ mesh=bpy.data.meshes.new(name);mesh.from_pydata(verts,[],faces);mesh.update();o=bpy.data.objects.new(name,mesh);bpy.context.collection.objects.link(o);o.data.materials.append(ma)
+ for p in mesh.polygons:p.use_smooth=True
+ b=o.modifiers.new('Rounded shell seam','BEVEL');b.width=.045;b.segments=3;o.modifiers.new('Normals','WEIGHTED_NORMAL');return o
 def text(name,body,loc,size,ma,back=False):
  c=bpy.data.curves.new(name,'FONT');c.body=body;c.align_x='CENTER';c.align_y='CENTER';c.size=size;c.extrude=.001;o=bpy.data.objects.new(name,c);bpy.context.collection.objects.link(o);o.location=(loc[0],-loc[2],loc[1]);o.rotation_euler=(math.pi/2 if not back else -math.pi/2,0,math.pi if back else 0);o.data.materials.append(ma);bpy.context.view_layer.objects.active=o;o.select_set(True);bpy.ops.object.convert(target='MESH');o.select_set(False);return o
 def cyl(name,r,depth,loc,ma,action=None):
@@ -65,6 +76,49 @@ box('Lens_cover',(1.52,1.13,.07),(0,1,-.46),keys,.09,'cover')
 text('Rear_label','NOKIA',(0,-.55,-.335),.18,white,True)
 for x in [-.65,.65]:cyl('Rear_screw',.025,.015,(x,-1.7,-.33),silver)
 export('n73-blender');light((3,5,5),500,4);preview('n73-blender',(3,1.7,7),(0,0,0))
+# Two independently modelled generations: 6600 joystick / 5230 touch slab.
+for model in ['6600','5230']:
+ reset();silver=mat('Satin silver',(.63,.65,.63),.7,.32);charcoal=mat('Charcoal rubber',(.055,.065,.068),.1,.65);ivory=mat('Ivory plastic',(.82,.81,.76),.05,.4);red=mat('Red rear shell',(.48,.035,.055),.15,.45);ink=mat('Display glass',(.018,.03,.035),.3,.18);legend=mat('Printed legends',(.8,.83,.8));greenkey=mat('Call green',(.04,.42,.15));redkey=mat('End red',(.6,.04,.04))
+ if model=='6600':
+  ovalbody('6600_rounded_body',(2.02,4.05,.73),(0,0,0),charcoal)
+  ovalbody('6600_silver_face',(1.91,3.94,.19),(0,0,.36),silver)
+  box('6600_display_surround',(1.6,2.17,.07),(0,.62,.48),charcoal,.13)
+  box('6600_LCD',(1.35,1.66,.02),(0,.66,.53),ink,.01)
+  text('Brand','NOKIA',(0,1.69,.5),.15,charcoal)
+  for i in range(5):box('Earpiece',(.1,.025,.02),(-.24+i*.12,1.88,.49),charcoal,.01)
+  cyl('6600_Joystick',.16,.11,(0,-.78,.54),charcoal,'ok')
+  for x,y,a in [(0,-.64,'up'),(0,-.92,'down'),(-.15,-.78,'left'),(.15,-.78,'right')]:box('Stick_'+a,(.15,.14,.03),(x,y,.48),silver,.02,'dir:'+a)
+  for x,side in [(-.64,'left'),(.64,'right')]:
+   box('Select_'+side,(.4,.18,.06),(x,-.62,.53),silver,.07,'soft:'+side)
+   box('Call_'+side,(.35,.2,.06),(x*1.3,-.32,.53),greenkey if side=='left' else redkey,.07,'contacts' if side=='left' else 'home')
+  for i,n in enumerate('123456789*0#'):
+   x=(i%3-1)*.43;y=-1.04-(i//3)*.21
+   box('Digit_'+n,(.42,.21,.065),(x,y,.49),silver,.085,'digit:'+n);text('Legend_'+n,n,(x,y,.532),.12,charcoal)
+  for x,a in [(-.85,'home'),(.85,'clear')]:box('Side_key_'+a,(.13,.38,.05),(x,-1.05,.48),charcoal,.04,a)
+  cyl('Rear_camera_ring',.23,.06,(0,1.05,-.41),silver);cyl('Rear_camera',.14,.07,(0,1.05,-.46),ink)
+  box('Power',(.3,.08,.12),(0,2.04,0),charcoal,.03,'power')
+ else:
+  box('5230_red_back',(1.87,4.03,.42),(0,0,0),red,.21)
+  box('5230_white_rim',(1.88,4.03,.15),(0,0,.24),ivory,.18)
+  box('5230_black_front',(1.69,3.8,.07),(0,0,.34),charcoal,.11)
+  box('5230_LCD',(1.47,2.64,.02),(0,.15,.39),ink,.01)
+  text('5230_brand','NOKIA',(0,1.69,.39),.13,ivory)
+  box('5230_earpiece',(.47,.035,.025),(0,1.87,.39),charcoal,.01)
+  for x,a,ma,label in [(-.58,'contacts',greenkey,'+'),(0,'home',ivory,'='),(.58,'soft:right',redkey,'-')]:
+   box('5230_bottom_'+a,(.42,.23,.06),(x,-1.55,.4),ma,.06,a);text('5230_legend_'+a,label,(x,-1.55,.44),.12,charcoal)
+  box('5230_power',(.22,.09,.14),(.5,2.04,0),charcoal,.025,'power')
+  box('5230_lock',(.07,.3,.1),(.96,.35,0),silver,.02)
+  cyl('5230_camera_ring',.17,.04,(0,1.25,-.25),silver);cyl('5230_camera',.11,.045,(0,1.25,-.28),ink)
+ if model=='6600':
+  # CC0 front photograph becomes a UV skin on the shaped shell, not a loose image.
+  im=bpy.data.images.load(os.path.join(ROOT,'dist/images/references/nokia-6600-real.jpg'));im.pack();fm=mat('6600 Drummyfish CC0 photo skin',(.6,.6,.6),.12,.58);n=fm.node_tree.nodes.new('ShaderNodeTexImage');n.image=im;fm.node_tree.links.new(n.outputs['Color'],fm.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
+  o=ovalbody('6600_photo_front',(2.02,4.05,.004),(0,0,.64),fm);uv=o.data.uv_layers.new()
+  for poly in o.data.polygons:
+   for li in poly.loop_indices:
+    v=o.data.vertices[o.data.loops[li].vertex_index].co
+    uv.data[li].uv=(.032+(v.x/2.02+.5)*.335,.046+(v.z/4.05+.5)*.908)
+ text('Rear_brand','NOKIA',(0,-.4,-.4 if model=='6600' else -.24),.18,silver,True)
+ export(model+'-blender');light((3,5,5),500,4);preview(model+'-blender',(2,1,7),(0,0,0))
 reset();walnut=wood();wall=mat('Aged plaster',(.34,.35,.29),0,.95);floor=mat('Old floor tiles',(.21,.23,.2),0,.85);green=mat('Repair mat',(.04,.16,.13),0,.9);metal=mat('Oxidized aluminium',(.25,.32,.29),.7,.35);dark=mat('Cable rubber',(.022,.027,.025),0,.8);paper=mat('Yellowed repair slips',(.63,.55,.36),0,.95);beige=mat('Landline plastic',(.5,.48,.35),0,.5);blue=mat('Phone packaging blue',(.065,.12,.17),0,.65)
 glass=mat('Counter glass',(.31,.48,.44),.05,.15);p=glass.node_tree.nodes.get('Principled BSDF');p.inputs['Transmission Weight'].default_value=.72;p.inputs['Alpha'].default_value=.3;glass.surface_render_method='DITHERED'
 box('Floor',(8,.12,6),(0,-.08,0),floor,.01)
@@ -137,5 +191,25 @@ for objname,crop in [('Warranty_cards',(.04,.43,.2,.88)),('Loose_battery',(.44,.
   a,b,c,d=crop
   for loop in uv.data:loop.uv=(a+loop.uv.x*(b-a),c+loop.uv.y*(d-c))
 box('Fluorescent_tube',(2,.09,.1),(.5,2.7,-2.25),mat('Tube glow',(.85,.9,.76),0,.2),.03)
+# Scuffed plinths, scattered era accessories and repair debris.
+rng=random.Random(6600)
+for i in range(40):
+ x=rng.uniform(-3.8,3.8);z=rng.uniform(-2.3,2.8)
+ box('Floor_scuff_'+str(i),(rng.uniform(.08,.4),.002,.015),(x,.009,z),dark,0)
+for i in range(17):
+ x=rng.uniform(-.5,2.8);z=rng.uniform(-2.08,-1.15)
+ box('Used_SIM_'+str(i),(.09,.012,.13),(x,1.245,z),paper,.009)
+ box('SIM_contacts_'+str(i),(.055,.006,.07),(x,1.255,z),metal,.002)
+for i in range(9):
+ box('Secondhand_box_'+str(i),(.48,.19,.68),(-3.3, .2+i*.19,-1.8),blue if i%2 else paper,.015)
+for i in range(14):
+ box('Paper_scrap_'+str(i),(.12,.003,.2),(rng.uniform(-2.6,.7),1.43,rng.uniform(.6,1.6)),paper,.001)
+for i in range(8):
+ box('Wall_damp_'+str(i),(.32+rng.random()*.6,.08,.007),(-3.5+i, .2+rng.random()*.3,-2.415),dark,.02)
+for i in range(5):
+ box('Cassette_case_'+str(i),(.45,.08,.3),(-2.7+i*.48,.5,1.3),beige,.01)
+box('Old_radio',(.8,.45,.28),(-3.3,1.5,-2.1),beige,.04)
+for i in range(7):box('Radio_grille_'+str(i),(.22,.018,.015),(-3.45,1.35+i*.045,-1.95),dark,.004)
+text('Radio_scale','FM 88 108',(-3.05,1.56,-1.945),.055,dark)
 export('oldlane-shop');light((1,4,1),700,5);light((-3,3,3),300,3);preview('oldlane-shop',(7,5,8),(0,1,0))
 print('BLENDER_OLDDAYS_EXPORT_COMPLETE')

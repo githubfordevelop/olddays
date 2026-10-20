@@ -861,3 +861,7 @@ test('Blender interaction preserves bounded world positions and routes real hand
 test('opening apps inside the 3D handset keeps the modal and original story active',()=>{
  const b=boot({}, {deep:true});b.run("phoneState.model='n73';tide.active=true;tide.device='black';shop3dPlayActive=true;document.querySelector('#modal').open=true;openPhoneLab('sms')");assert.equal(b.run('phoneState.app'),'sms');assert.equal(b.run("document.querySelector('#modal').open"),true);assert.equal(b.run('tide.device'),'black');
 });
+
+test('3D Java controls send game softkeys and never replace the device on auto expansion',()=>{
+ const b=boot({}, {deep:true});b.run("phoneState.app='java';shop3dPlayActive=true;blenderWorld={mode:'phone',powered:true,draw(){this.drawn=true}};window.gameKeys=[];pocketJavaMessage=(type,code,down)=>window.gameKeys.push([type,code,down]);pocketExpand();blenderKey('soft:left');blenderKey('soft:right');blenderKey('ok')");assert.equal(b.run('blenderWorld.drawn'),true);assert.equal(b.run('window.gameKeys[0][1]'),-6);assert.equal(b.run('window.gameKeys[1][1]'),-7);assert.equal(b.run('window.gameKeys[2][1]'),-5);
+});
