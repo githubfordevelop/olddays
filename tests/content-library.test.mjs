@@ -56,3 +56,13 @@ test('real photo cabinet respects photograph dates, keeps source licenses and pe
  assert.equal(vm.runInContext('cabinetState.stamps.length',cabinet(c.saved)),1);assert.equal(vm.runInContext('cabinetState.stamps.length',cabinet('{"stamps":["n73","n73","bad"]}')),1);
  c.experienceZone='story';assert.equal(vm.runInContext("phoneAppAllowed('cabinet')",c),false);
 });
+
+test('photo recognition quiz can finish using hardware keys and never skips unsolved cards',()=>{
+ const c=cabinet();vm.runInContext("date='2008-01-01';cabinetHardware('5')",c);assert.equal(vm.runInContext('cabinetQuiz',c),true);assert.equal(vm.runInContext('cabinetQuizNext()',c),false);
+ vm.runInContext("cabinetHardware('3')",c);assert.equal(vm.runInContext('cabinetQuizSolved',c),false);
+ vm.runInContext("cabinetHardware('1');cabinetHardware('5')",c);assert.equal(vm.runInContext('cabinetSelected',c),'shop');
+ vm.runInContext("cabinetHardware('2');cabinetHardware('5')",c);assert.equal(vm.runInContext('cabinetQuiz',c),false);assert.equal(vm.runInContext('cabinetState.stamps.length',c),2);
+ const restored=cabinet(c.saved);assert.equal(vm.runInContext('cabinetState.stamps.length',restored),2);
+ vm.runInContext("cabinetOpen('n73');cabinetHardware('6');cabinetHardware('5')",c);assert.equal(vm.runInContext('cabinetSelected',c),'shop');assert.equal(vm.runInContext('cabinetZoom',c),2);
+ vm.runInContext("cabinetHardware('0')",c);assert.equal(vm.runInContext('cabinetSelected',c),'');
+});
