@@ -1,6 +1,6 @@
 {
   "provider": "Hyper3D Rodin",
-  "status": "downloaded_and_integrated_experimental",
+  "status": "refined_with_photographic_front_and_independent_rear",
   "publish": true,
   "assets": [
     {
@@ -17,7 +17,7 @@
       "workspaceId": "b7c24df2-be7e-48f7-aebf-4e7dab898d08",
       "tier": "Low",
       "outputFile": "dist/models/n73-hyper3d.glb",
-      "sha256": "28ebb2d798c2cbeee919e5cb86db42ff0ec3d316d64b01fbad23f20105a6fb2c"
+      "sha256": "adbc60c308addb095d455f12799c6e9677b75eb186bb00fba71c613051d80892"
     },
     {
       "id": "shop-static-set",
@@ -32,7 +32,7 @@
       "workspaceId": "717986da-c526-428e-831d-368461b20329",
       "tier": "Low",
       "outputFile": "dist/models/oldlane-shop-hyper3d.glb",
-      "sha256": "c0291e657260f29b0308a888e90fe4fa5598b2be6768989f0bbb74b9d965fd59",
+      "sha256": "5eb61e78ef6c4ae73bf73145805cb1b9d8cc70bb849bae8f99961bd625a75c87",
       "reference": "dist/models/oldlane-shop-preview.png",
       "referenceType": "Existing original Blender render, not historical photography"
     }
@@ -46,8 +46,8 @@
   ],
   "previewQuery": "?hyper3d=1",
   "limitations": [
-    "Low tier generated texture has warped lettering; not an exact replica",
-    "Only generated shop counter adopted; generated drawer excluded to retain operation",
-    "Medium model export required subscription; no subscription purchased"
+    "Generated side curvature retained; this is a web reconstruction, not a factory CAD model",
+    "Only generated shop counter adopted; interactive drawer and evidence remain separate",
+    "Medium export required subscription; no subscription purchased"
   ]
 }
