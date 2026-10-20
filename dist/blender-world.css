@@ -40,3 +40,4 @@
 body:has(#pocket-model-host) .experience-phone-tools{display:none}
 @media(max-width:600px){#pocket-model-host .blender-stage{height:76svh;min-height:480px;max-height:800px}body:has(#pocket-model-host) .lab-layout{display:block}body:has(#pocket-model-host) .lab-side-ad{display:none}}
 body #content #museum-device.pocket-native-bridge{display:none!important}
+@media(orientation:landscape) and (max-height:600px){#pocket-model-host .blender-stage{height:85svh;min-height:280px;max-height:none}}
