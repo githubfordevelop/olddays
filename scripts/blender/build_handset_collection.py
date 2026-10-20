@@ -110,26 +110,24 @@ start();body('V3_lower_alloy',1.92,2.55,silver,.24).location.z=-.95
 hinge=group('Flip_panel');hinge.location=(0,0,.35)
 body('V3_upper_lid',1.92,2.5,silver,.22,hinge).location.z=1.25
 box('V3_inner_black',(1.73,2.26,.06),(0,1.22,.16),black,.08,parent=hinge)
-s=display(0,1.13,1.48,1.86,.30,hinge);speaker(2.3,hinge);brand('MOTOROLA',2.14,hinge)
+s=display(0,1.13,1.48,1.86,.205,hinge);speaker(2.3,hinge);brand('MOTOROLA',2.14,hinge)
 # Exterior mini-display and camera are on the other face of lid.
-box('V3_external_display',(.7,.65,.025),(0,1.25,-.15),glass,.025,parent=hinge)
-o=text('V3_external_clock','12:03',(0,1.25,-.17),.12,white,True);o.parent=hinge;o.rotation_euler=(math.pi/2,0,math.pi)
-c=cyl('V3_outer_camera',.12,.03,(0,1.92,-.15),glass);c.parent=hinge
+# The licensed outer photo already contains the display and camera; avoid floating duplicates.
 pad(-.20);numbers(-.70,width=1.6);common_power(.96,-.2,0)
-reference_face('V3_real_inner_lid','razr-archive-reference.png',(.553,.936,.029,.420),1.92,2.5,.27,hinge,y=1.25,outline=[(.72,.030),(.80,.030),(.87,.043),(.92,.06),(.932,.075),(.932,.39),(.916,.418),(.575,.418),(.556,.39),(.558,.075),(.573,.055),(.64,.04)])
-reference_face('V3_real_outer_lid','razr-archive-reference.png',(.05,.46,.225,.715),1.92,2.5,-.21,hinge,y=1.25,back=True,outline=[(.19,.228),(.325,.228),(.34,.235),(.405,.235),(.445,.245),(.455,.27),(.455,.65),(.435,.68),(.375,.700),(.30,.71),(.20,.71),(.12,.70),(.07,.685),(.05,.66),(.05,.27),(.06,.245),(.12,.235),(.18,.235)])
-reference_face('V3_real_lower_keys','razr-archive-reference.png',(.553,.94,.468,.974),1.92,2.55,.43,y=-.95,outline=[(.58,.468),(.92,.468),(.94,.50),(.94,.94),(.88,.974),(.62,.974),(.553,.94),(.553,.50)])
+reference_face('V3_real_inner_lid','razr-archive-reference.png',(.553,.936,.029,.420),1.92,2.5,.20,hinge,y=1.25,outline=[(.72,.030),(.80,.030),(.87,.043),(.92,.06),(.932,.075),(.932,.39),(.916,.418),(.575,.418),(.556,.39),(.558,.075),(.573,.055),(.64,.04)])
+reference_face('V3_real_outer_lid','razr-archive-reference.png',(.05,.46,.225,.715),1.92,2.5,-.125,hinge,y=1.25,back=True,outline=[(.19,.228),(.325,.228),(.34,.235),(.405,.235),(.445,.245),(.455,.27),(.455,.65),(.435,.68),(.375,.700),(.30,.71),(.20,.71),(.12,.70),(.07,.685),(.05,.66),(.05,.27),(.06,.245),(.12,.235),(.18,.235)])
+reference_face('V3_real_lower_keys','razr-archive-reference.png',(.553,.94,.468,.974),1.88,2.50,.15,y=-.95,outline=[(.58,.468),(.92,.468),(.94,.50),(.94,.94),(.88,.974),(.62,.974),(.553,.94),(.553,.50)])
 for o in bpy.context.scene.objects:
- if o.get('action') and o.get('action')!='power':o['photoHit']=True
+ if o.get('action') and o.get('action')!='power':o['photoHit']=True;o.location.y=-.15
 for o in bpy.context.scene.objects:
- if o.parent==hinge:o.location.y+=.5
-hinge.location.y=-.5;s[2]-=.5
+ if o.parent==hinge:o.location.y+=.19
+hinge.location.y=-.19;s[2]-=.19
 finish('razr','Motorola RAZR V3',s,brandname='MOTOROLA',mechanism='flip',screenGroup='Flip_panel',distance=10)
 # Dual slider: screen/control panel moves up for number keys and down for media keys.
 start();body('N95_lower_chassis',1.95,3.55,black,.48);numbers(-.86,width=1.65)
 for x,a,sym in [(-.6,'track:prev','<<'),(0,'play','>'),(.6,'track:next','>>')]:legendkey(a,sym,x,1.45,.47,.24)
 slider=group('Slide_panel');body('N95_upper_shell',1.95,3.55,silver,.23,slider).location.y=-.39
-s=display(.02,.37,1.54,2.01,.71,slider);brand('NOKIA Nseries',1.65,slider);pad(-1.24,slider);legendkey('home','Menu',-.62,-1.43,.4,.18,slider,z=.55);legendkey('clear','C',.62,-1.43,.4,.18,slider,z=.55);
+s=display(.02,.37,1.5075,2.01,.71,slider);brand('NOKIA Nseries',1.65,slider);pad(-1.24,slider);legendkey('home','Menu',-.62,-1.43,.4,.18,slider,z=.55);legendkey('clear','C',.62,-1.43,.4,.18,slider,z=.55);
 for o in bpy.context.scene.objects:
  if o.parent==slider and (o.get('action') or o.name.startswith('Legend_')):o.location.y-=.23
 reference_face('N95_real_slide_panel','n95-archive-reference.jpg',(.20,.83,.09,.925),1.95,3.55,.68,slider,outline=[(.27,.09),(.72,.09),(.82,.11),(.83,.90),(.78,.925),(.25,.925),(.20,.90),(.20,.12)])
@@ -146,13 +144,16 @@ for row,letters in enumerate(['QWERTYUIOP','ASDFGHJKL','ZXCVBNM']):
  for col,c in enumerate(letters):legendkey('letter:'+c,c,-1.69+col*.365,.48-row*.34,.31,.29,z=.25)
 for x,a,sym,w in [(-1.62,'shift','SHIFT',.55),(-.55,'letter: ','SPACE',1.3),(1.25,'clear','DEL',.7)]:legendkey(a,sym,x,-.65,w,.28,z=.25)
 slide=group('Qwerty_screen');body('N97_touch_panel',4.0,1.95,silver,.20,slide).location.y=-.40
-box('N97_gloss_bezel',(3.86,1.8,.04),(0,0,.53),black,.06,parent=slide);s=display(0,0,3.12,1.72,.57,slide)
+box('N97_gloss_bezel',(3.86,1.8,.04),(0,0,.53),black,.06,parent=slide);s=display(0,0,3.0577778,1.72,.57,slide)
 legendkey('home','◆',1.78,-.72,.19,.23,slide,z=.56)
 for action,y,color in [('contacts',-.25,(.12,.65,.26)),('end',.45,(.82,.14,.12))]:
  ink=mat('N97_'+action+'_ink',color,.05,.6)
  box('Key_'+action,(.12,.23,.008),(1.78,y,.555),black,.012,action,slide)
  box('N97_'+action+'_mark',(.015,.12,.005),(1.78,y,.565),ink,.005,parent=slide)
  for dy in [-.065,.065]:box('N97_'+action+'_ear',(.04,.025,.005),(1.79,y+dy,.565),ink,.007,parent=slide)
+# Paired slide support arms sit behind the screen and are revealed only when open.
+for x in [-1.40,1.40]:
+ box('N97_slide_support',(.15,.72,.12),(x,.84,.22),silver,.025)
 box('N97_Earpiece',(.035,.42,.02),(-1.78,0,.56),black,.012,parent=slide)
 c=cyl('N97_front_camera',.045,.012,(-1.78,.53,.56),glass);c.parent=slide
 label('NOKIA',-1.45,.85,.56,.085,slide)

@@ -30,3 +30,8 @@ https://creativecommons.org/licenses/by-sa/3.0/
 - **k750**: `k750-archive-reference.jpg` — Jyi1693; 2007-04-21; [CC BY 2.5](https://creativecommons.org/licenses/by/2.5/); [原图](https://commons.wikimedia.org/wiki/File:Sony_K750i_front.JPG). No edits to reference file; used for visual comparison, not historical screenshot.
 
 3310/V3/N95 的对应 `models/*-collection.glb` 含上述照片的裁切映射，相关改编资产按相同来源许可证发布。K750照片仅在资料夹对照，不进入机身贴图。2017年V3组合图与2009年3310照片不冒充机型上市当年拍摄。新增机身为本项目Blender重建，未调用新Hyper3D付费生成，也不是原厂CAD或完整系统仿真。
+
+### 2026-10-21 articulated handset correction
+- V3: rechecked the licensed Raimond Spekking CC BY-SA 4.0 closed/open montage (https://commons.wikimedia.org/wiki/File:Motorola_Razr_V3_montage_closed_open.png). Repositioned reconstruction hinge/inner material and input planes to prevent floating layers; the photographed outer display is static, not a live factory screen. No new source photo added.
+- N97: Nokia's 2008 product description documents the tilt display above the keyboard: https://blogs.windows.com/devices/2008/12/02/nokia-n97-marks-evolutionary-milestone-for-nseries-and-mobilekind-2/ . Nokia data sheet (2008, hosted at https://files.dinside.no/0/2843200.pdf) specifies 640×360, 16:9. Reconstructed support geometry and tilt are an approximation, not factory CAD; display ratio now matches the data sheet.
+- N95 display geometry now uses the original 240×320 3:4 raster ratio, preserving the existing independently licensed reference texture.

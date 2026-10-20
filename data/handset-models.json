@@ -55,8 +55,8 @@
     {
       "file": "dist/models/razr-collection.glb",
       "reference": "https://commons.wikimedia.org/wiki/File:Motorola_Razr_V3_montage_closed_open.png",
-      "bytes": 1011520,
-      "sha256": "6c494b829b5a266f7173b81fef464bce9a13eed2ca23d6f7e734023fa865d5c7",
+      "bytes": 929104,
+      "sha256": "3d406b3a9bd0b093ef7a9192dc26bf08cf5cf7d341aee23f6b595f0105e61304",
       "photoLicense": "CC BY-SA 4.0",
       "photoLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "derivedAssetLicense": "CC BY-SA 4.0"
@@ -64,8 +64,8 @@
     {
       "file": "dist/models/n95-collection.glb",
       "reference": "https://commons.wikimedia.org/wiki/File:Nokia_N95_Front_1.jpg",
-      "bytes": 452152,
-      "sha256": "878f8ed6159a1643bb672b977466cf34723a88c9fd60c1bf5d823de83f42ac8c",
+      "bytes": 452148,
+      "sha256": "a0f803ff2af875b11a338ad54f46b8e9a6ca03f3efb7e2371f0dfabdf44e9ae0",
       "photoLicense": "CC BY-SA 3.0",
       "photoLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
       "derivedAssetLicense": "CC BY-SA 3.0"
@@ -73,8 +73,8 @@
     {
       "file": "dist/models/n97-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
-      "bytes": 689404,
-      "sha256": "3ca189c100fc5fc07e55f204df7857e098bb8dcb7be4f988eec3b0d4c0c07a05"
+      "bytes": 699576,
+      "sha256": "49c1e1f89acfa0bb3cfeb34ac2a61219be8525bbbca3f63f8464243ea8ca2587"
     },
     {
       "file": "dist/models/twist-collection.glb",

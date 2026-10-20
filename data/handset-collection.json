@@ -89,7 +89,7 @@
     "screen": [
       0,
       1.13,
-      -0.2,
+      0.014999999999999986,
       1.48,
       1.86
     ],
@@ -109,10 +109,10 @@
       0.02,
       0.37,
       0.71,
-      1.54,
+      1.5075,
       2.01
     ],
-    "height": 339,
+    "height": 347,
     "distance": 9,
     "reference": "n95",
     "mechanism": "dual",
@@ -128,10 +128,10 @@
       0,
       0,
       0.57,
-      3.12,
+      3.0577778,
       1.72
     ],
-    "height": 143,
+    "height": 146,
     "distance": 12,
     "mechanism": "qwerty",
     "screenGroup": "Qwerty_screen"
