@@ -870,7 +870,7 @@ test('3D Java controls send game softkeys and never replace the device on auto e
  test('textured handsets keep device and modal while switching SMS QQ and Java',()=>{for(const [id,model] of [['black','n73'],['white','nokia5230']]){const b=boot({}, {deep:true});b.run(`tide.active=true;tide.device='${id}';phoneState.model='${model}';shop3dPlayActive=true;blenderWorld={mode:'phone',powered:true,draw(){}};document.querySelector('#modal').open=true;`);for(const app of ['sms','qq','games','java']){b.run(`openPhoneLab('${app}')`);assert.equal(b.run('phoneState.model'),model);assert.equal(b.run('tide.device'),id);assert.equal(b.run('phoneState.app'),app);assert.equal(b.run("document.querySelector('#modal').open"),true);}}});
 
 test('experience zones keep ordinary play separate from story progress and restore device choices',()=>{
- const b=boot({}, {deep:true,zones:true});assert.match(b.run('renderHome()'),/手机游玩/);assert.match(b.run('renderHome()'),/电脑上网/);assert.match(b.run('renderHome()'),/故事探索/);
+ const b=boot({}, {deep:true,zones:true});assert.match(b.run('renderHome()'),/口袋时光/);assert.match(b.run('renderHome()'),/重连旧网/);assert.match(b.run('renderHome()'),/旧巷来客/);
  b.run("chooseExperience('story');tideOpenDevice('black');tide.seen=['sms','qq'];phoneState.app='qq';chooseExperience('phone')");
  assert.equal(b.run('tide.active'),false);assert.equal(b.run('campus.started'),false);assert.equal(b.run('mystery.started'),false);assert.doesNotMatch(b.run('renderHome()'),/推开玻璃门|潮声收藏者/);
  b.run("phoneState.model='nokia5230';phoneState.app='music';deskEntered=true;chooseExperience('pc')");

@@ -234,7 +234,7 @@ function renderDirectoryHome() {
     )
     .join(
       "",
-    )}</div></section><section class="box"><h2>▤ 考古须知 <span>READ ME</span></h2><p class="note">这里的链接通往<strong>真实历史存档</strong>。<br>首页是我们重制的年代导航，<strong>并非历史原页</strong>。<br>有些图片和帖子已经遗失。缺失，也是历史的一部分。<br><a href="#" data-action="about">了解存档来源 →</a></p></section><div class="text-ad"><b>慢一点，上网。</b><small>TAKE YOUR TIME ONLINE</small></div></aside><div class="center-col"><h2 class="section-title">◇ 那一年的互联网 <span>EXPLORE THE OLD WEB</span></h2>${catalogMarkup("desktop-catalog")}</div><aside class="right-col"><div class="memory-card"><h3>一小片回忆</h3><p>${e.memo}</p><small>— 编者手记 / ${year()}</small></div><section class="box"><h2>↗ 年代探索 <span>TIME CAPSULE</span></h2><div class="topic-list">${e.topics.map((t) => `<div>${siteLink(t[0], t[1])}<small>${year()} · 主题站点入口</small></div>`).join("")}</div><p class="note" style="border-top:1px solid #d9dccd;font-size:10px">编辑选题，非历史新闻标题。<br>点击查找所选年份的真实页面。</p></section></aside></div><footer class="portal-foot"><div><button data-action="about">关于考古浏览器</button>·<button data-action="sources">资料来源</button>·<button data-action="install">添加到手机主屏幕</button></div><div>本站不属于过去，但希望帮你找到过去。 &nbsp; 最佳浏览心情：有一点怀念。</div><div>你的本机探索足迹 <span class="counter" id="counter">${String(
+    )}</div></section><section class="box"><h2>▤ 考古须知 <span>READ ME</span></h2><p class="note">这里的链接通往<strong>真实历史存档</strong>。<br>首页是我们重制的年代导航，<strong>并非历史原页</strong>。<br>有些图片和帖子已经遗失。缺失，也是历史的一部分。<br><a href="#" data-action="about">了解存档来源 →</a></p></section><div class="text-ad"><b>慢一点，上网。</b><small>TAKE YOUR TIME ONLINE</small></div></aside><div class="center-col"><h2 class="section-title">◇ 那一年的互联网 <span>EXPLORE THE OLD WEB</span></h2>${catalogMarkup("desktop-catalog")}</div><aside class="right-col"><div class="memory-card"><h3>一小片回忆</h3><p>${e.memo}</p><small>— 编者手记 / ${year()}</small></div><section class="box"><h2>↗ 年代探索 <span>TIME CAPSULE</span></h2><div class="topic-list">${e.topics.map((t) => `<div>${siteLink(t[0], t[1])}<small>${year()} · 主题站点入口</small></div>`).join("")}</div><p class="note" style="border-top:1px solid #d9dccd;font-size:10px">编辑选题，非历史新闻标题。<br>点击查找所选年份的真实页面。</p></section></aside></div><footer class="portal-foot"><div><button data-action="about">关于旧日未关机</button>·<button data-action="sources">资料来源</button>·<button data-action="install">添加到手机主屏幕</button></div><div>本站不属于过去，但希望帮你找到过去。 &nbsp; 最佳浏览心情：有一点怀念。</div><div>你的本机探索足迹 <span class="counter" id="counter">${String(
     history.filter((x) => x.page.type === "archive").length,
   )
     .padStart(5, "0")
@@ -292,10 +292,10 @@ function navigate(page, push = true) {
           : embeddedArchivePage(page));
   $("#address").value = page.type === "home" ? "archaeo://home" : page.url;
   document.body.classList.toggle('lobby-mode',page.type==='home'&&typeof experienceZone!=='undefined'&&!experienceZone);
-  const homeTitle=typeof experienceZone==='undefined'?'系统桌面':({phone:'手机游玩',pc:'电脑上网',story:'故事探索'}[experienceZone]||'旧日时光');
+  const homeTitle=typeof experienceZone==='undefined'?'系统桌面':({phone:'口袋时光',pc:'重连旧网',story:'旧巷来客'}[experienceZone]||'旧日未关机');
   $("#windowtitle").textContent = page.type === "home" ? homeTitle : page.name;
   $("#status").textContent = page.type === "archive" ? "◷ 等待历史存档" : "✓ 完成";
-  document.title = `${page.type === "home" ? homeTitle : page.name} · ${year()} — 考古浏览器`;
+  document.title = `${page.type === "home" ? homeTitle : page.name} · ${year()} — 旧日未关机`;
   updateNav();
   saveTabState();
   renderBrowserTabs();
@@ -476,8 +476,8 @@ function action(a) {
   }
   if (a === "about" || a === "sources")
     dialog(
-      a === "about" ? "关于考古浏览器" : "历史资料来源",
-      `<p><b>考古浏览器 / FIRST EDITION</b><br>选择一个年份，重新走进那时的互联网。</p><p>浏览器外壳与首页为年代风格重制；站点链接指向 Internet Archive 的真实存档。这里没有生成的历史新闻，也不保证候选站点每年都有存档。</p><p><a href="https://web.archive.org/" target="_blank" rel="noopener noreferrer">Wayback Machine ↗</a> · 快照查询与历史页面<br><a href="https://commoncrawl.org/overview" target="_blank" rel="noopener noreferrer">Common Crawl ↗</a> · 后续可扩展的数据源，尚未接入</p><p>第一版：日期选择、网址查询、跨年份导航、本机收藏、iPhone 适配。历史网页在外壳内展示，电脑与手机均保留工具栏。部分来源可能限制内嵌；内页后续跳转由存档站控制，不能保证整段浏览严格停留在同一天。</p>`,
+      a === "about" ? "关于旧日未关机" : "历史资料来源",
+      `<p><b>旧日未关机 / OLDDAYS</b><br>那些回不去的日子，还在这里亮着。旧手机、老互联网与陌生人的故事，在三个独立入口里继续。</p><p>浏览器外壳与首页为年代风格重制；站点链接指向 Internet Archive 的真实存档。这里没有生成的历史新闻，也不保证候选站点每年都有存档。</p><p><a href="https://web.archive.org/" target="_blank" rel="noopener noreferrer">Wayback Machine ↗</a> · 快照查询与历史页面<br><a href="https://commoncrawl.org/overview" target="_blank" rel="noopener noreferrer">Common Crawl ↗</a> · 后续可扩展的数据源，尚未接入</p><p>第一版：日期选择、网址查询、跨年份导航、本机收藏、iPhone 适配。历史网页在外壳内展示，电脑与手机均保留工具栏。部分来源可能限制内嵌；内页后续跳转由存档站控制，不能保证整段浏览严格停留在同一天。</p>`,
     );
   if (a === "install")
     dialog(
