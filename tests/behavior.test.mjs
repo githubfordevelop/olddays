@@ -105,7 +105,7 @@ function boot(initial = {}, runtime = {}) {
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
       filename: file,
     });
-  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
+  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
   context.yearbookTestData=JSON.parse(readFileSync("data/yearbook.json","utf8"));
   vm.runInContext("Object.assign(yearbook, yearbookTestData)",context);
   delete context.yearbookTestData;
@@ -803,4 +803,15 @@ test('shop scene locks items and stages messages across saved discoveries',()=>{
  b.run("deepMark('mirror');deepMark('ledger');shopAdvance()");assert.equal(b.run("nightShop.events.includes('second')"),true);
  const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run('nightShop.drawer'),true);assert.equal(c.run('nightShop.items.length'),2);assert.equal(c.run('nightShop.events.length'),3);
  c.run("tide.device='black';tideView='shop:message'");assert.match(c.run('tideSms()'),/2005-11-02/);assert.match(c.run('shopMap()'),/手机店内景/);
+});
+
+test('shop closeups require layered searching, preserve it, and gate later photo message',()=>{
+ const b=boot({}, {deep:true});assert.equal(b.run("shopRummage('cards')"),false);assert.equal(b.run("shopEvidence('photo')"),false);
+ b.run("shopInspect('drawer');nightShop.drawer=true");assert.equal(b.run("shopRummage('battery')"),false);assert.equal(b.run("shopRummage('cards')"),true);assert.equal(b.run("shopRummage('battery')"),true);
+ assert.equal(b.run("shopEvidence('photo')"),true);assert.equal(b.run("shopRummage('reverse')"),false);b.run("shopDetailBack=true;shopRummage('reverse')");
+ b.run("nightShop.events.push('second');nightShop.callStage=1;shopAdvance()");assert.equal(b.run("nightShop.events.includes('photo-sms')"),false);
+ b.run("nightShop.callStage=2;shopAdvance()");assert.equal(b.run("nightShop.events.includes('photo-sms')"),true);
+ const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run("nightShop.rummaged.includes('reverse')"),true);assert.equal(c.run("nightShop.events.includes('photo-sms')"),true);
+ c.run("tide.device='black';tideView='shop:photo-message'");assert.match(c.run('tideSms()'),/我在拍照/);
+ c.run("visitMode='phone'");assert.match(c.run('renderPhoneEntrance()'),/oldlane-hero/);assert.match(c.run('renderPhoneEntrance()'),/随便玩玩/);
 });
