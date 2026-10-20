@@ -41,3 +41,11 @@ body:has(#pocket-model-host) .experience-phone-tools{display:none}
 @media(max-width:600px){#pocket-model-host .blender-stage{height:76svh;min-height:480px;max-height:800px}body:has(#pocket-model-host) .lab-layout{display:block}body:has(#pocket-model-host) .lab-side-ad{display:none}}
 body #content #museum-device.pocket-native-bridge{display:none!important}
 @media(orientation:landscape) and (max-height:600px){#pocket-model-host .blender-stage{height:85svh;min-height:280px;max-height:none}}
+
+body.model-play-expanded{overflow:hidden!important}
+#pocket-model-host .pocket-model-expanded{position:fixed!important;inset:0!important;z-index:5000;background:#17221d;overflow:auto;box-sizing:border-box;padding:env(safe-area-inset-top) 8px env(safe-area-inset-bottom)!important}
+#pocket-model-host .pocket-model-expanded .blender-stage{height:calc(100svh - 145px);min-height:250px;max-height:none;border-radius:0}
+#pocket-model-host .pocket-model-expanded #blender-status{color:#eee;margin:4px 0}
+#pocket-model-host .pocket-model-expanded>small,#pocket-model-host .pocket-model-expanded>details{display:none}
+@media(orientation:landscape){#pocket-model-host .pocket-model-expanded .blender-stage{height:calc(100svh - 85px);min-height:200px}#pocket-model-host .pocket-model-expanded nav{display:flex;flex-wrap:wrap;gap:3px}#pocket-model-host .pocket-model-expanded nav button{padding:5px;min-width:55px}}
+body.model-play-expanded .app-navigation{display:none!important}

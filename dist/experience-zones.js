@@ -39,8 +39,8 @@ function mountPocketModel(retained){
  if(experienceZone!=='phone'||!deskEntered||!native||typeof document.createElement!=='function')return;
  native.classList.add('pocket-native-bridge');
  const host=document.createElement('section');host.id='pocket-model-host';host.setAttribute('aria-label','可操作的三维设备');native.before(host);
- if(retained){host.append(retained);if(blenderWorld?.powered){blenderWorld.reclaim?.();refreshPhone();}blenderWorld?.draw?.();}
- else {const app=phoneState.app;openBlenderWorld('phone',pocketModelId(),host).then(()=>{if(blenderWorld?.inline&&!blenderWorld.failed){blenderWorld.startApp=app;blenderWorld.power();}});}
+ if(retained){host.append(retained);if(blenderWorld&&!blenderWorld.powered)blenderWorld.startApp=phoneState.app;if(blenderWorld?.powered){blenderWorld.reclaim?.();refreshPhone();}blenderWorld?.draw?.();}
+ else {const loading=openBlenderWorld('phone',pocketModelId(),host),mounted=blenderWorld;mounted.startApp=phoneState.app;loading.then(()=>{if(blenderWorld===mounted&&mounted.inline&&!mounted.failed)mounted.power();});}
 }
 function retainPocketModel(page){
  const active=blenderWorld?.inline;
