@@ -49,3 +49,4 @@ body.model-play-expanded{overflow:hidden!important}
 #pocket-model-host .pocket-model-expanded>small,#pocket-model-host .pocket-model-expanded>details{display:none}
 @media(orientation:landscape){#pocket-model-host .pocket-model-expanded .blender-stage{height:calc(100svh - 85px);min-height:200px}#pocket-model-host .pocket-model-expanded nav{display:flex;flex-wrap:wrap;gap:3px}#pocket-model-host .pocket-model-expanded nav button{padding:5px;min-width:55px}}
 body.model-play-expanded .app-navigation{display:none!important}
+body.model-play-expanded .experience-nav{display:none!important}
