@@ -15,3 +15,5 @@ __pycache__/
 # Raw generated assets and editable scene copies remain local; runtime GLBs are versioned.
 /art/hyper3d/*-raw/
 /art/hyper3d/*.blend*
+# Reproducible collection scene copies stay local; build script and runtime GLBs are tracked.
+/art/blender/*-collection.blend*

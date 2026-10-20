@@ -1,0 +1,42 @@
+[
+  {
+    "model": "nokia3310",
+    "file": "nokia3310-archive-reference.jpg",
+    "author": "Rainer Knäpper; retouch Multicherry",
+    "photographed": "2009-01-14",
+    "license": "Free Art License",
+    "licenseUrl": "https://artlibre.org/licence/lal/en/",
+    "source": "https://commons.wikimedia.org/wiki/File:Nokia_3310_Blue_R7309170_(retouch).jpg",
+    "changes": "Original reference retained. Cropped/contour-mapped and resized for interactive Blender model; derived GLB/photo material shared under the same source license."
+  },
+  {
+    "model": "razr",
+    "file": "razr-archive-reference.png",
+    "author": "Raimond Spekking",
+    "photographed": "2017-11-16",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Motorola_Razr_V3_montage_closed_open.png",
+    "changes": "Original reference retained. Cropped/contour-mapped and resized for interactive Blender model; derived GLB/photo material shared under the same source license."
+  },
+  {
+    "model": "n95",
+    "file": "n95-archive-reference.jpg",
+    "author": "Asim18",
+    "photographed": "2008-12-14",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Nokia_N95_Front_1.jpg",
+    "changes": "Original reference retained. Cropped/contour-mapped and resized for interactive Blender model; derived GLB/photo material shared under the same source license."
+  },
+  {
+    "model": "k750",
+    "file": "k750-archive-reference.jpg",
+    "author": "Jyi1693",
+    "photographed": "2007-04-21",
+    "license": "CC BY 2.5",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
+    "source": "https://commons.wikimedia.org/wiki/File:Sony_K750i_front.JPG",
+    "changes": "No edits to reference file; used for visual comparison, not historical screenshot."
+  }
+]

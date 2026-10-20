@@ -53,8 +53,9 @@ for index,(file,title) in enumerate([('nokia-n73-real.jpg','N73 catalogue'),('ba
  im=bpy.data.images.load(str(root/'dist/images/references'/file));im.pack();m=mat(title,(.6,.6,.6),0,.9);n=m.node_tree.nodes.new('ShaderNodeTexImage');n.image=im;m.node_tree.links.new(n.outputs['Color'],m.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
  obj=box('Period_accessory_card_'+str(index),(.65,.85,.012),(-3.25+index*.82,2.45,-2.36),m,.005)
 for image in bpy.data.images:
- if max(image.size)>1024:
-  scale=1024/max(image.size);image.scale(max(1,round(image.size[0]*scale)),max(1,round(image.size[1]*scale)));image.pack()
+ limit=256 if any(k in image.name for k in ['texture_normal','texture_metallic','texture_roughness']) else 512 if image.name.startswith(('texture_','plaster-diff','wood-diff')) else 1024
+ if max(image.size)>limit:
+  scale=limit/max(image.size);image.scale(max(1,round(image.size[0]*scale)),max(1,round(image.size[1]*scale)));image.pack()
 bpy.ops.object.select_all(action='DESELECT')
 for obj in bpy.context.scene.objects:
  if obj.type in {'MESH','CURVE','FONT'}:obj.select_set(True)

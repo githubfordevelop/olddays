@@ -8,6 +8,28 @@
       "url": "https://support.bell.ca/_web/guides/User-Guides/Mobile/Nokia/Nokia-EN/Nokia_N97_user_guide.pdf",
       "pages": "24-25",
       "usage": "Checked hardware text input, shift, space and backspace behavior; no manual pages or photos redistributed. Web recreation implements a subset, not original firmware."
+    },
+    {
+      "device": "Nokia 5230",
+      "publisher": "Nokia user guide, hosted by Belsimpel",
+      "year": 2010,
+      "url": "https://s3-eu-west-1.amazonaws.com/handleiding.belsimpel.nl/Nokia-5230-Black-handleiding-engels.pdf",
+      "pages": "21-23",
+      "usage": "Verified front call/menu/end, media, volume and lock-switch roles; original manual not redistributed. Web reconstruction, not factory firmware."
+    },
+    {
+      "device": "Motorola RAZR V3",
+      "publisher": "Motorola official support",
+      "year": 2006,
+      "url": "https://en-us.support.motorola.com/euf/assets/downloads/Manuals/V3_06_UG.pdf",
+      "usage": "Clamshell and keypad reference; manual not redistributed. Independent lower deck and hinged display, closed inner input blocked."
+    },
+    {
+      "device": "First generation iPhone",
+      "publisher": "Apple Newsroom",
+      "year": 2007,
+      "url": "https://www.apple.com/uk/newsroom/2007/01/09Apple-Reinvents-the-Phone-with-iPhone/",
+      "usage": "Original touch phone reference; rounded Home button, no numerical deck or modern notch. Recreation does not emulate original firmware."
     }
   ]
 }

@@ -21,3 +21,12 @@ https://creativecommons.org/licenses/by-sa/3.0/
 - battery-bl5c-2007.jpg — Adam Brookes (Adambro), 2007-08-15, CC BY-SA 3.0. https://commons.wikimedia.org/wiki/File:BL-5C_Nokia_battery.jpg . Resized and mapped to independent spare battery; original shown in inspection. Textured shop derivative distributed under CC BY-SA 3.0. https://creativecommons.org/licenses/by-sa/3.0/
 - ../materials/plaster-diff.jpg — Amal Kumar, Painted Plaster Wall, Poly Haven, CC0. https://polyhaven.com/a/painted_plaster_wall . Modern photographed surface texture used to evoke wear; NOT an archive photograph of a 2008 shop. https://polyhaven.com/license
 - ../materials/wood-diff.jpg — Dimitrios Savva (photography), Rico Cilliers (processing), Wood Table 001, Poly Haven, CC0. https://polyhaven.com/a/wood_table_001 . Modern photographed surface texture, not historical shop evidence. https://polyhaven.com/license
+
+## 2026-10-20 机型收藏 / 新增实机参考
+
+- **nokia3310**: `nokia3310-archive-reference.jpg` — Rainer Knäpper; retouch Multicherry; 2009-01-14; [Free Art License](https://artlibre.org/licence/lal/en/); [原图](https://commons.wikimedia.org/wiki/File:Nokia_3310_Blue_R7309170_(retouch).jpg). Original reference retained. Cropped/contour-mapped and resized for interactive Blender model; derived GLB/photo material shared under the same source license.
+- **razr**: `razr-archive-reference.png` — Raimond Spekking; 2017-11-16; [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); [原图](https://commons.wikimedia.org/wiki/File:Motorola_Razr_V3_montage_closed_open.png). Original reference retained. Cropped/contour-mapped and resized for interactive Blender model; derived GLB/photo material shared under the same source license.
+- **n95**: `n95-archive-reference.jpg` — Asim18; 2008-12-14; [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/); [原图](https://commons.wikimedia.org/wiki/File:Nokia_N95_Front_1.jpg). Original reference retained. Cropped/contour-mapped and resized for interactive Blender model; derived GLB/photo material shared under the same source license.
+- **k750**: `k750-archive-reference.jpg` — Jyi1693; 2007-04-21; [CC BY 2.5](https://creativecommons.org/licenses/by/2.5/); [原图](https://commons.wikimedia.org/wiki/File:Sony_K750i_front.JPG). No edits to reference file; used for visual comparison, not historical screenshot.
+
+3310/V3/N95 的对应 `models/*-collection.glb` 含上述照片的裁切映射，相关改编资产按相同来源许可证发布。K750照片仅在资料夹对照，不进入机身贴图。2017年V3组合图与2009年3310照片不冒充机型上市当年拍摄。新增机身为本项目Blender重建，未调用新Hyper3D付费生成，也不是原厂CAD或完整系统仿真。

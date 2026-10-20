@@ -1,0 +1,123 @@
+{
+  "verified": "2026-10-20",
+  "models": [
+    {
+      "file": "dist/models/n73-hyper3d.glb",
+      "bytes": 2063504,
+      "sha256": "e8e975f663a931c529d3dffa43f5f0798348b4b06874be492b9ac0055b7854e3",
+      "reference": "2007 public-domain N73 front and independently modeled rear"
+    },
+    {
+      "file": "dist/models/6600-refined.glb",
+      "bytes": 479016,
+      "sha256": "2100d64221f7644a4540fd0171193cfa2b296fe125723a6d3324e31816f86129",
+      "reference": "Drummyfish front/side/back photo, 2019, CC0"
+    },
+    {
+      "file": "dist/models/5230-refined.glb",
+      "bytes": 491456,
+      "sha256": "fe83d4610e0bb102bc9d9a53989c4fe6309d657b1d63c502472116aae41e9d5e",
+      "reference": "Anton Bagrin front,2009,CC BY-SA3.0; Nokia user guide2010"
+    },
+    {
+      "file": "dist/models/nokia3310-collection.glb",
+      "reference": "https://commons.wikimedia.org/wiki/File:Nokia_3310_Blue_R7309170_(retouch).jpg",
+      "bytes": 474456,
+      "sha256": "fc854b7686f6ad0ea9191628d3e0759dcf6e6fb4cfcd1424bf44a9287d7f1612",
+      "photoLicense": "Free Art License",
+      "photoLicenseUrl": "https://artlibre.org/licence/lal/en/",
+      "derivedAssetLicense": "Free Art License"
+    },
+    {
+      "file": "dist/models/nokia1100-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 413312,
+      "sha256": "63f85b12f8a1d648a430ca1feba7fbe644d344827acdc0137c6c08a6e6340592"
+    },
+    {
+      "file": "dist/models/nokia7610-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 494884,
+      "sha256": "f8d0eb6944bf55ada8a92b822519e8c94e21a97684f6e1774853b9954c161d9e"
+    },
+    {
+      "file": "dist/models/k750-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 617036,
+      "sha256": "eb3fcd31b81badc9116857b485a00581c34fd9e1f3fc3fd63c086df60a23db96"
+    },
+    {
+      "file": "dist/models/walkman-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 576016,
+      "sha256": "290d5964153b78bc2084a6bd9c9510ce66dcd21c5ca68eb011a8a5d054842e51"
+    },
+    {
+      "file": "dist/models/razr-collection.glb",
+      "reference": "https://commons.wikimedia.org/wiki/File:Motorola_Razr_V3_montage_closed_open.png",
+      "bytes": 1295912,
+      "sha256": "18e4a3ab7786b8fd9f21a2f880fd8ff6176da264597a2f822b8d48df0fcc8769",
+      "photoLicense": "CC BY-SA 4.0",
+      "photoLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "derivedAssetLicense": "CC BY-SA 4.0"
+    },
+    {
+      "file": "dist/models/n95-collection.glb",
+      "reference": "https://commons.wikimedia.org/wiki/File:Nokia_N95_Front_1.jpg",
+      "bytes": 646248,
+      "sha256": "eb02aad572a388ff35308f5a2db83dcc31d36e1cc33f4cd900ccd03120d73196",
+      "photoLicense": "CC BY-SA 3.0",
+      "photoLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "derivedAssetLicense": "CC BY-SA 3.0"
+    },
+    {
+      "file": "dist/models/n97-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 555860,
+      "sha256": "cc8e0700d28ca87013e723542406443ec06d77ad1ebfd355b432633abd4a27ae"
+    },
+    {
+      "file": "dist/models/twist-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 439240,
+      "sha256": "2a2285aec427c45feab777288d3717e4252f80db3aa11a3c137127ccc9268060"
+    },
+    {
+      "file": "dist/models/iphone-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 153276,
+      "sha256": "69070280cf64d86e1f3afbd0313fdbc87447c5d32d51668b2bb102f80931170b"
+    },
+    {
+      "file": "dist/models/fullscreen-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 74372,
+      "sha256": "1f79db039098c80ecfb5817e5e8703cf0d0ed81a1c47c93df91c59b9fcfe6743"
+    },
+    {
+      "file": "dist/models/mp5-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 95748,
+      "sha256": "7e107dc2fbf6c3edcf6dbf29e5ad0b3ed581c9e4b19d4e3367c07b0b23c25946"
+    },
+    {
+      "file": "dist/models/mp3-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 167852,
+      "sha256": "b76f52af484fc5d689cae63ced960b2ac57f7abe9536d6e88ea2ce565703ac54"
+    },
+    {
+      "file": "dist/models/mp4-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 175624,
+      "sha256": "9eac2cde6e2fbaa4908974ece12a03a76a20a0de5acdf14498a332aea1470058"
+    },
+    {
+      "file": "dist/models/psp-collection.glb",
+      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
+      "bytes": 270108,
+      "sha256": "2daa0078c16f25dd3abfc255f90f9f4cac885cd65d8fd233ee8ffb1c4050cef0"
+    }
+  ],
+  "scope": "Web reconstruction; independent story/save IDs retained. Not factory CAD or firmware."
+}

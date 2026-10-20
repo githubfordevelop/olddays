@@ -68,6 +68,10 @@ brand.parent=cover;brand.matrix_parent_inverse=cover.matrix_world.inverted()
 for x in [-.45,-.27,-.09,.09,.27,.45]:
  box('Rear_top_speaker',(.075,.026,.02),(x,1.96,-.39),ink,.01)
 
+# Connect the photo-front to the generated curvature; no floating card-like face.
+midframe=mat('N73 connected satin midframe',(.30,.32,.34),.65,.4)
+ovalbody('N73_front_support',(1.80,4.10,.28),(0,0,.41),midframe)
+for x in [-.77,.77]:box('Rear_cover_rail',(.10,2.58,.23),(x,.6,-.455),plum,.04)
 # Calibrate physical hit centers against the same front photograph (no generic key grid).
 for obj in bpy.context.scene.objects:
  action=obj.get('action','')
@@ -78,11 +82,16 @@ for obj in bpy.context.scene.objects:
  if obj.name.startswith('Key_'):
   obj.location.z=-.73 if action.startswith('soft:') else -.945
 for image in bpy.data.images:
- if image.size[0]>1024 or image.size[1]>1024:
-  scale=1024/max(image.size);image.scale(max(1,round(image.size[0]*scale)),max(1,round(image.size[1]*scale)));image.pack()
+ limit=256 if any(k in image.name for k in ['texture_normal','texture_metallic','texture_roughness']) else 512 if image.name.startswith(('texture_','plaster-diff','wood-diff')) else 1024
+ if max(image.size)>limit:
+  scale=limit/max(image.size);image.scale(max(1,round(image.size[0]*scale)),max(1,round(image.size[1]*scale)));image.pack()
+depth_rig=bpy.data.objects.new('N73_depth_calibration',None);bpy.context.collection.objects.link(depth_rig)
+for obj in list(bpy.context.scene.objects):
+ if obj is not depth_rig and obj.parent is None:obj.parent=depth_rig
+depth_rig.scale.y=.65
 bpy.ops.object.select_all(action='DESELECT')
 for o in bpy.context.scene.objects:
- if o.type=='MESH':o.select_set(True)
+ if o.type in {'MESH','EMPTY'}:o.select_set(True)
 out=Path(a.output).resolve();out.parent.mkdir(parents=True,exist_ok=True)
 bpy.ops.export_scene.gltf(filepath=str(out),export_format='GLB',use_selection=True,export_extras=True,export_apply=True,export_cameras=False,export_lights=False)
 bpy.ops.wm.save_as_mainfile(filepath=str(root/'art/hyper3d/n73-interactive.blend'))

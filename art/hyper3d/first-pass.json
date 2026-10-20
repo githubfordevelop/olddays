@@ -17,7 +17,7 @@
       "workspaceId": "b7c24df2-be7e-48f7-aebf-4e7dab898d08",
       "tier": "Low",
       "outputFile": "dist/models/n73-hyper3d.glb",
-      "sha256": "adbc60c308addb095d455f12799c6e9677b75eb186bb00fba71c613051d80892"
+      "sha256": "e8e975f663a931c529d3dffa43f5f0798348b4b06874be492b9ac0055b7854e3"
     },
     {
       "id": "shop-static-set",
@@ -32,7 +32,7 @@
       "workspaceId": "717986da-c526-428e-831d-368461b20329",
       "tier": "Low",
       "outputFile": "dist/models/oldlane-shop-hyper3d.glb",
-      "sha256": "5eb61e78ef6c4ae73bf73145805cb1b9d8cc70bb849bae8f99961bd625a75c87",
+      "sha256": "8d7f14602db5f3c51c22d1658cb590a83bc1cc41d38dd4b69c2fba02d5422f38",
       "reference": "dist/models/oldlane-shop-preview.png",
       "referenceType": "Existing original Blender render, not historical photography"
     }
@@ -49,5 +49,6 @@
     "Generated side curvature retained; this is a web reconstruction, not a factory CAD model",
     "Only generated shop counter adopted; interactive drawer and evidence remain separate",
     "Medium export required subscription; no subscription purchased"
-  ]
+  ],
+  "runtimeOptimization": "Generated maps256-512px, photo1024px; N73 connected midframe and .65 depth calibration. Other 15 rigs independently built in Blender, not new Hyper3D output."
 }
