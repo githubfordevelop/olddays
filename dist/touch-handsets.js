@@ -24,3 +24,8 @@ const portableRenderBase=renderPhoneLab;
 renderPhoneLab=function(){let html=portableRenderBase();if(!['psp','mp5'].includes(phoneState.model))return html;return html.replace(/<div class="device-keypad">[\s\S]*?<\/div>/g,'').replace(/<div class="device-hinge"><\/div>/g,'').replace(/<button class="device-home-button"[\s\S]*?<\/button>/g,'').replace(/<div class="device-softkeys">[\s\S]*?<\/div>/g,'<div class="player-screen-menu"><button data-phone-app="home">主菜单</button><button data-phone-app="games">游戏</button></div>').replace('▂▄▆ 中国移动','▂▄▆ Wi-Fi').replaceAll('时光网络','掌上娱乐');};
 const portableRefreshBase=refreshPhone;
 refreshPhone=function(){portableRefreshBase();if(['psp','mp5'].includes(phoneState.model)){const title=document.querySelector('.device-app-title span');if(title)title.textContent='掌上娱乐';}};
+
+const n97HardwareBase=phoneHardwareMarkup;
+phoneHardwareMarkup=function(){if(phoneState.model!=='n97')return n97HardwareBase();return `<div class="device-controls hardware-5230 hardware-n97-front"><button data-phone-app="contacts" aria-label="N97通话键">☎</button><button data-phone-app="home" aria-label="N97菜单键">▭</button><button data-phone-app="home" aria-label="N97结束键">☎</button></div>`;};
+const n97RenderBase=renderPhoneLab;
+renderPhoneLab=function(){let html=n97RenderBase();if(phoneState.model!=='n97')return html;html=html.replace(/<div class="device-keypad">[\s\S]*?<\/div>/g,'').replace(/<button class="device-home-button"[\s\S]*?<\/button>/g,'');return html.replace('<div class="n97-keyboard">','<div class="n97-keyboard"><nav class="n97-edit-tools"><button data-n97-edit="shift" aria-label="N97大小写" aria-pressed="'+n97Uppercase+'">⇧</button><button data-n97-edit="backspace" aria-label="N97退格">⌫</button></nav>');};

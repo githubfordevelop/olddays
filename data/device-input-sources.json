@@ -1,0 +1,13 @@
+{
+  "verified": "2026-10-20",
+  "sources": [
+    {
+      "device": "Nokia N97",
+      "publisher": "Nokia, user guide hosted by Bell Canada",
+      "year": 2009,
+      "url": "https://support.bell.ca/_web/guides/User-Guides/Mobile/Nokia/Nokia-EN/Nokia_N97_user_guide.pdf",
+      "pages": "24-25",
+      "usage": "Checked hardware text input, shift, space and backspace behavior; no manual pages or photos redistributed. Web recreation implements a subset, not original firmware."
+    }
+  ]
+}

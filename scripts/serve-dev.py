@@ -9,4 +9,7 @@ class Handler(SimpleHTTPRequestHandler):
   return super().send_head()
  def end_headers(self):
   self.send_header('Cache-Control','no-store');super().end_headers()
-ThreadingHTTPServer(('127.0.0.1',a.port),Handler).serve_forever()
+class DevServer(ThreadingHTTPServer):
+ request_queue_size=128
+ daemon_threads=True
+DevServer(('127.0.0.1',a.port),Handler).serve_forever()

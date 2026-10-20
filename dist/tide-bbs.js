@@ -43,6 +43,13 @@ bbsThreads.window={title:'[随手录] 下雨时窗边的底噪',board:'field',au
  {user:'noodle',time:'22:04',text:'录完早点睡，我楼上天天十一点洗衣服。'},
  {user:'listener',time:'10-18 09:56',quote:{thread:'window',floor:2,text:'我这边天还没下，先关窗了。'},text:'我只记得关过一次。怎么后面又有一张窗户照片。'}]};
 bbsThreads.outtake={title:'[外采] 海边的底噪里，有一段不属于海的声音',board:'field',author:'listener',date:'10-17',posts:[{user:'listener',time:'时间未缓存',text:'不是观鸟。我想留下一些没人注意过的环境声音。灯塔那边风太大，昨晚换到了堤下面，门缝里很安静。'},{user:'sound',time:'时间未缓存',text:'先查串音和回授。为什么最后八秒像有人在学你呼吸？'},{user:'listener',time:'已编辑',text:'那时候我没有开口。潮最低的时候，门外才有地方站。'},{user:'xun',time:'时间未缓存',text:'别再传了。你说那句是以后才会说的，到底什么意思？'},{user:'admin',time:'时间未缓存',text:'音频暂不可下载。保留文字，等待楼主补充说明。'}]};
+bbsThreads.paper={title:'[闲聊] 修理单背面，写过字还能用吗',board:'life',author:'listener',date:'10-16',posts:[
+ {user:'listener',time:'21:46',text:'店里那张单子反面还有字，老板翻过来给我签名了。想起家里记菜钱也是用旧纸。正面日期是新的，背面不一定。'},
+ {user:'noodle',time:'22:03',text:'我爸拿练习本背面列清单，一本能用两遍。你别把价钱看反了就行。'},
+ {user:'listener',time:'22:08',text:'不是价钱。背面像写过一段路线，擦了，铅笔印还在。笔画很像我的。'},
+ {user:'sound',time:'22:16',text:'纸压在底下写字会留下压痕。先看是不是上一张纸透下来的，别急着往怪处想。'},
+ {user:'xun',time:'22:31',text:'日期别拿来对时间，签单子和拍照片不是一回事。机器留店里了吧？'},
+ {user:'listener',time:'22:36',text:'留了。纸回去压在书下，我妈说别再当废纸扔。那行字先留着，不描。'}]};
 let bbsQuery='',bbsBoard='all',bbsTrail='bbs:list';
 const bbsBoards={all:'全部',gear:'器材',field:'现场',life:'水区',street:'同城'};
 function bbsState(){const n=nightState();if(!n.bbs||typeof n.bbs!=='object')n.bbs={last:'',visited:[]};return n.bbs;}
@@ -61,3 +68,4 @@ const bbsNightOpen=nightOpen;nightOpen=function(id){if(id==='forum')return bbsOp
 const bbsDeepView=deepSetView;deepSetView=function(view){if(tide.active&&tide.device==='black'){if(view.startsWith('forumdeep:')&&Object.hasOwn(bbsThreads,view.slice(10)))return bbsOpen(`bbs:thread:${view.slice(10)}:1:0:0`);if(view==='deep:forum'||view==='deep:search')return bbsOpen('bbs:list');}return bbsDeepView(view);};
 document.addEventListener('click',e=>{if(!tide.active||tide.device!=='black')return;const b=e.target.closest('[data-bbs-route],[data-bbs-board]');if(!b)return;e.preventDefault();if(b.dataset.bbsRoute)return bbsOpen(b.dataset.bbsRoute);if(Object.hasOwn(bbsBoards,b.dataset.bbsBoard)){bbsBoard=b.dataset.bbsBoard;bbsOpen('bbs:list');}});
 document.addEventListener('submit',e=>{if(!tide.active||tide.device!=='black'||!e.target.matches('[data-bbs-search]'))return;e.preventDefault();bbsQuery=String(new FormData(e.target).get('q')||'').trim().slice(0,40);bbsOpen('bbs:list');});
+const paperThreadBase=bbsThread;bbsThread=function(...args){const html=paperThreadBase(...args);nightPaperReady();return html;};
