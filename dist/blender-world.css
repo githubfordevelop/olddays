@@ -29,3 +29,14 @@
 @media(max-width:600px){.blender-stage{height:clamp(220px,calc(100dvh - 445px),440px);min-height:220px;max-height:none}.shop3d-play>nav{grid-template-columns:repeat(3,minmax(0,1fr))}.shop3d-play>small{font-size:9px;line-height:1.4}.shop3d-play .blender-key-help{margin-top:3px}}
 @media(max-height:500px) and (orientation:landscape){.blender-stage{height:calc(100dvh - 175px);min-height:160px;max-height:none}.shop3d-play>nav{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}.shop3d-play>nav>button{flex:0 0 100px;min-width:100px;white-space:nowrap}.shop3d-play>nav>.blender-model-picker,.shop3d-play>.blender-key-help,.shop3d-play>small{display:none}.shop3d-play{padding:0}.shop3d-play #blender-status{margin:4px 0}}
 @media(min-width:601px) and (min-height:501px){.blender-stage{height:min(560px,calc(100dvh - 400px));min-height:300px}}
+
+/* Ordinary pocket play uses the same operable model as the collection viewer. */
+.pocket-native-bridge{display:none!important}
+.phone-stage:has(#pocket-model-host){display:block;min-width:0;width:100%;padding:0}
+#pocket-model-host{width:100%;min-width:0}
+#pocket-model-host .shop3d-play{padding:0;border:0}
+#pocket-model-host .blender-stage{height:700px;max-height:none;min-height:460px;border-radius:16px;background:#17221d}
+#pocket-model-host [data-world-exit],#pocket-model-host .blender-model-picker{display:none}
+body:has(#pocket-model-host) .experience-phone-tools{display:none}
+@media(max-width:600px){#pocket-model-host .blender-stage{height:76svh;min-height:480px;max-height:800px}body:has(#pocket-model-host) .lab-layout{display:block}body:has(#pocket-model-host) .lab-side-ad{display:none}}
+body #content #museum-device.pocket-native-bridge{display:none!important}

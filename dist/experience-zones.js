@@ -31,3 +31,21 @@ phoneUCMarkup=function(){if(experienceZone!=='pc')return zoneBrowser();return '<
 function zoneResourceShelf(){return '<section class="zone-resource-shelf"><h2>随便玩玩，从这里开始</h2><nav>'+[['games','游戏厅 / 战棋与冒险'],['music','音乐 / 彩铃与旋律'],['books','小说 / 夜读书架'],['magazines','杂志 / 漫画翻页']].map(([id,t])=>'<button data-phone-app="'+id+'">'+t+'</button>').join('')+'</nav><p>'+Object.keys(phoneModels).length+' 款设备 · '+(pocketJavaGames.length+pocketClassicGames.length)+' 款口袋游戏 · '+memoryTracks.length+' 首年代歌单 · '+kioskAvailable().length+' 个报刊入口</p></section>';}
 document.addEventListener('click',e=>{const quick=e.target.closest('[data-lobby-app]');if(quick){e.preventDefault();const app=quick.getAttribute('data-lobby-app');if(!['games','music','books','magazines'].includes(app))return;chooseExperience('phone');deskEntered=true;phoneState.app=app;phoneState.book=null;savePhone();navigate({type:'home'},false);return;}if(e.target.closest('[data-tide-view="native"]')){e.preventDefault();e.stopImmediatePropagation();return chooseExperience('phone');}const hand=e.target.closest('[data-experience-handset]');if(hand){e.preventDefault();return openBlenderWorld('phone',hand.getAttribute('data-experience-handset'));}const b=e.target.closest('[data-experience]');if(b){e.preventDefault();return chooseExperience(b.getAttribute('data-experience'));}if(e.target.closest('[data-action="home"]')){experienceSave();experienceZone='';}},true);
 window.addEventListener('pagehide',experienceSave);
+
+// Keep the live model and its screen alive when an app refreshes the page shell.
+function pocketModelId(){return {symbian:'silver',n73:'black',nokia5230:'white'}[phoneState.model]||phoneState.model;}
+function mountPocketModel(retained){
+ const native=document.querySelector('#museum-device');
+ if(experienceZone!=='phone'||!deskEntered||!native||typeof document.createElement!=='function')return;
+ native.classList.add('pocket-native-bridge');
+ const host=document.createElement('section');host.id='pocket-model-host';host.setAttribute('aria-label','可操作的三维设备');native.before(host);
+ if(retained){host.append(retained);if(blenderWorld?.powered){blenderWorld.reclaim?.();refreshPhone();}blenderWorld?.draw?.();}
+ else {const app=phoneState.app;openBlenderWorld('phone',pocketModelId(),host).then(()=>{if(blenderWorld?.inline&&!blenderWorld.failed){blenderWorld.startApp=app;blenderWorld.power();}});}
+}
+function retainPocketModel(page){
+ const active=blenderWorld?.inline;
+ const keep=active&&experienceZone==='phone'&&deskEntered&&page.type==='home'&&blenderWorld.device===pocketModelId();
+ const retained=keep?document.querySelector('#pocket-model-host > .shop3d'):null;
+ if(retained)retained.remove();else if(active)blenderWorldDispose?.();
+ return retained;
+}

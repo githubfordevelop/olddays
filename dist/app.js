@@ -257,6 +257,7 @@ function renderWorldPage(page) {
  return renderers[page.type]?.();
 }
 function navigate(page, push = true) {
+  const retainedPocket=typeof retainPocketModel==='function'?retainPocketModel(page):null;
   try{if(validTravelDate(date))localStorage.setItem('olddays-selected-date',date);}catch{}
   if((current.type==='phone'&&page.type!=='phone')||(current.type==='home'&&page.type!=='home')){
     pocketJavaReleaseAll();
@@ -296,6 +297,7 @@ function navigate(page, push = true) {
   $("#windowtitle").textContent = page.type === "home" ? homeTitle : page.name;
   $("#status").textContent = page.type === "archive" ? "◷ 等待历史存档" : "✓ 完成";
   document.title = `${page.type === "home" ? homeTitle : page.name} · ${year()} — 旧日未关机`;
+  if(page.type==='home'&&typeof mountPocketModel==='function')mountPocketModel(retainedPocket);
   updateNav();
   saveTabState();
   renderBrowserTabs();
