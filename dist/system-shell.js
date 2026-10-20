@@ -31,7 +31,20 @@ function phoneUCMarkup(){const links=[['news','新闻'],['books','小说'],['com
 function installSystemApp(id){if(!systemApps.some(a=>a.id===id)||systemInstalled.includes(id))return false;systemInstalled.push(id);unlockDeskStamp('install');try{localStorage.setItem('olddays-system-apps',JSON.stringify(systemInstalled));}catch{}return true;}
 function launchSystemApp(id){if(!phoneAppAllowed(id)){toast('此机型不支持，请换一部彩屏手机');return;}if(isTextOnlyPhone()&&id==='snake'){openPhoneLab('home');startPhoneSnake();return;}if(isTextOnlyPhone()&&id==='calculator'){openPhoneLab('calculator');return;}const app=systemApps.find(a=>a.id===id);if(!app)return;if(app.jar){pocketJavaChoice=app.jar;openPhoneLab('java');}else openPhoneLab(id);if((current.type!=='home'||app.jar&&window.innerWidth<620)&&!document.body.classList.contains('pocket-expanded'))pocketExpand();}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-system-launch],[data-system-install],[data-system-portal],[data-uc-tab],[data-uc-news],[data-uc-open],[data-uc-back]');if(!b)return;e.preventDefault();if(b.dataset.systemLaunch)return launchSystemApp(b.dataset.systemLaunch);if(b.dataset.systemInstall){const product=walletForApp(b.dataset.systemInstall);if(product){const payment=walletPurchase(product.code);if(!payment.ok){toast(payment.reason);return;}}if(!installSystemApp(b.dataset.systemInstall))return;const view=document.querySelector('#device-viewport'),scroll=view?.scrollTop||0;refreshPhone();if(view)view.scrollTop=scroll;toast('已安装到桌面');return;}if(b.hasAttribute('data-system-portal'))return navigate({type:'portal',name:'旧日导航',url:'archaeo://portal'});if(b.hasAttribute('data-uc-back')){if(phoneState.article!==null){phoneState.article=null;}else if(ucContent){ucContent='';}else return phoneSelectApp('home');return refreshPhone();}if(b.dataset.ucOpen){ucContent=b.dataset.ucOpen;phoneState.article=null;return refreshPhone();}if(b.dataset.ucTab){ucPage=b.dataset.ucTab;ucQuery='';ucContent='';return refreshPhone();}if(b.dataset.ucNews!==undefined){ucContent='news';phoneState.article=Number(b.dataset.ucNews);refreshPhone();}});
-document.addEventListener('submit',e=>{if(!e.target.matches('[data-uc-search]'))return;e.preventDefault();ucQuery=String(new FormData(e.target).get('query')||'').trim().slice(0,80);ucPage='home';ucContent='';refreshPhone();});
+document.addEventListener('submit',e=>{if(!e.target.matches('[data-uc-search]'))return;e.preventDefault();const value=String(new FormData(e.target).get('query')||'').trim().slice(0,2048);if(openPocketAddress(value))return;ucQuery=value.slice(0,80);ucPage='home';ucContent='';refreshPhone();});
 
 function phoneUCKey(key){if(key==='0'){ucContent='';ucQuery='';ucPage='home';phoneState.article=null;return refreshPhone();}if(key==='#'){ucPage='nav';ucContent='';return refreshPhone();}const destinations=['news','books','games','music','videos','magazines','gallery','store'];if(/^[1-8]$/.test(key)){ucContent=destinations[Number(key)-1];phoneState.article=null;refreshPhone();}}
 document.addEventListener('keydown',e=>{if(!phoneSurfaceActive()||phoneState.app!=='browser'||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.ctrlKey||e.metaKey||e.repeat)return;if(/^[0-9#]$/.test(e.key)){e.preventDefault();phoneUCKey(e.key);}else if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();document.querySelector('#device-viewport').scrollBy({top:e.key==='ArrowUp'?-100:100,behavior:'smooth'});}});
+
+// Keep real old addresses inside the same handset/archive viewer.
+function openPocketAddress(value){
+ if(!/^(?:https?:\/\/|www\.)|^[a-z0-9-]+(?:\.[a-z0-9-]+)+(?::\d+)?(?:[/?#]|$)/i.test(value))return false;
+ try{
+  const url=new URL(/^https?:\/\//i.test(value)?value:'https://'+value);
+  if(!['http:','https:'].includes(url.protocol)||url.username||url.password)throw Error();
+  const host=url.hostname.replace(/^www\./,'');
+  const known=siteCatalog.flatMap(c=>c.sites).find(s=>{try{return new URL(/^https?:\/\//i.test(s.url)?s.url:'https://'+s.url).hostname.replace(/^www\./,'')===host;}catch{return false;}});
+  if(known&&known.since>Number(year())){toast('这个网站在 '+known.since+' 年才出现，换个年份再试试。');return true;}
+  url.hash='';deskWebsite={name:known?.name||url.hostname,url:url.href};ucQuery='';ucContent='web';ucPage='home';refreshPhone();return true;
+ }catch{toast('请输入有效网址，例如 www.sina.com.cn');return true;}
+}
