@@ -891,3 +891,22 @@ test('reading position and selected Java program survive switching independent s
  const b=boot({}, {deep:true,zones:true});b.run("chooseExperience('phone');phoneState.book='letters';phoneState.chapter=1;phoneState.app='books';deskEntered=true;pocketJavaChoice='pocket-saga';chooseExperience('pc');chooseExperience('phone')");assert.equal(b.run('phoneState.book'),'letters');assert.equal(b.run('phoneState.chapter'),1);assert.equal(b.run('pocketJavaChoice'),'pocket-saga');assert.match(b.run('phoneBookMarkup()'),/江湖来信/);
  b.run("phoneState.book=null;bookLibraryQuery='吴承恩'");assert.match(b.run('phoneBookMarkup()'),/西游记/);assert.doesNotMatch(b.run('phoneBookMarkup()'),/data-phone-read=\"letters\"/);
 });
+
+test('phone reading contents expose all chapters and chapter jumps preserve reading state',()=>{
+ const b=boot();b.run("phoneState.book='journey';phoneState.chapter=20;phoneReadingContents=true");
+ const html=b.run('phoneBookMarkup()');assert.equal((html.match(/data-phone-toc-chapter=/g)||[]).length,30);assert.match(html,/data-phone-toc-chapter="20" aria-current="true"/);
+ b.run("phoneReadBook('journey',29)");assert.equal(b.run('phoneState.chapter'),29);assert.equal(b.run('phoneReadingContents'),false);assert.equal(b.run('readingState.progress.journey'),29);
+ b.run("phoneReadBook('journey',999)");assert.equal(b.run('phoneState.chapter'),29);
+});
+test('browser return clears an archive immediately even with absent or stale news article state',()=>{
+ const b=boot();for(const article of ['undefined','3']){
+  b.run('ucContent="web";phoneState.article='+article);
+  const target={dataset:{},closest:s=>s.includes('[data-uc-back]')?target:null,hasAttribute:k=>k==='data-uc-back'};
+  for(const fn of b.listeners.get('click'))fn({target,preventDefault(){}});
+  assert.equal(b.run('ucContent'),'');
+ }
+ b.run('ucContent="news";phoneState.article=2');
+ const target={dataset:{},closest:s=>s.includes('[data-uc-back]')?target:null,hasAttribute:k=>k==='data-uc-back'};
+ for(const fn of b.listeners.get('click'))fn({target,preventDefault(){}});
+ assert.equal(b.run('ucContent'),'news');assert.equal(b.run('phoneState.article'),null);
+});
