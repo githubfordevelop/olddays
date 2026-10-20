@@ -105,7 +105,7 @@ function boot(initial = {}, runtime = {}) {
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
       filename: file,
     });
-  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js","shop-hands.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
+  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js","shop-hands.js","shop-authentic.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
   context.yearbookTestData=JSON.parse(readFileSync("data/yearbook.json","utf8"));
   vm.runInContext("Object.assign(yearbook, yearbookTestData)",context);
   delete context.yearbookTestData;
@@ -819,7 +819,7 @@ test('shop closeups require layered searching, preserve it, and gate later photo
 test('physical drag requires distance and valid layer; lift and power preserve device stories',()=>{
  const b=boot({}, {deep:true});assert.equal(b.run("shopLift('unknown')"),false);assert.equal(b.run('shopPower()'),false);
  b.run("shopInspect('drawer');nightShop.drawer=true");assert.equal(b.run("shopDragResolve('cards',10,4)"),false);assert.equal(b.run("shopDragResolve('battery',80,0)"),false);assert.equal(b.run("shopDragResolve('cards',65,10)"),true);assert.equal(b.run("shopDragResolve('battery',0,60)"),true);assert.equal(b.run("shopDragResolve('battery',NaN,1)"),false);
- assert.equal(b.run("shopLift('black')"),true);assert.match(b.run('shopMap()'),/data-hands-power/);assert.equal(b.run('shopPower()'),true);assert.equal(b.run('tide.device'),'black');assert.equal(b.run('phoneState.app'),'home');
+ assert.equal(b.run("shopLift('black')"),true);assert.match(b.run('shopMap()'),/data-hands-power/);assert.equal(b.run('shopPower()'),true);b.run('shopBootFinish()');assert.equal(b.run('tide.device'),'black');assert.equal(b.run('phoneState.app'),'home');
  b.run("shopLift('silver');shopPower()");assert.equal(b.run('tide.device'),'silver');assert.equal(b.run('phoneState.model'),'symbian');
 });
 test('shop correspondence validates physical evidence and waits for separate story milestones',()=>{
@@ -831,4 +831,10 @@ test('shop correspondence validates physical evidence and waits for separate sto
  b.run("tideDeep.completed=true;shopAdvance();shopChatChoose('finished')");assert.equal(b.run("nightShop.events.includes('dawn')"),true);assert.equal(b.run("nightShop.correspondence.length"),9);
  const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run("nightShop.correspondence.length"),9);assert.equal(c.run("nightShop.evidenceRead.includes('photo-back')"),true);assert.equal(c.run("nightShop.events.includes('dawn')"),true);
  c.run("tide.device='black';tideView='shop:qq'");assert.match(c.run('tideQQ()'),/卷帘门/);assert.match(c.run('tideQQ()'),/不是同一卷/);c.run("tideView='shop:dawn'");assert.match(c.run('tideSms()'),/早点铺/);
+});
+
+test('N73 held view uses model keys and boot sequence cannot start twice',()=>{
+ const b=boot({}, {deep:true});b.run("shopLift('black')");const h=b.run('shopHandsetMarkup()');assert.match(h,/N73顶部电源键/);assert.match(h,/N73编辑键/);assert.match(h,/N73多媒体键/);assert.match(h,/N73清除键/);assert.match(h,/N73数字键9/);
+ assert.equal(b.run('shopPower()'),true);assert.equal(b.run('shopPower()'),false);assert.match(b.run('shopHandsetMarkup()'),/正在启动/);assert.equal(b.run('shopBootFinish()'),true);assert.equal(b.run('shopBootFinish()'),false);assert.equal(b.run('tide.active'),true);
+ b.run("shopInspect('drawer');nightShop.drawer=true;shopRummage('cards');shopRummage('battery')");assert.match(b.run('shopObjectMarkup()'),/挪到旁边的保修卡/);assert.match(b.run('shopObjectMarkup()'),/挪到旁边的电池/);assert.equal(b.run("shopPutLayer('cards')"),true);assert.equal(b.run("nightShop.rummaged.includes('battery')"),false);
 });
