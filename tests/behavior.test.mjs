@@ -105,7 +105,7 @@ function boot(initial = {}, runtime = {}) {
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
       filename: file,
     });
-  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js","shop-hands.js","shop-authentic.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
+  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js","shop-hands.js","shop-authentic.js","n73-live.js","handset-lives.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
   context.yearbookTestData=JSON.parse(readFileSync("data/yearbook.json","utf8"));
   vm.runInContext("Object.assign(yearbook, yearbookTestData)",context);
   delete context.yearbookTestData;
@@ -837,4 +837,17 @@ test('N73 held view uses model keys and boot sequence cannot start twice',()=>{
  const b=boot({}, {deep:true});b.run("shopLift('black')");const h=b.run('shopHandsetMarkup()');assert.match(h,/N73顶部电源键/);assert.match(h,/N73编辑键/);assert.match(h,/N73多媒体键/);assert.match(h,/N73清除键/);assert.match(h,/N73数字键9/);
  assert.equal(b.run('shopPower()'),true);assert.equal(b.run('shopPower()'),false);assert.match(b.run('shopHandsetMarkup()'),/正在启动/);assert.equal(b.run('shopBootFinish()'),true);assert.equal(b.run('shopBootFinish()'),false);assert.equal(b.run('tide.active'),true);
  b.run("shopInspect('drawer');nightShop.drawer=true;shopRummage('cards');shopRummage('battery')");assert.match(b.run('shopObjectMarkup()'),/挪到旁边的保修卡/);assert.match(b.run('shopObjectMarkup()'),/挪到旁边的电池/);assert.equal(b.run("shopPutLayer('cards')"),true);assert.equal(b.run("nightShop.rummaged.includes('battery')"),false);
+});
+
+test('active N73 keeps its shell, binds hardware, and stores normalized physical positions',()=>{
+ const b=boot({}, {deep:true});b.run("phoneState.model='n73'");const h=b.run('renderPhoneLab()');assert.match(h,/live-real-n73/);assert.match(h,/live-joystick/);assert.match(h,/data-phone-key="5"/);assert.match(h,/id="device-viewport"/);assert.equal((h.match(/id="museum-device"/g)||[]).length,1);
+ assert.equal(b.run("shopPosition('cards',.31,.22)"),true);assert.equal(b.run("shopPosition('unknown',.2,.2)"),false);assert.equal(b.run("shopPosition('battery',NaN,0)"),false);
+ const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run('nightShop.positions.cards.x'),.31);assert.equal(c.run('nightShop.positions.cards.y'),.22);c.run("shopInspect('drawer');nightShop.drawer=true;shopRummage('cards')");assert.match(c.run('shopObjectMarkup()'),/left:31.00%;top:22.00%/);
+});
+test('collected handsets keep separate messages, chats, discoveries and saved story progress',()=>{
+ const b=boot({}, {deep:true});b.run("tide.device='silver'");assert.match(b.run('tideSms()'),/老杜/);assert.doesNotMatch(b.run('tideSms()'),/阿巡|第十二张/);assert.equal(b.run("handsetLifeTalk('finish')"),false);
+ b.run("handsetLifeTalk('intro');handsetLifeTalk('cable');handsetLifeRead('photo');handsetLifeRead('browser')");assert.equal(b.run("handsetLifeTalk('finish')"),true);
+ b.run("tide.device='white'");assert.match(b.run('tideSms()'),/外婆/);assert.doesNotMatch(b.run('tideSms()'),/老杜|海堤/);assert.equal(b.run("nightShop.handsetStories.white.talk.length"),0);assert.equal(b.run("handsetLifeTalk('finish')"),false);
+ b.run("handsetLifeTalk('intro');handsetLifeTalk('print');handsetLifeRead('photo');handsetLifeRead('browser');handsetLifeTalk('finish')");
+ const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run('nightShop.handsetStories.silver.talk.length'),3);assert.equal(c.run('nightShop.handsetStories.white.talk.length'),3);c.run("tide.device='black'");assert.doesNotMatch(c.run('tideSms()'),/第十二张|琴房窗户/);
 });
