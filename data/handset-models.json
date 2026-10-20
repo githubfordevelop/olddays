@@ -22,8 +22,8 @@
     {
       "file": "dist/models/nokia3310-collection.glb",
       "reference": "https://commons.wikimedia.org/wiki/File:Nokia_3310_Blue_R7309170_(retouch).jpg",
-      "bytes": 474456,
-      "sha256": "fc854b7686f6ad0ea9191628d3e0759dcf6e6fb4cfcd1424bf44a9287d7f1612",
+      "bytes": 208136,
+      "sha256": "a61686f6c91df4cc3969bb284f0c093e077c98a75218cdde629426a63fa137f8",
       "photoLicense": "Free Art License",
       "photoLicenseUrl": "https://artlibre.org/licence/lal/en/",
       "derivedAssetLicense": "Free Art License"
@@ -32,31 +32,31 @@
       "file": "dist/models/nokia1100-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
       "bytes": 413312,
-      "sha256": "63f85b12f8a1d648a430ca1feba7fbe644d344827acdc0137c6c08a6e6340592"
+      "sha256": "fd1ba041e1c7495b8d1be10e3cdb9065808533b883acc023814cfedde9d88e63"
     },
     {
       "file": "dist/models/nokia7610-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
-      "bytes": 494884,
-      "sha256": "f8d0eb6944bf55ada8a92b822519e8c94e21a97684f6e1774853b9954c161d9e"
+      "bytes": 494880,
+      "sha256": "788ae81c092a31f63d52db9d6f6365648987a043b49dd2734e4111c18c9e64d9"
     },
     {
       "file": "dist/models/k750-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
       "bytes": 617036,
-      "sha256": "eb3fcd31b81badc9116857b485a00581c34fd9e1f3fc3fd63c086df60a23db96"
+      "sha256": "bdcceed08d2ccc2629a77262591231a8fe8abed993648d7ad4dc231979d6f810"
     },
     {
       "file": "dist/models/walkman-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
       "bytes": 576016,
-      "sha256": "290d5964153b78bc2084a6bd9c9510ce66dcd21c5ca68eb011a8a5d054842e51"
+      "sha256": "80ab2c46fccc703d7ef7bb157de8a9be2ad426109d058c7477f31b48df236eeb"
     },
     {
       "file": "dist/models/razr-collection.glb",
       "reference": "https://commons.wikimedia.org/wiki/File:Motorola_Razr_V3_montage_closed_open.png",
-      "bytes": 1295912,
-      "sha256": "18e4a3ab7786b8fd9f21a2f880fd8ff6176da264597a2f822b8d48df0fcc8769",
+      "bytes": 1011520,
+      "sha256": "6c494b829b5a266f7173b81fef464bce9a13eed2ca23d6f7e734023fa865d5c7",
       "photoLicense": "CC BY-SA 4.0",
       "photoLicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "derivedAssetLicense": "CC BY-SA 4.0"
@@ -64,8 +64,8 @@
     {
       "file": "dist/models/n95-collection.glb",
       "reference": "https://commons.wikimedia.org/wiki/File:Nokia_N95_Front_1.jpg",
-      "bytes": 646248,
-      "sha256": "eb02aad572a388ff35308f5a2db83dcc31d36e1cc33f4cd900ccd03120d73196",
+      "bytes": 452152,
+      "sha256": "878f8ed6159a1643bb672b977466cf34723a88c9fd60c1bf5d823de83f42ac8c",
       "photoLicense": "CC BY-SA 3.0",
       "photoLicenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
       "derivedAssetLicense": "CC BY-SA 3.0"
@@ -73,50 +73,50 @@
     {
       "file": "dist/models/n97-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
-      "bytes": 555860,
-      "sha256": "cc8e0700d28ca87013e723542406443ec06d77ad1ebfd355b432633abd4a27ae"
+      "bytes": 689404,
+      "sha256": "3ca189c100fc5fc07e55f204df7857e098bb8dcb7be4f988eec3b0d4c0c07a05"
     },
     {
       "file": "dist/models/twist-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
       "bytes": 439240,
-      "sha256": "2a2285aec427c45feab777288d3717e4252f80db3aa11a3c137127ccc9268060"
+      "sha256": "ca2223e673a713b2730256fc1f5ef62cfaf3b850b69752ddea016bfe0938da20"
     },
     {
       "file": "dist/models/iphone-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
       "bytes": 153276,
-      "sha256": "69070280cf64d86e1f3afbd0313fdbc87447c5d32d51668b2bb102f80931170b"
+      "sha256": "cb3cf642fee9dfd293911c4e19cd6b699ef085b5530bbbaa233b9da2bbc505ff"
     },
     {
       "file": "dist/models/fullscreen-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
       "bytes": 74372,
-      "sha256": "1f79db039098c80ecfb5817e5e8703cf0d0ed81a1c47c93df91c59b9fcfe6743"
+      "sha256": "2a382dbd99aa4c3c10c6b05d43ec8d083b581db63e67a92e5485dd5eb583d82e"
     },
     {
       "file": "dist/models/mp5-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
       "bytes": 95748,
-      "sha256": "7e107dc2fbf6c3edcf6dbf29e5ad0b3ed581c9e4b19d4e3367c07b0b23c25946"
+      "sha256": "a8b181cb1e97c77b05d8beba757ea29b082480a9e51bdcac4e068c92f9ec36fd"
     },
     {
       "file": "dist/models/mp3-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
       "bytes": 167852,
-      "sha256": "b76f52af484fc5d689cae63ced960b2ac57f7abe9536d6e88ea2ce565703ac54"
+      "sha256": "529b3d6c11042fc95ad39f44bd54cd7d1e52c6df7c6538ce80103b4f90495275"
     },
     {
       "file": "dist/models/mp4-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
       "bytes": 175624,
-      "sha256": "9eac2cde6e2fbaa4908974ece12a03a76a20a0de5acdf14498a332aea1470058"
+      "sha256": "9d0a07c8484c9b8585cf3906d583e6e5e6e704bf20c1a644fb6e1fc24db9b0ee"
     },
     {
       "file": "dist/models/psp-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
       "bytes": 270108,
-      "sha256": "2daa0078c16f25dd3abfc255f90f9f4cac885cd65d8fd233ee8ffb1c4050cef0"
+      "sha256": "49690264debcca84a48a213e07144c44bad7c1211c6968f394d80a7ebdeb582e"
     }
   ],
   "scope": "Web reconstruction; independent story/save IDs retained. Not factory CAD or firmware."

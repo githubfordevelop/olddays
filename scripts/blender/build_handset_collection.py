@@ -1,7 +1,7 @@
 """Distinct low-poly interactive reconstructions, not factory CAD/firmware.
 Coordinates and mechanisms are explicit per model; generic players are labelled concepts.
 """
-import bpy, math, json
+import bpy, math, json, os
 from pathlib import Path
 root=Path(__file__).resolve().parents[2]
 exec((root/'scripts/blender/build_oldlane.py').read_text().split("reset();silver=mat('Brushed metal'")[0],globals())
@@ -49,13 +49,18 @@ def camera_back(y=1.35,x=-.48,z=-.27):
 def brand(s,y=1.75,parent=None):label(s,0,y,.32,.13,parent)
 def speaker(y=1.92,parent=None):box('Earpiece',(.40,.035,.02),(0,y,.32),black,.014,parent=parent)
 def common_power(x=.5,y=2.03,z=0):box('Power',(.26,.06,.16),(x,y,z),keys,.02,'power')
-def rearbrand(s='NOKIA',y=.45):text('Rear_brand',s,(0,y,-.27),.17,silver,True)
+def rearbrand(s='NOKIA',y=.45):
+ o=text('Rear_brand',s,(0,y,-.27),.17,silver,True);o.rotation_euler=(math.pi/2,0,math.pi)
 def finish(id,name,screen,kind='classic',brandname='NOKIA',mechanism=None,screenGroup=None,distance=8):
  profiles[id]={'name':name,'model':id,'file':id+'-collection','kind':kind,'brand':brandname,'screen':screen,'height':round(260*screen[4]/screen[3]),'distance':distance}
  if id in ['nokia3310','razr','n95']:
   profiles[id]['reference']=id
  if mechanism:profiles[id]['mechanism']=mechanism
  if screenGroup:profiles[id]['screenGroup']=screenGroup
+ if id in ['nokia3310','razr','n95']:
+  for obj in list(bpy.context.scene.objects):
+   if obj.name.startswith('Legend_') and (id!='n95' or obj.parent and obj.parent.name=='Slide_panel'):bpy.data.objects.remove(obj,do_unlink=True)
+ if os.environ.get('OLDDAYS_HANDSET') and id not in os.environ['OLDDAYS_HANDSET'].split(','):return
  for o in bpy.context.scene.objects:
   if o.get('photoHit'):
    m=mat('Invisible photo-aligned input',(.1,.1,.1));m.node_tree.nodes.get('Principled BSDF').inputs['Alpha'].default_value=0;m.surface_render_method='DITHERED';o.data.materials.clear();o.data.materials.append(m)
@@ -108,11 +113,11 @@ box('V3_inner_black',(1.73,2.26,.06),(0,1.22,.16),black,.08,parent=hinge)
 s=display(0,1.13,1.48,1.86,.30,hinge);speaker(2.3,hinge);brand('MOTOROLA',2.14,hinge)
 # Exterior mini-display and camera are on the other face of lid.
 box('V3_external_display',(.7,.65,.025),(0,1.25,-.15),glass,.025,parent=hinge)
-o=text('V3_external_clock','12:03',(0,1.25,-.17),.12,white,True);o.parent=hinge
+o=text('V3_external_clock','12:03',(0,1.25,-.17),.12,white,True);o.parent=hinge;o.rotation_euler=(math.pi/2,0,math.pi)
 c=cyl('V3_outer_camera',.12,.03,(0,1.92,-.15),glass);c.parent=hinge
 pad(-.20);numbers(-.70,width=1.6);common_power(.96,-.2,0)
-reference_face('V3_real_inner_lid','razr-archive-reference.png',(.553,.936,.029,.420),1.92,2.5,.27,hinge,y=1.25,outline=[(.62,.029),(.87,.029),(.93,.05),(.936,.40),(.90,.42),(.58,.42),(.553,.40),(.553,.07)])
-reference_face('V3_real_outer_lid','razr-archive-reference.png',(.05,.46,.225,.715),1.92,2.5,-.21,hinge,y=1.25,back=True,outline=[(.10,.225),(.40,.225),(.46,.26),(.46,.68),(.39,.715),(.12,.715),(.05,.68),(.05,.26)])
+reference_face('V3_real_inner_lid','razr-archive-reference.png',(.553,.936,.029,.420),1.92,2.5,.27,hinge,y=1.25,outline=[(.72,.030),(.80,.030),(.87,.043),(.92,.06),(.932,.075),(.932,.39),(.916,.418),(.575,.418),(.556,.39),(.558,.075),(.573,.055),(.64,.04)])
+reference_face('V3_real_outer_lid','razr-archive-reference.png',(.05,.46,.225,.715),1.92,2.5,-.21,hinge,y=1.25,back=True,outline=[(.19,.228),(.325,.228),(.34,.235),(.405,.235),(.445,.245),(.455,.27),(.455,.65),(.435,.68),(.375,.700),(.30,.71),(.20,.71),(.12,.70),(.07,.685),(.05,.66),(.05,.27),(.06,.245),(.12,.235),(.18,.235)])
 reference_face('V3_real_lower_keys','razr-archive-reference.png',(.553,.94,.468,.974),1.92,2.55,.43,y=-.95,outline=[(.58,.468),(.92,.468),(.94,.50),(.94,.94),(.88,.974),(.62,.974),(.553,.94),(.553,.50)])
 for o in bpy.context.scene.objects:
  if o.get('action') and o.get('action')!='power':o['photoHit']=True
@@ -129,8 +134,12 @@ for o in bpy.context.scene.objects:
  if o.parent==slider and (o.get('action') or o.name.startswith('Legend_')):o.location.y-=.23
 reference_face('N95_real_slide_panel','n95-archive-reference.jpg',(.20,.83,.09,.925),1.95,3.55,.68,slider,outline=[(.27,.09),(.72,.09),(.82,.11),(.83,.90),(.78,.925),(.25,.925),(.20,.90),(.20,.12)])
 for o in bpy.context.scene.objects:
- if o.parent==slider and o.get('action'):o['photoHit']=True
-common_power();camera_back();rearbrand();finish('n95','Nokia N95',s,mechanism='dual',screenGroup='Slide_panel',distance=9)
+ if o.parent==slider and o.get('action'):
+  o['photoHit']=True;o.location.y=-.705
+  layout={'home':(-.44,-1.22,.26,.28),'soft:left':(-.73,-1.03,.20,.16),'soft:right':(.73,-1.03,.20,.16),'contacts':(-.71,-1.43,.22,.18),'end':(.71,-1.43,.22,.18),'clear':(.34,-1.535,.17,.12)}
+  if o.get('action') in layout:
+   x,y,w,h=layout[o['action']];o.location.x=x;o.location.z=y;o.dimensions=(w,.05,h)
+common_power(.5,1.80,0);camera_back();rearbrand();finish('n95','Nokia N95',s,mechanism='dual',screenGroup='Slide_panel',distance=9)
 # Side-sliding landscape touch display, real separate QWERTY deck.
 start();body('N97_keyboard_chassis',4.0,1.95,black,.38)
 for row,letters in enumerate(['QWERTYUIOP','ASDFGHJKL','ZXCVBNM']):
@@ -138,8 +147,21 @@ for row,letters in enumerate(['QWERTYUIOP','ASDFGHJKL','ZXCVBNM']):
 for x,a,sym,w in [(-1.62,'shift','SHIFT',.55),(-.55,'letter: ','SPACE',1.3),(1.25,'clear','DEL',.7)]:legendkey(a,sym,x,-.65,w,.28,z=.25)
 slide=group('Qwerty_screen');body('N97_touch_panel',4.0,1.95,silver,.20,slide).location.y=-.40
 box('N97_gloss_bezel',(3.86,1.8,.04),(0,0,.53),black,.06,parent=slide);s=display(0,0,3.12,1.72,.57,slide)
-legendkey('home','Menu',-1.78,0,.25,.34,slide,z=.56);legendkey('contacts','+',1.78,.45,.22,.3,slide,z=.56);legendkey('end','-',1.78,-.45,.22,.3,slide,z=.56)
-label('NOKIA',1.77,0,.56,.085,slide);camera_back(.65,-1.6);common_power(1.6,1.0,0);finish('n97','Nokia N97',s,'qwerty',mechanism='qwerty',screenGroup='Qwerty_screen',distance=12)
+legendkey('home','◆',1.78,-.72,.19,.23,slide,z=.56)
+for action,y,color in [('contacts',-.25,(.12,.65,.26)),('end',.45,(.82,.14,.12))]:
+ ink=mat('N97_'+action+'_ink',color,.05,.6)
+ box('Key_'+action,(.12,.23,.008),(1.78,y,.555),black,.012,action,slide)
+ box('N97_'+action+'_mark',(.015,.12,.005),(1.78,y,.565),ink,.005,parent=slide)
+ for dy in [-.065,.065]:box('N97_'+action+'_ear',(.04,.025,.005),(1.79,y+dy,.565),ink,.007,parent=slide)
+box('N97_Earpiece',(.035,.42,.02),(-1.78,0,.56),black,.012,parent=slide)
+c=cyl('N97_front_camera',.045,.012,(-1.78,.53,.56),glass);c.parent=slide
+label('NOKIA',-1.45,.85,.56,.085,slide)
+box('N97_rear_camera_plate',(.85,1.30,.055),(-1.39,0,-.225),silver,.08)
+camera_back(.38,-1.40,-.28)
+box('N97_dual_LED',(.13,.31,.014),(-1.68,.38,-.295),white,.025)
+box('N97_lens_cover',(.68,.64,.045),(-1.39,-.27,-.29),silver,.045)
+text('N97_rear_brand','NOKIA Nseries',(.35,0,-.205),.12,silver,True).rotation_euler=(math.pi/2,0,math.pi)
+box('Power',(.06,.26,.12),(-2.0,.40,0),keys,.02,'power');finish('n97','Nokia N97',s,'qwerty',mechanism='qwerty',screenGroup='Qwerty_screen',distance=12)
 # Rotating lower music grip. This entry is explicitly a period-inspired concept.
 start();body('Twist_upper',1.8,2.7,black);s=display(0,.45,1.40,1.8,.25);brand('MUSIC',1.18);speaker(1.27);pad(-.69)
 rot=group('Twist_grip');rot.location.z=-1.38
@@ -147,7 +169,7 @@ body('Twist_lower',1.8,1.3,orange,.5,rot).location.z=-.65
 numbers(-.17,rot,width=1.55)
 musicface=group('Twist_music_face');musicface.parent=rot;musicface.rotation_euler.z=math.pi
 for x,a,t in [(-.55,'track:prev','<<'),(0,'play','>'),(.55,'track:next','>>')]:legendkey(a,t,x,-.65,.42,.3,musicface)
-common_power();finish('twist','旋转音乐手机 / 概念重制',s,brandname='MUSIC',mechanism='twist',distance=9)
+common_power(.5,1.37,0);finish('twist','旋转音乐手机 / 概念重制',s,brandname='MUSIC',mechanism='twist',distance=9)
 for id,name in [('iphone','初代 iPhone'),('fullscreen','全面屏触控手机'),('mp5','联网 MP5 / 概念重制')]:
  start();h=4.1;body('Aluminium_rear',2.1,h,silver,.28);body('Black_glass_front',2.02,h-.06,black,.08).location.y=-.18
  full=id=='fullscreen';s=display(0,.03,1.88 if full else 1.83,3.72 if full else 2.74,.25)
