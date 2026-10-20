@@ -118,9 +118,9 @@
     },
     {
       "file": "dist/models/psp-collection.glb",
-      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
-      "bytes": 270108,
-      "sha256": "49690264debcca84a48a213e07144c44bad7c1211c6968f394d80a7ebdeb582e"
+      "reference": "Sony Interactive Entertainment 2007 hardware overview and PSP online guide; independently modelled PSP-family controls, not factory CAD/firmware.",
+      "bytes": 472408,
+      "sha256": "18c8ef4e4ad4188eb65654e8ab98f7d94245aa3aed4a58f0209b4f93a328abfc"
     }
   ],
   "scope": "Web reconstruction; independent story/save IDs retained. Not factory CAD or firmware."

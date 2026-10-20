@@ -45,3 +45,8 @@ The existing Jyi1693 CC BY 2.5 front photograph (`k750-archive-reference.jpg`, o
 
 ### Original iPhone geometry correction, 2026-10-21
 Primary reference: Apple archived technical specifications https://support.apple.com/en-us/112445 (115×61×11.6 mm, 3.5-inch display, 480×320 raster). Reconstruction uses width scale 2.1/61; screen width/height derive from the stated diagonal and 2:3 portrait ratio. Port/trim details and desktop are interpretive geometry/UI, not factory CAD, Apple images or an iOS distribution. Side controls operate the website audio/video only.
+
+### PSP-family control reconstruction (2026-10-21)
+- Primary specification and control inventory: https://sonyinteractive.com/en/press-releases/2007/pspplaystationportable-becomes-slimmer-and-lighter/ (2007-07-12). Used for PSP-family 16:9 display and physical control arrangement, not to relabel the 2005 era entry as PSP-2000.
+- Official operating guide: https://manuals.playstation.net/document/en/psp/current/index.html . No Sony photographs, firmware or commercial game files copied into the project.
+- Independently built mesh: diamond triangle/circle/cross/square buttons, digital D-pad, usable digital quadrants on analog nub, HOME/SELECT/START, volume and shoulder controls. Dimensions remain approximate. Web mapping: circle/START confirm, cross back, triangle/SELECT activate current function, square opens local game menu, L/R move selection. Not a PSP emulator or original OS.
