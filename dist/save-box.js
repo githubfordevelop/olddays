@@ -5,10 +5,11 @@ const saveBoxKeys = Object.freeze({
   'olddays-pocket-anime':'object','olddays-arcade-save':'object','olddays-discoveries':'array',
   'olddays-support-applause':'number','olddays-qq-demo':'object','olddays-memory-stamps':'array',
   'olddays-visit-mode':'mode','olddays-selected-date':'date',
-  'olddays-pocket-club':'object','olddays-experience-states':'object','olddays-game-library':'object','archaeo-reading-room':'object'
+  'olddays-memory-cabinet':'object','olddays-pocket-club':'object','olddays-experience-states':'object','olddays-game-library':'object','archaeo-reading-room':'object'
 });
 let saveBoxPending=null,saveBoxRead=0;
 const saveBoxFields={
+ 'olddays-memory-cabinet':{seen:'array',stamps:'array'},
  'olddays-pocket-club':{name:'string',level:'integer',xp:'integer',coins:'integer',energy:'integer',mood:'integer',collection:'array',notes:'array',wins:'integer',fish:'integer',best:'integer',claimed:'array',battle:'object'},
  'olddays-game-library':{favorites:'array',recent:'array'},
  'archaeo-reading-room':{progress:'object',font:'string',paper:'string'},

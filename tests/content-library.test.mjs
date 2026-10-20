@@ -46,3 +46,13 @@ test('all companion routes can finish, unlock by level, and telegraph charged at
   assert.equal(vm.runInContext('pocketClub.wins',c),r+1);
  }
 });
+
+function cabinet(saved=''){const c=vm.createContext({date:'2010-12-31',localStorage:{getItem:()=>saved,setItem:(k,v)=>c.saved=v},document:{addEventListener(){}},phoneApps:[],systemApps:[],systemInstalled:[],phoneScreen:()=>'',phoneAppAllowed:()=>true,phoneGameShelfMarkup:()=>'',phoneState:{app:'cabinet',model:'n73'},experienceZone:'phone',isTextOnlyPhone:()=>false,deviceCapabilities:{}});vm.runInContext(readFileSync('dist/memory-cabinet.js','utf8'),c);return c;}
+test('real photo cabinet respects photograph dates, keeps source licenses and persists collection stamps',()=>{
+ const c=cabinet();assert.equal(vm.runInContext('cabinetAvailable().length',c),6);
+ for(const item of JSON.parse(JSON.stringify(vm.runInContext('cabinetItems',c)))){assert.ok(readFileSync('dist/images/references/'+item.file).length>10000);assert.match(item.licenseURL,/creativecommons.org/);assert.ok(item.author);}
+ vm.runInContext("date='2008-01-01'",c);assert.equal(vm.runInContext('cabinetAvailable().length',c),2);assert.equal(vm.runInContext("cabinetOpen('seg')",c),false);
+ vm.runInContext("cabinetOpen('n73')",c);assert.equal(vm.runInContext('cabinetAnswer(2)',c),false);assert.equal(vm.runInContext('cabinetAnswer(0)',c),true);vm.runInContext('cabinetAnswer(0)',c);assert.equal(vm.runInContext('cabinetState.stamps.length',c),1);
+ assert.equal(vm.runInContext('cabinetState.stamps.length',cabinet(c.saved)),1);assert.equal(vm.runInContext('cabinetState.stamps.length',cabinet('{"stamps":["n73","n73","bad"]}')),1);
+ c.experienceZone='story';assert.equal(vm.runInContext("phoneAppAllowed('cabinet')",c),false);
+});

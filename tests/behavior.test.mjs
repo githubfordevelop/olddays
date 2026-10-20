@@ -910,3 +910,16 @@ test('browser return clears an archive immediately even with absent or stale new
  for(const fn of b.listeners.get('click'))fn({target,preventDefault(){}});
  assert.equal(b.run('ucContent'),'news');assert.equal(b.run('phoneState.article'),null);
 });
+
+test('independent handset callbacks need cross-app records and persist without changing Tide evidence',()=>{
+ const b=boot({}, {deep:true});
+ for(const [device,owner,detail,reason]of [['silver','阿禾','0918','applause'],['white','林恬','0612','original']]){
+  b.run(`tide.device='${device}'`);assert.equal(b.run(`handsetLifeReturn('${owner}','${detail}','${reason}')`),false);
+  b.run("handsetLifeTalk('intro');['sms','photo','browser','forum'].forEach(handsetLifeRead);handsetLifeTalk('archive')");
+  assert.equal(b.run(`handsetLifeReturn('${owner}','9999','${reason}')`),false);assert.equal(b.run(`nightShop.handsetStories.${device}.returned`),false);
+  assert.equal(b.run(`handsetLifeReturn('${owner}','${detail}','${reason}')`),true);assert.equal(b.run(`nightShop.handsetStories.${device}.returned`),true);
+ }
+ assert.equal(b.run('tide.seen.length'),0);
+ const restored=boot(Object.fromEntries(b.values),{deep:true});assert.equal(restored.run('nightShop.handsetStories.silver.returned'),true);assert.equal(restored.run('nightShop.handsetStories.white.returned'),true);
+ restored.run("tide.device='silver';tideView='life:reply'");assert.match(restored.run('tideQQ()'),/四十秒/);assert.doesNotMatch(restored.run('tideQQ()'),/外婆/);
+});

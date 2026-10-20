@@ -44,3 +44,6 @@
 - Automatic large home banner and pocket lab side advertisements are hidden. Ad magazine remains an intentional separate destination.
 
 Java gameplay QA: Brick Buster launch, play, ball launch, movement and pause checked after disabling native tone generation. Other JARs are build checked; full gameplay compatibility is not claimed. Initial automated screenshot sweep ran too early to confirm runtime readiness and is not treated as gameplay verification. Native tones disabled in modified Sfx.java; modified sources included.
+
+## 2026-10-20 可使用的旧物图鉴
+“口袋旧物志”将已有真实参考照片改成手机内可阅读、放大和辨物集章内容，而非新增空菜单。六张图逐项来源、拍摄日期、作者及许可见 `data/memory-cabinet-sources.json`；原图保存在 `dist/images/references`，沿用该目录SOURCES.md的许可。2007 N73与阿克拉手机店、2008 N82太阳能充电器、2009 5230与BL-4C、2010深圳赛格均按拍摄日期过滤。原有5230裁切明确标注，其他照片不改写画面。真实记录与虚构失主剧情完全分开，不作为失主照片或中国旧巷实拍。

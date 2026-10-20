@@ -1,0 +1,110 @@
+[
+  {
+    "id": "n73",
+    "title": "N73与实体键盘",
+    "date": "2007-01-17",
+    "file": "nokia-n73-real.jpg",
+    "author": "Paul3vanz",
+    "license": "Public domain",
+    "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "source": "Nokia-N73.jpg",
+    "text": "一块小屏幕下面，方向键、选择键和数字键挤在同一张脸上。翻图时看看手指究竟落在哪个位置，再回到模拟手机里按一按。此图为真实机型照片，不是故事中失主的手机。",
+    "question": "照片记录的是哪一种操作方式？",
+    "options": [
+      "实体数字键与摇杆",
+      "只有整块触屏",
+      "翻盖全键盘"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "shop",
+    "title": "2007年的手机小店",
+    "date": "2007-04-24",
+    "file": "phone-shop-2007.jpg",
+    "author": "Paul Scott",
+    "license": "CC BY-SA 2.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "Mobile_phone_shop_Accra_2007_B002.jpg",
+    "text": "这家店在加纳阿克拉。它记录了2007年的真实手机零售场景，可以放大观察柜台和陈列。它不是中国旧巷，也不承担剧情证据的角色。",
+    "question": "这张真实小店照片在哪里拍摄？",
+    "options": [
+      "虚构的雾江",
+      "加纳阿克拉",
+      "深圳赛格"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "charger",
+    "title": "给N82续一格电",
+    "date": "2008-09-11",
+    "file": "charger-2008.jpg",
+    "author": "Mark Guim",
+    "license": "CC BY 2.0",
+    "licenseURL": "https://creativecommons.org/licenses/by/2.0/",
+    "source": "Solar_charger_4.jpg",
+    "text": "真实照片记录了太阳能充电器与Nokia N82。再多一格电，可以多听一会儿歌、多等一条消息。照片保留原样，不能据此认为所有旧手机都使用同一种接口。",
+    "question": "这张照片里的配件是什么？",
+    "options": [
+      "游戏卡带",
+      "太阳能充电器",
+      "存储卡读卡器"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "5230",
+    "title": "数字键逐渐离开屏幕",
+    "date": "2009-08-25",
+    "file": "nokia-5230-front.jpg",
+    "author": "Anton Bagrin",
+    "license": "CC BY-SA 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "source": "Nokia-5230-black1.jpg",
+    "text": "5230的正面与N73明显不同：大片触屏下面保留几颗实体功能键。对照真机照片，看看从按数字键到用手指点屏幕，交互发生了什么变化。此处展示本站已有裁切版本。",
+    "question": "这部手机正面最显眼的变化是什么？",
+    "options": [
+      "完整数字键盘",
+      "大片触屏",
+      "双屏翻盖"
+    ],
+    "answer": 1
+  },
+  {
+    "id": "battery",
+    "title": "可以拆下的旧电池",
+    "date": "2009-12-14",
+    "file": "battery-bl4c.jpg",
+    "author": "Myles Findlay",
+    "license": "CC BY-SA 3.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "source": "BL-4C_Nokia_battery.jpg",
+    "text": "BL-4C电池标签的真实照片。那时一块备用电池也能装进书包。这只是年代资料，型号不能混用，也不是维修指导。放大后可以看看标签字体和触点位置。",
+    "question": "这张照片记录的电池型号是？",
+    "options": [
+      "BL-4C",
+      "BL-5J",
+      "未知通用电池"
+    ],
+    "answer": 0
+  },
+  {
+    "id": "seg",
+    "title": "2010年的深圳赛格",
+    "date": "2010-08-04",
+    "file": "seg-2010.jpg",
+    "author": "Bobbie Johnson",
+    "license": "CC BY-SA 2.0",
+    "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "source": "Inside_SEG_Plaza_(Bobbie_Johnson)_-_Flickr.jpg",
+    "text": "深圳赛格广场内部的真实照片。把画面放大，慢慢看柜台、商品和通道。这里记录的是2010年的电子市场，与手机店虚构剧情相互独立。",
+    "question": "这张电子市场照片拍摄于哪一年？",
+    "options": [
+      "2004",
+      "2010",
+      "2018"
+    ],
+    "answer": 1
+  }
+]
