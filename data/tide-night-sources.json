@@ -1,0 +1,19 @@
+{
+  "chapter": "末班车之后",
+  "fiction": "短信、QQ、车票插画、论坛与本机便笺为原创虚构；不是历史案件证据。",
+  "verified": "2026-10-20",
+  "historicalReading": [
+    {
+      "date": "2008-06-17",
+      "publisher": "Mozilla",
+      "url": "https://blog.mozilla.org/press/2008/06/mozilla-releases-firefox-3-and-redefines-the-web-experience/",
+      "usage": "中文事实摘要和来源链接，未复制原文和图片"
+    },
+    {
+      "date": "2008-09-23",
+      "publisher": "Android Developers Blog",
+      "url": "https://android-developers.googleblog.com/2008/09/announcing-android-10-sdk-release-1.html",
+      "usage": "中文事实摘要和来源链接，未复制原文和图片"
+    }
+  ]
+}

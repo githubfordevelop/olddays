@@ -105,7 +105,7 @@ function boot(initial = {}, runtime = {}) {
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
       filename: file,
     });
-  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js","shop-hands.js","shop-authentic.js","n73-live.js","handset-lives.js","blender-world.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
+  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js","shop-hands.js","shop-authentic.js","n73-live.js","handset-lives.js","blender-world.js","tide-night.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
   if(runtime.zones)for(const file of ["experience-zones.js","game-library.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
   context.yearbookTestData=JSON.parse(readFileSync("data/yearbook.json","utf8"));
   vm.runInContext("Object.assign(yearbook, yearbookTestData)",context);
@@ -923,3 +923,6 @@ test('independent handset callbacks need cross-app records and persist without c
  const restored=boot(Object.fromEntries(b.values),{deep:true});assert.equal(restored.run('nightShop.handsetStories.silver.returned'),true);assert.equal(restored.run('nightShop.handsetStories.white.returned'),true);
  restored.run("tide.device='silver';tideView='life:reply'");assert.match(restored.run('tideQQ()'),/四十秒/);assert.doesNotMatch(restored.run('tideQQ()'),/外婆/);
 });
+
+// Optional N73 chapter requires cross-application reading and preserves old saves.
+{const b=boot({}, {deep:true});b.run("tide.device='black';tide.active=true");assert.match(b.run("nightCheck('2240','unknown')"),/空白/);for(const k of ['draft','chat','forum','photo','receipt'])b.run(`nightRead('${k}')`);assert.match(b.run("nightCheck('2235','unknown')"),/混为/);assert.match(b.run("nightCheck('2240','yes')"),/混为/);assert.match(b.run("nightCheck('22:40','unknown')"),/夹进/);assert.equal(b.run("nightReply('ask')"),true);const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run("nightState().checked"),true);assert.equal(c.run("nightState().choice"),'ask');b.run("tide.device='silver'");assert.equal(b.run("nightReply('wait')"),false);assert.match(b.run("nightPage('period')"),/真实史料/);}
