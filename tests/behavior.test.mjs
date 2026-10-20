@@ -106,6 +106,7 @@ function boot(initial = {}, runtime = {}) {
       filename: file,
     });
   if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js","shop-hands.js","shop-authentic.js","n73-live.js","handset-lives.js","blender-world.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
+  if(runtime.zones)for(const file of ["experience-zones.js","game-library.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
   context.yearbookTestData=JSON.parse(readFileSync("data/yearbook.json","utf8"));
   vm.runInContext("Object.assign(yearbook, yearbookTestData)",context);
   delete context.yearbookTestData;
@@ -867,3 +868,26 @@ test('3D Java controls send game softkeys and never replace the device on auto e
 });
 
  test('textured handsets keep device and modal while switching SMS QQ and Java',()=>{for(const [id,model] of [['black','n73'],['white','nokia5230']]){const b=boot({}, {deep:true});b.run(`tide.active=true;tide.device='${id}';phoneState.model='${model}';shop3dPlayActive=true;blenderWorld={mode:'phone',powered:true,draw(){}};document.querySelector('#modal').open=true;`);for(const app of ['sms','qq','games','java']){b.run(`openPhoneLab('${app}')`);assert.equal(b.run('phoneState.model'),model);assert.equal(b.run('tide.device'),id);assert.equal(b.run('phoneState.app'),app);assert.equal(b.run("document.querySelector('#modal').open"),true);}}});
+
+test('experience zones keep ordinary play separate from story progress and restore device choices',()=>{
+ const b=boot({}, {deep:true,zones:true});assert.match(b.run('renderHome()'),/手机游玩/);assert.match(b.run('renderHome()'),/电脑上网/);assert.match(b.run('renderHome()'),/故事探索/);
+ b.run("chooseExperience('story');tideOpenDevice('black');tide.seen=['sms','qq'];phoneState.app='qq';chooseExperience('phone')");
+ assert.equal(b.run('tide.active'),false);assert.equal(b.run('campus.started'),false);assert.equal(b.run('mystery.started'),false);assert.doesNotMatch(b.run('renderHome()'),/推开玻璃门|潮声收藏者/);
+ b.run("phoneState.model='nokia5230';phoneState.app='music';deskEntered=true;chooseExperience('pc')");
+ assert.equal(b.run('visitMode'),'pc');assert.doesNotMatch(b.run('renderHome()'),/失物档案|旧巷手机店|museum-device/);
+ b.run("chooseExperience('phone')");assert.equal(b.run('phoneState.model'),'nokia5230');assert.equal(b.run('phoneState.app'),'music');
+ b.run("chooseExperience('story')");assert.equal(b.run('tide.active'),true);assert.equal(b.run('tide.seen.join()'),'sms,qq');assert.equal(b.run('phoneState.model'),'n73');
+});
+
+test('game library exposes a real classic, filters adventures and stores favorites safely',()=>{
+ const b=boot({}, {deep:true,zones:true});assert.doesNotMatch(b.run('phoneGameShelfMarkup()'),/data-launch-java="ancient-empires-2"/);b.run("gameLibraryFilter='rpg'");assert.match(b.run('phoneGameShelfMarkup()'),/宠物小精灵/);assert.doesNotMatch(b.run('phoneGameShelfMarkup()'),/像素乒乓/);b.run("gameLibraryFilter='favorites';gameLibraryFavorites=['grid-tactics'];saveGameLibrary()");const c=boot(Object.fromEntries(b.values),{deep:true,zones:true});assert.equal(c.run("gameLibraryFavorites.join()"),'grid-tactics');c.run("gameLibraryQuery='<script>'");assert.doesNotMatch(c.run('phoneGameShelfMarkup()'),/<script>/);
+});
+
+test('ordinary phone suppresses mystery hooks and rejects corrupted mode snapshots',()=>{
+ const b=boot({}, {deep:true,zones:true});b.run("chooseExperience('phone');phoneState.app='sms';mystery.started=true;campus.started=true");assert.doesNotMatch(b.run('phoneScreen()'),/未知发件人|夏末备份|迟到了很多年/);assert.equal(b.run("installedSystemApps().some(a=>a.id==='campus')"),false);b.run("restoreExperiencePhone({model:'n73',app:'<script>',wallpaper:'x\u0022 onload=x',sent:[{text:null,reply:'bad'}],page:-5})");assert.equal(b.run('phoneState.app'),'home');assert.equal(b.run('phoneState.wallpaper'),'blue');assert.equal(b.run('phoneState.sent.length'),0);assert.equal(b.run('phoneState.page'),0);
+});
+
+test('reading position and selected Java program survive switching independent spaces',()=>{
+ const b=boot({}, {deep:true,zones:true});b.run("chooseExperience('phone');phoneState.book='letters';phoneState.chapter=1;phoneState.app='books';deskEntered=true;pocketJavaChoice='pocket-saga';chooseExperience('pc');chooseExperience('phone')");assert.equal(b.run('phoneState.book'),'letters');assert.equal(b.run('phoneState.chapter'),1);assert.equal(b.run('pocketJavaChoice'),'pocket-saga');assert.match(b.run('phoneBookMarkup()'),/江湖来信/);
+ b.run("phoneState.book=null;bookLibraryQuery='吴承恩'");assert.match(b.run('phoneBookMarkup()'),/西游记/);assert.doesNotMatch(b.run('phoneBookMarkup()'),/data-phone-read=\"letters\"/);
+});

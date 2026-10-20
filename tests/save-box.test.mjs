@@ -8,7 +8,7 @@ function boot(initial={}){
  vm.runInContext(readFileSync('dist/save-box.js','utf8'),context);
  return {values,run:s=>vm.runInContext(s,context),fail:()=>{fail=true;}};
 }
-const entry={'olddays-dreamnet-game':JSON.stringify({balance:7700,subscriptions:{'杂志01':{active:false}}}),'olddays-campus-case-02':JSON.stringify({started:true,evidence:['sms'],solved:false}),'olddays-tide-v1':JSON.stringify({active:true,device:'black',seen:['gate'],notebooks:{black:'记得退潮'}})};
+const entry={'olddays-experience-states':JSON.stringify({phone:{phone:{model:'n73',app:'music'},date:'2008-10-19'}}),'olddays-game-library':JSON.stringify({favorites:['ancient-empires-2'],recent:['pocket-saga']}),'olddays-dreamnet-game':JSON.stringify({balance:7700,subscriptions:{'杂志01':{active:false}}}),'olddays-campus-case-02':JSON.stringify({started:true,evidence:['sms'],solved:false}),'olddays-tide-v1':JSON.stringify({active:true,device:'black',seen:['gate'],notebooks:{black:'记得退潮'}})};
 test('portable save round trip keeps billing, independent stories, and leaves unrelated storage untouched',()=>{
  const b=boot({...entry,unrelated:'private'});b.run('const exported=saveBoxExport()');
  b.values.set('olddays-dreamnet-game','{}');b.values.set('olddays-discoveries','["support"]');

@@ -14,3 +14,5 @@ test('Blender GLB exports include actual interactive keys and shop objects',()=>
  const objects=room.nodes.map(n=>n.extras?.action).filter(Boolean);for(const a of ['drawer','drag:cards','drag:battery','photo','receipt','key','phone:black','phone:silver','phone:white'])assert.ok(objects.includes(a),a);
  const old=glb('6600-blender').nodes.map(n=>n.extras?.action),touch=glb('5230-blender').nodes.map(n=>n.extras?.action);for(const a of ['power','ok','dir:left','digit:5','clear'])assert.ok(old.includes(a));for(const a of ['power','home','contacts','end'])assert.ok(touch.includes(a));assert.ok(!touch.some(a=>a?.startsWith('digit:')),'5230 must not acquire a numeric keypad');assert.ok(phone.meshes.length>35);assert.ok(room.meshes.length>70);
 });
+
+test('unsupported classic links show maintenance instead of launching another game',()=>{const wrapper=readFileSync('dist/javame/wrapper.js','utf8');assert.match(wrapper,/requestedUnsupported/);assert.match(wrapper,/暂未通过兼容验收/);assert.match(readFileSync('dist/javame/index.html','utf8'),/value="pokemon-crystal"/);});

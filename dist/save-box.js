@@ -4,10 +4,14 @@ const saveBoxKeys = Object.freeze({
   'olddays-mystery-01':'object','olddays-campus-case-02':'object','olddays-tide-v1':'object',
   'olddays-pocket-anime':'object','olddays-arcade-save':'object','olddays-discoveries':'array',
   'olddays-support-applause':'number','olddays-qq-demo':'object','olddays-memory-stamps':'array',
-  'olddays-visit-mode':'mode','olddays-selected-date':'date'
+  'olddays-visit-mode':'mode','olddays-selected-date':'date',
+  'olddays-experience-states':'object','olddays-game-library':'object','archaeo-reading-room':'object'
 });
 let saveBoxPending=null,saveBoxRead=0;
 const saveBoxFields={
+ 'olddays-game-library':{favorites:'array',recent:'array'},
+ 'archaeo-reading-room':{progress:'object',font:'string',paper:'string'},
+ 'olddays-experience-states':{phone:'object',pc:'object',story:'object'},
  'olddays-dreamnet-game':{balance:'integer',month:'integer',purchases:'object',subscriptions:'object',ledger:'array',messages:'array'},
  'olddays-campus-case-02':{evidence:'array',started:'boolean',solved:'boolean'},
  'olddays-mystery-01':{evidence:'array',started:'boolean',solved:'boolean'},
@@ -39,6 +43,7 @@ function saveBoxValidate(input){
   return {format:'olddays-save',version:1,createdAt:typeof data.createdAt==='string'?data.createdAt.slice(0,40):'',entries};
 }
 function saveBoxExport(){
+  if(typeof experienceSave==='function')experienceSave();
   const entries={};for(const key of Object.keys(saveBoxKeys)){const raw=localStorage.getItem(key);if(raw!==null)entries[key]=raw;}
   return JSON.stringify({format:'olddays-save',version:1,createdAt:new Date().toISOString(),entries},null,2);
 }
