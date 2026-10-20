@@ -11,7 +11,7 @@ const saveBoxFields={
  'olddays-dreamnet-game':{balance:'integer',month:'integer',purchases:'object',subscriptions:'object',ledger:'array',messages:'array'},
  'olddays-campus-case-02':{evidence:'array',started:'boolean',solved:'boolean'},
  'olddays-mystery-01':{evidence:'array',started:'boolean',solved:'boolean'},
- 'olddays-tide-v1':{seen:'array',notebooks:'object',active:'boolean',solved:'boolean'},
+ 'olddays-tide-v1':{seen:'array',notebooks:'object',active:'boolean',solved:'boolean',expansion:'object'},
  'olddays-pocket-anime':{collection:'array',notes:'object'},
  'archaeo-phone-lab':{sent:'array'},
  'olddays-arcade-save':{lights:'array',slideTiles:'array',memoryCards:'array'}

@@ -105,6 +105,7 @@ function boot(initial = {}, runtime = {}) {
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
       filename: file,
     });
+  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
   context.yearbookTestData=JSON.parse(readFileSync("data/yearbook.json","utf8"));
   vm.runInContext("Object.assign(yearbook, yearbookTestData)",context);
   delete context.yearbookTestData;
@@ -737,4 +738,57 @@ test('Campus notebook only offers rereading discovered records and keeps bounded
 test('selected historical date survives reload while invalid stored dates fall back safely',()=>{
  const b=boot({'olddays-selected-date':'2010-06-05'});assert.equal(b.run('date'),'2010-06-05');b.run("applyDate('2008-10-18')");assert.equal(b.values.get('olddays-selected-date'),'2008-10-18');assert.equal(boot(Object.fromEntries(b.values)).run('date'),'2008-10-18');
  assert.equal(boot({'olddays-selected-date':'2010-02-30'}).run('date'),'2004-08-01');
+});
+
+
+test('expanded Tide keeps old endings and requires the deeper record before new conclusion',()=>{
+ const b=boot({}, {deep:true});b.run("tide.active=true;tide.device='black'");assert.equal(b.run('tideDeepCanFinish()'),false);
+ assert.match(b.run("tideDeepConclude('old','unconfirmed','sealed')"),/互相矛盾/);
+ b.run("['recorder','notice','mirror','archive2','repairlog','deletedpost','ledger'].forEach(deepMark);tideDeep.talk.push('tape');tideDeep.sms.push('mum-ask')");
+ assert.match(b.run("tideDeepConclude('new','unconfirmed','sealed')"),/猜测/);assert.equal(b.run('tideDeep.completed'),false);
+ assert.match(b.run("tideDeepConclude('old','unconfirmed','sealed')"),/早餐/);
+ const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run('tideDeep.completed'),true);assert.equal(c.run('tideDeep.ending'),'sealed');
+ assert.ok(c.run('tide.expansion')===undefined||c.run('tide.expansion.version')===2);
+});
+test('expanded conversations progress in order and validate what player read on the label',()=>{
+ const b=boot({}, {deep:true});b.run("tide.device='black'");assert.equal(b.run("deepTalk('voice')"),false);
+ assert.equal(b.run("deepTalk('hello')"),true);assert.equal(b.run("deepTalk('voice')"),true);
+ assert.match(b.run("deepTapeReply('N73')"),/不像/);assert.equal(b.run("tideDeep.talk.includes('tape')"),false);
+ assert.equal(b.run("deepTapeReply('b-17')"),'');assert.equal(b.run("deepTalk('tape')"),false);
+ assert.equal(b.run("deepSmsChoose('mum-ask')"),false);b.run("deepSmsChoose('mum-home');deepSmsChoose('mum-ask')");assert.equal(b.run('tideDeep.sms.length'),2);
+ assert.equal(b.run("deepMark('not-a-page')"),false);assert.equal(b.run("deepTalk('unknown')"),false);
+});
+test('expanded album has nine scenes and wallpaper remains a virtual SMS download',()=>{
+ const b=boot({}, {deep:true});b.run("tide.device='black';tideView=''");assert.match(b.run('tideAlbum()'),/9个文件/);
+ b.run("tideView='deepphoto:recorder'");assert.match(b.run('tideAlbum()'),/deep\/recorder.svg/);
+ assert.equal(b.run('deepPhotos.length'),6);assert.equal(b.run("smsOfferFor('星梦01').wallpaper"),'starGirl');
+ const before=b.run('dreamnet.balance');b.run("walletPurchase('星梦01')");assert.equal(b.run('dreamnet.balance'),before-300);
+ assert.match(b.run('deepWallpaperPage()'),/游戏币/);assert.match(b.run('phoneHardwareMarkup()'),/hardware-fiveway/);
+ b.run("phoneState.model='n73'");assert.match(b.run('phoneHardwareMarkup()'),/hardware-n73/);assert.match(b.run('renderPhoneLab()'),/N73清除键/);
+ b.run("phoneState.model='nokia5230'");assert.match(b.run('phoneHardwareMarkup()'),/hardware-5230/);
+});
+test('legacy Tide save remains completed while extension can be explored without reset',()=>{
+ const b=boot();b.run("tide.device='black';['qq','gate','back','forum','timetable','recording'].forEach(tideMark);tideJudge('xu','field','gate','0317','sealed')");
+ const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run('tide.solved'),true);assert.equal(c.run('tideDeep.legacyEnding'),true);assert.equal(c.run('tideDeep.completed'),false);
+ assert.match(c.run('tideJournal()'),/旧版结局已保留/);
+});
+
+test('new SMS wallpaper survives reload without a second virtual charge',()=>{
+ const b=boot({}, {deep:true});b.run("walletPurchase('星梦01');phoneState.wallpaperImage='starGirl';savePhone()");
+ const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run("dreamnet.purchases['星梦01']"),true);assert.equal(c.run('phoneState.wallpaperImage'),'starGirl');
+ const before=c.run('dreamnet.balance');c.run("walletPurchase('星梦01')");assert.equal(c.run('dreamnet.balance'),before);
+});
+
+test('night shop locations and calls are navigable fiction, ownership needs corroboration',()=>{
+ const b=boot({}, {deep:true});assert.equal(b.run("shopVisit('unknown')"),false);assert.equal(b.run("shopVisit('counter')"),true);
+ assert.equal(b.run("shopCall('ask')"),false);b.run("shopCall('answer');shopCall('ask')");assert.match(b.run('shopCallMarkup()'),/旧手机能修好吗/);
+ assert.match(b.run("shopReturn('许舟','field')"),/不够|没有足够/);assert.equal(b.run('nightShop.returned'),false);
+ b.run("tideDeep.talk.push('hello');tide.device='black';tideMark('qq')");assert.match(b.run("shopReturn('阿巡','field')"),/对不上/);
+ assert.match(b.run("shopReturn('许舟','field')"),/已登记/);
+ const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run('nightShop.returned'),true);assert.equal(c.run('nightShop.calls.length'),2);
+});
+
+test('expanded late-night change waits for the recovered page, label exchange and mirror',()=>{
+ const b=boot({}, {deep:true});b.run("tide.device='black';['qq','gate','back','forum','timetable','recording'].forEach(tideMark)");assert.equal(b.run('tideStage()'),1);
+ b.run("deepMark('archive2');deepMark('mirror');tideDeep.talk.push('tape')");assert.equal(b.run('tideStage()'),2);
 });
