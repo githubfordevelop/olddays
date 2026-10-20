@@ -105,7 +105,7 @@ function boot(initial = {}, runtime = {}) {
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
       filename: file,
     });
-  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js","shop-hands.js","shop-authentic.js","n73-live.js","handset-lives.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
+  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js","shop-hands.js","shop-authentic.js","n73-live.js","handset-lives.js","blender-world.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
   context.yearbookTestData=JSON.parse(readFileSync("data/yearbook.json","utf8"));
   vm.runInContext("Object.assign(yearbook, yearbookTestData)",context);
   delete context.yearbookTestData;
@@ -850,4 +850,14 @@ test('collected handsets keep separate messages, chats, discoveries and saved st
  b.run("tide.device='white'");assert.match(b.run('tideSms()'),/外婆/);assert.doesNotMatch(b.run('tideSms()'),/老杜|海堤/);assert.equal(b.run("nightShop.handsetStories.white.talk.length"),0);assert.equal(b.run("handsetLifeTalk('finish')"),false);
  b.run("handsetLifeTalk('intro');handsetLifeTalk('print');handsetLifeRead('photo');handsetLifeRead('browser');handsetLifeTalk('finish')");
  const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run('nightShop.handsetStories.silver.talk.length'),3);assert.equal(c.run('nightShop.handsetStories.white.talk.length'),3);c.run("tide.device='black'");assert.doesNotMatch(c.run('tideSms()'),/第十二张|琴房窗户/);
+});
+
+test('Blender interaction preserves bounded world positions and routes real handset controls',()=>{
+ const b=boot({}, {deep:true});assert.equal(b.run("worldStorePosition('Warranty_cards',{x:2,y:1,z:1.7})"),true);assert.equal(b.run("worldStorePosition('Unknown',{x:2,y:1,z:1})"),false);assert.equal(b.run("worldStorePosition('Loose_battery',{x:NaN,y:1,z:1})"),false);
+ const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run('nightShop.worldPositions.Warranty_cards.z'),1.7);assert.equal(c.run("blenderKey('digit:1')"),false);
+ c.run("blenderWorld={mode:'phone',powered:false,power(){this.starting=true},native(s){this.last=s;return true}};");assert.equal(c.run("blenderKey('digit:1')"),false);assert.equal(c.run("blenderKey('power')"),true);c.run('blenderWorld.powered=true');assert.equal(c.run("blenderKey('digit:3')"),true);assert.equal(c.run('blenderWorld.last'),'[data-phone-key="3"]');assert.equal(c.run("blenderKey('dir:left')"),true);assert.equal(c.run('blenderWorld.last'),'[data-phone-dir="left"]');
+});
+
+test('opening apps inside the 3D handset keeps the modal and original story active',()=>{
+ const b=boot({}, {deep:true});b.run("phoneState.model='n73';tide.active=true;tide.device='black';shop3dPlayActive=true;document.querySelector('#modal').open=true;openPhoneLab('sms')");assert.equal(b.run('phoneState.app'),'sms');assert.equal(b.run("document.querySelector('#modal').open"),true);assert.equal(b.run('tide.device'),'black');
 });
