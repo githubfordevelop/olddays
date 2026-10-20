@@ -38,3 +38,7 @@ https://creativecommons.org/licenses/by-sa/3.0/
 
 ### K750 front reconstruction, 2026-10-21
 The existing Jyi1693 CC BY 2.5 front photograph (`k750-archive-reference.jpg`, original source above) was used to compare the black fascia, dark keypad deck, chrome joystick and split digit legends. Geometry is manually reconstructed, not a camera projection or factory CAD. The side music button is referenced against Sony Ericsson K750i user guide (February 2005), manufacturer-hosted PDF: https://www-support-downloads.sonymobile.com/k750/userguide_EN_K750.pdf . Website playback is a local simulation, not the original headset-dependent firmware behavior.
+
+### Nokia 7610 live front, 2026-10-21
+- Source: https://commons.wikimedia.org/wiki/File:Nokia_7610.png ; photograph 2007-06-18 by Kaliy~commonswiki, cutout attributed by Commons to AnVuong1222004 (11). Original retained as `nokia7610-archive-reference.png`.
+- CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/ . Our changes: crop/contour mapping and resizing onto independent Blender body; replacement of pictured display with a live local webpage; separate photo-calibrated key hit geometry. The derived GLB/photo material is offered under CC BY-SA 4.0. No original firmware is included. Photo date is not the phone launch date.

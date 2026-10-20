@@ -1,5 +1,5 @@
 {
-  "verified": "2026-10-20",
+  "verified": "2026-10-21",
   "models": [
     {
       "file": "dist/models/n73-hyper3d.glb",
@@ -36,9 +36,12 @@
     },
     {
       "file": "dist/models/nokia7610-collection.glb",
-      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
-      "bytes": 494880,
-      "sha256": "788ae81c092a31f63d52db9d6f6365648987a043b49dd2734e4111c18c9e64d9"
+      "reference": "Kaliy original 2007-06-18 photograph / AnVuong1222004 cutout, live screen and calibrated independent keys",
+      "bytes": 1182312,
+      "sha256": "161af36187f452f8927c8dd40e4a33a0abbcbdc4c38ffb353bef678782f452f9",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "source": "https://commons.wikimedia.org/wiki/File:Nokia_7610.png"
     },
     {
       "file": "dist/models/k750-collection.glb",

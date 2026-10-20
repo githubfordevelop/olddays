@@ -38,5 +38,15 @@
     "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
     "source": "https://commons.wikimedia.org/wiki/File:Sony_K750i_front.JPG",
     "changes": "No edits to reference file; used for visual comparison, not historical screenshot."
+  },
+  {
+    "model": "nokia7610",
+    "file": "nokia7610-archive-reference.png",
+    "author": "Kaliy~commonswiki (original photograph); AnVuong1222004 (11) (cutout)",
+    "photographed": "2007-06-18",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Nokia_7610.png",
+    "changes": "Original licensed cutout retained. Cropped, resized and contour-mapped onto independently reconstructed interactive body; derived GLB/photo material offered under CC BY-SA 4.0. Screen replaced by live local application; no original firmware distributed."
   }
 ]

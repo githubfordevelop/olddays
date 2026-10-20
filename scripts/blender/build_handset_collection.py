@@ -53,11 +53,11 @@ def rearbrand(s='NOKIA',y=.45):
  o=text('Rear_brand',s,(0,y,-.27),.17,silver,True);o.rotation_euler=(math.pi/2,0,math.pi)
 def finish(id,name,screen,kind='classic',brandname='NOKIA',mechanism=None,screenGroup=None,distance=8):
  profiles[id]={'name':name,'model':id,'file':id+'-collection','kind':kind,'brand':brandname,'screen':screen,'height':round(260*screen[4]/screen[3]),'distance':distance}
- if id in ['nokia3310','razr','n95']:
+ if id in ['nokia3310','razr','n95','nokia7610']:
   profiles[id]['reference']=id
  if mechanism:profiles[id]['mechanism']=mechanism
  if screenGroup:profiles[id]['screenGroup']=screenGroup
- if id in ['nokia3310','razr','n95']:
+ if id in ['nokia3310','razr','n95','nokia7610']:
   for obj in list(bpy.context.scene.objects):
    if obj.name.startswith('Legend_') and (id!='n95' or obj.parent and obj.parent.name=='Slide_panel'):bpy.data.objects.remove(obj,do_unlink=True)
  if os.environ.get('OLDDAYS_HANDSET') and id not in os.environ['OLDDAYS_HANDSET'].split(','):return
@@ -92,16 +92,23 @@ for id,name in [('nokia3310','Nokia 3310'),('nokia1100','Nokia 1100')]:
   for o in bpy.context.scene.objects:
    if o.get('action') and o.get('action')!='power':o.hide_render=True;o['photoHit']=True
  finish(id,name,screen,'mono')
-start();body('7610_asymmetric_cover',1.98,4.0,silver)
+start();body('7610_asymmetric_cover',1.98,4.0,black)
 # Shape both lower corners differently, characteristic leaf outline.
 for v in bpy.data.objects['7610_asymmetric_cover'].data.vertices:
  if v.co.z<0:v.co.x+=.17*(-v.co.z/2);v.co.x*=1-.15*(-v.co.z/2)
 body('7610_black_face',1.8,3.8,black,.08).location.y=-.26
-s=display(-.09,.63,1.42,1.68,.34);speaker();brand('NOKIA',1.71);pad(-.53)
+s=display(-.02,.43,1.245,1.484,.35);speaker();brand('NOKIA',1.71);pad(-.53)
 for i,c in enumerate('123456789*0#'):
  x=(i%3-1)*.54+.09*(i//3);y=-1.05-(i//3)*.24+.06*(i%3-1)
  legendkey('digit:'+c,c,x,y,.48,.19)
-legendkey('home','Menu',-.78,-.78,.3,.17);legendkey('clear','C',.78,-.76,.24,.17);camera_back();common_power();rearbrand();finish('nokia7610','Nokia 7610',s)
+legendkey('home','Menu',-.78,-.78,.3,.17);legendkey('clear','C',.78,-.76,.24,.17);legendkey('edit','Edit',-.78,-1.05,.3,.17)
+reference_face('7610_real_front','nokia7610-archive-reference.png',(.12,.825,.023,.975),1.98,4.0,.33,outline=[(.20,.027),(.55,.025),(.64,.037),(.71,.067),(.76,.102),(.783,.147),(.795,.20),(.803,.35),(.813,.60),(.820,.90),(.813,.94),(.798,.959),(.77,.967),(.40,.972),(.34,.968),(.26,.950),(.20,.918),(.17,.878),(.146,.83),(.133,.77),(.128,.60),(.122,.20),(.122,.09),(.132,.057),(.16,.037)])
+positions={'ok':(.482,.689),'dir:up':(.485,.648),'dir:down':(.485,.730),'dir:left':(.427,.684),'dir:right':(.544,.685),'soft:left':(.328,.662),'soft:right':(.632,.660),'contacts':(.240,.680),'end':(.719,.673),'clear':(.638,.700),'home':(.350,.740),'edit':(.269,.770)}
+for char,uv in zip('123456789*0#',[(.489,.771),(.628,.755),(.710,.734),(.441,.819),(.594,.809),(.711,.787),(.351,.853),(.570,.862),(.719,.841),(.299,.877),(.506,.908),(.680,.903)]):positions['digit:'+char]=uv
+for o in bpy.context.scene.objects:
+ if o.get('action') in positions:
+  u,v=positions[o['action']];o.location.x=((u-.12)/.705-.5)*1.98;o.location.z=(.5-(v-.023)/.952)*4;o.location.y=-.34;o.dimensions=(.24,.025,.115);o['photoHit']=True
+camera_back();common_power();rearbrand();finish('nokia7610','Nokia 7610',s)
 for id,name in [('k750','Sony Ericsson K750'),('walkman','音乐手机 / 风格重制')]:
  start();body('Camera_phone_shell',1.82,4.0,black if id=='k750' else cream);box('Front_alloy', (1.65,3.6,.08),(0,0,.24),black if id=='k750' else cream,.12)
  s=display(0,.68,1.32,1.62,.31);speaker();brand('Sony Ericsson' if id=='k750' else 'MUSIC',1.72)

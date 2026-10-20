@@ -39,14 +39,15 @@
     "kind": "classic",
     "brand": "NOKIA",
     "screen": [
-      -0.09,
-      0.63,
-      0.34,
-      1.42,
-      1.68
+      -0.02,
+      0.43,
+      0.35,
+      1.245,
+      1.484
     ],
-    "height": 308,
-    "distance": 8
+    "height": 310,
+    "distance": 8,
+    "reference": "nokia7610"
   },
   "k750": {
     "name": "Sony Ericsson K750",
