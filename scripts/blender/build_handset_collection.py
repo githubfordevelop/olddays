@@ -74,12 +74,20 @@ def start():
  reset();silver=mat('Brushed alloy',(.57,.59,.61),.75,.28);black=mat('Graphite plastic',(.025,.032,.041),.08,.36);keys=mat('Satin key caps',(.16,.18,.20),.3,.4);white=mat('Printed white legends',(.9,.91,.87));glass=mat('Dark glass',(.015,.035,.045),.15,.13);blue=mat('2000 navy cover',(.035,.08,.19),.05,.42);orange=mat('Music orange',(.95,.29,.035));cream=mat('Ivory plastic',(.76,.76,.69),.05,.5)
 for id,name in [('nokia3310','Nokia 3310'),('nokia1100','Nokia 1100')]:
  start();body('Rounded_removable_cover',1.85,4.1,blue if id=='nokia3310' else cream,.65);body('Dark_front_insert',1.56,3.73,black,.07).location.y=-.34
- screen=display(0,.56,1.30,.93,.49);speaker();brand('NOKIA',1.6)
+ screen=display(0,.56,1.32 if id=='nokia3310' else 1.30,.872 if id=='nokia3310' else .93,.49);speaker();brand('NOKIA',1.6)
  # Navi key and separate clear/up/down, not a later S60 joystick.
  legendkey('ok','Navi',0,-.10,.65,.25,z=.43);legendkey('clear','C',-.57,-.38,.35,.24,z=.43)
  legendkey('dir:up','^',.57,-.19,.30,.22,z=.43);legendkey('dir:down','v',.57,-.49,.30,.22,z=.43);numbers(-.75,width=1.6);common_power();rearbrand()
  if id=='nokia3310':
-  reference_face('3310_real_cover','nokia3310-archive-reference.jpg',(.10,.90,.03,.98),1.85,4.1,.46,outline=[(.30,.03),(.70,.03),(.80,.05),(.87,.10),(.90,.30),(.90,.80),(.87,.94),(.79,.98),(.22,.98),(.14,.95),(.10,.80),(.10,.30),(.13,.10),(.20,.05)])
+  reference_face('3310_real_cover','nokia3310-archive-reference.jpg',(.10,.90,.03,.98),1.85,4.1,.46,outline=[(.36,.040),(.50,.037),(.65,.040),(.76,.049),(.82,.067),(.865,.11),(.887,.20),(.893,.35),(.889,.60),(.865,.86),(.843,.93),(.803,.951),(.73,.963),(.52,.967),(.33,.961),(.245,.951),(.205,.93),(.165,.86),(.125,.60),(.112,.35),(.116,.20),(.132,.12),(.176,.076),(.255,.054)])
+  # Centres measured on the licensed front photograph, normalized to the original image.
+  centres={'ok':(.50,.537),'clear':(.29,.575),'dir:up':(.73,.568),'dir:down':(.615,.606)}
+  for row,keysInRow in enumerate(['123','456','789','*0#']):
+   for col,char in enumerate(keysInRow):centres['digit:'+char]=([.27,.50,.732][col], [.666,.730,.795,.860][row]+(.014 if col==1 else 0))
+  for o in bpy.context.scene.objects:
+   if o.get('action') in centres:
+    u,v=centres[o['action']];o.location.x=((u-.10)/.80-.5)*1.85;o.location.z=(.5-(v-.03)/.95)*4.1
+  screen[3]=1.32;screen[4]=.872
   # Rendering comes from the photo, while independent geometry still owns every hit key.
   for o in bpy.context.scene.objects:
    if o.get('action') and o.get('action')!='power':o.hide_render=True;o['photoHit']=True
