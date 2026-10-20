@@ -15,5 +15,17 @@
       "url": "https://android-developers.googleblog.com/2008/09/announcing-android-10-sdk-release-1.html",
       "usage": "中文事实摘要和来源链接，未复制原文和图片"
     }
+  ],
+  "fictionIllustrations": [
+    {
+      "file": "images/tide/deep/cupboard.svg",
+      "title": "送修前的桌面",
+      "origin": "项目原创SVG故事插画，非历史实拍；标签B-17与已有主线一致"
+    },
+    {
+      "file": "images/tide/deep/shopfront.svg",
+      "title": "关门前的街角",
+      "origin": "项目原创SVG故事插画，非历史实拍；墙钟不可作为准确授时证据"
+    }
   ]
 }
