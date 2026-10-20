@@ -87,9 +87,10 @@
     },
     {
       "file": "dist/models/iphone-collection.glb",
-      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
-      "bytes": 153276,
-      "sha256": "cb3cf642fee9dfd293911c4e19cd6b699ef085b5530bbbaa233b9da2bbc505ff"
+      "reference": "Apple original iPhone archived technical specifications: 115 x 61 mm, 3.5 inch 320 x 480 screen; independent mesh reconstruction",
+      "bytes": 189580,
+      "sha256": "b107c152dbe042f6087441f63fc8ee8dc1474bf96fcd33ceae162d72bf2d416c",
+      "source": "https://support.apple.com/en-us/112445"
     },
     {
       "file": "dist/models/fullscreen-collection.glb",

@@ -205,13 +205,21 @@ musicface=group('Twist_music_face');musicface.parent=rot;musicface.rotation_eule
 for x,a,t in [(-.55,'track:prev','<<'),(0,'play','>'),(.55,'track:next','>>')]:legendkey(a,t,x,-.65,.42,.3,musicface)
 common_power(.5,1.37,0);finish('twist','旋转音乐手机 / 概念重制',s,brandname='MUSIC',mechanism='twist',distance=9)
 for id,name in [('iphone','初代 iPhone'),('fullscreen','全面屏触控手机'),('mp5','联网 MP5 / 概念重制')]:
- start();h=4.1;body('Aluminium_rear',2.1,h,silver,.28);body('Black_glass_front',2.02,h-.06,black,.08).location.y=-.18
- full=id=='fullscreen';s=display(0,.03,1.88 if full else 1.83,3.72 if full else 2.74,.25)
- speaker(1.87);common_power(.65,2.05)
+ start();h=115*2.1/61 if id=='iphone' else 4.1;body('Aluminium_rear',2.1,h,silver,.28);body('Black_glass_front',2.02,h-.06,black,.08).location.y=-.18
+ full=id=='fullscreen';iphoneWidth=(3.5*25.4/math.sqrt(13))*2*2.1/61;s=display(0,.03,iphoneWidth if id=='iphone' else 1.88 if full else 1.83,iphoneWidth*1.5 if id=='iphone' else 3.72 if full else 2.74,.25)
+ speaker(1.65 if id=='iphone' else 1.87);common_power(.65,h/2+.02 if id=='iphone' else 2.05)
  if full:box('Gesture_bar',(.55,.025,.01),(0,-1.84,.27),white,.01,'home')
  else:
-  cyl('Round_Home_key',.19,.02,(0,-1.7,.26),black,'home');box('Home_symbol',(.12,.12,.01),(0,-1.7,.275),silver,.025)
- if id=='iphone':box('Black_antenna_cover',(2.04,.88,.03),(0,-1.58,-.17),black,.06);camera_back(1.66,-.77,-.16)
+  homeY=-1.63 if id=='iphone' else -1.7
+  cyl('Round_Home_key',.19,.02,(0,homeY,.26),black,'home')
+  if id=='iphone':
+   for x,y,w,hh in [(0,.052,.105,.012),(0,-.052,.105,.012),(-.052,0,.012,.105),(.052,0,.012,.105)]:box('Home_outline',(w,hh,.008),(x,homeY+y,.275),silver,.004)
+  else:box('Home_symbol',(.12,.12,.01),(0,homeY,.275),silver,.025)
+ if id=='iphone':
+  box('Black_antenna_cover',(2.04,.78,.03),(0,-1.56,-.17),black,.06);camera_back(1.66,-.77,-.16)
+  for y,a in [(1.05,'volume:up'),(.80,'volume:down')]:box('iPhone_'+a,(.055,.19,.13),(-1.06,y,0),silver,.015,a)
+  box('iPhone_30pin_port',(.64,.025,.16),(0,-h/2-.006,0),black,.012)
+  box('iPhone_headphone_port',(.13,.025,.15),(-.62,h/2+.006,0),black,.012)
  elif id=='fullscreen':camera_back(1.60,-.73,-.16)
  label('iPhone' if id=='iphone' else 'PLAYER' if id=='mp5' else '',0,-.65,-.17,.14).rotation_euler=(math.pi/2,0,math.pi)
  finish(id,name,s,'touch',brandname='Apple' if id=='iphone' else 'PLAYER' if id=='mp5' else 'OLDDAYS',distance=8.5)

@@ -42,3 +42,6 @@ The existing Jyi1693 CC BY 2.5 front photograph (`k750-archive-reference.jpg`, o
 ### Nokia 7610 live front, 2026-10-21
 - Source: https://commons.wikimedia.org/wiki/File:Nokia_7610.png ; photograph 2007-06-18 by Kaliy~commonswiki, cutout attributed by Commons to AnVuong1222004 (11). Original retained as `nokia7610-archive-reference.png`.
 - CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/ . Our changes: crop/contour mapping and resizing onto independent Blender body; replacement of pictured display with a live local webpage; separate photo-calibrated key hit geometry. The derived GLB/photo material is offered under CC BY-SA 4.0. No original firmware is included. Photo date is not the phone launch date.
+
+### Original iPhone geometry correction, 2026-10-21
+Primary reference: Apple archived technical specifications https://support.apple.com/en-us/112445 (115×61×11.6 mm, 3.5-inch display, 480×320 raster). Reconstruction uses width scale 2.1/61; screen width/height derive from the stated diagonal and 2:3 portrait ratio. Port/trim details and desktop are interpretive geometry/UI, not factory CAD, Apple images or an iOS distribution. Side controls operate the website audio/video only.
