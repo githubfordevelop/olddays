@@ -1,0 +1,53 @@
+{
+  "provider": "Hyper3D Rodin",
+  "status": "downloaded_and_integrated_experimental",
+  "publish": true,
+  "assets": [
+    {
+      "id": "n73-shell",
+      "reference": "dist/images/references/nokia-n73-real.jpg",
+      "prompt": "A realistic Nokia N73 classic 2006 candybar mobile phone, charcoal black and silver original body. Exact tall narrow proportions, small 2.4 inch display, Nokia Nseries wordmark, rounded silver frame, five-way joystick, two soft keys and green call/red end keys, two thin vertical side key rails flanking the twelve-key keypad. Back with original sliding camera cover and 3.2MP camera lens. Worn edges, fine scratches, fingerprints, dusty seams, plausible molded plastic and brushed metal, no fantasy buttons. Neutral unlit screen, no UI, no hands, no scene, isolated product, physically based textures. Front photo reference is authoritative.",
+      "output": "GLB with textures; keep a copy before optimization",
+      "interactive_contract": {
+        "screen": "existing live HTML UI overlay retained",
+        "keys": "existing independent key meshes/hit areas retained and aligned to reference, never infer operation from generated texture",
+        "power": "existing power action and boot sequence retained",
+        "back": "camera-cover action retained"
+      },
+      "workspaceId": "b7c24df2-be7e-48f7-aebf-4e7dab898d08",
+      "tier": "Low",
+      "outputFile": "dist/models/n73-hyper3d.glb",
+      "sha256": "28ebb2d798c2cbeee919e5cb86db42ff0ec3d316d64b01fbad23f20105a6fb2c"
+    },
+    {
+      "id": "shop-static-set",
+      "prompt": "Interior modular asset of a small Chinese mobile phone repair shop circa 2008. Cramped old neighborhood shop, faded pale green walls with water stains, dusty glass display counter, dark worn laminate workbench, scratched wooden drawer cabinet, coiled charging cables, yellowed accessory pegboard packaging, old bench lamp, soldering stand, stools, old CRT monitor, spare removable phone batteries. Warm fluorescent overhead lighting, subtle damp rainy-night atmosphere, believable small shop, grounded materials, realistic lived-in wear. No people, no modern full-screen phones, no magical objects, no gore, no baked captions or illegible advertising text. Accessible clear front of counter and drawer.",
+      "output": "GLB; static environment separate from moveable drawer and props",
+      "interactive_contract": {
+        "drawer": "retain separate front/handle/inside nodes and travel direction; do not bake drawer into the environment",
+        "phones": "retain three independent pickup/boot/story routes",
+        "evidence": "retain independent photo/receipt meshes, front/back inspect and source-consistent records",
+        "props": "drag position persistence remains in current save format"
+      },
+      "workspaceId": "717986da-c526-428e-831d-368461b20329",
+      "tier": "Low",
+      "outputFile": "dist/models/oldlane-shop-hyper3d.glb",
+      "sha256": "c0291e657260f29b0308a888e90fe4fa5598b2be6768989f0bbb74b9d965fd59",
+      "reference": "dist/models/oldlane-shop-preview.png",
+      "referenceType": "Existing original Blender render, not historical photography"
+    }
+  ],
+  "mobile_acceptance": [
+    "390x844 viewport without horizontal page overflow",
+    "tap power, boot, move home selection and open SMS/QQ/photos/game in held N73",
+    "open and close drawer, move battery, inspect photo and receipt both sides",
+    "refresh preserves progress and positions",
+    "no claims of Hyper3D generation until actual output and source identifiers exist"
+  ],
+  "previewQuery": "?hyper3d=1",
+  "limitations": [
+    "Low tier generated texture has warped lettering; not an exact replica",
+    "Only generated shop counter adopted; generated drawer excluded to retain operation",
+    "Medium model export required subscription; no subscription purchased"
+  ]
+}

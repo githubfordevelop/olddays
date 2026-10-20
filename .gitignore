@@ -11,3 +11,7 @@ __pycache__/
 *.pyc
 
 /work/
+
+# Raw generated assets and editable scene copies remain local; runtime GLBs are versioned.
+/art/hyper3d/*-raw/
+/art/hyper3d/*.blend*

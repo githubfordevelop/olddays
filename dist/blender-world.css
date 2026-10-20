@@ -11,3 +11,5 @@
 .reference-folder{width:100%;padding:12px;box-sizing:border-box;color:#eddfbd}.reference-folder img{width:100%;height:auto}.reference-folder figure{margin:15px 0}.reference-folder figcaption{font:12px/1.7 SimSun}.reference-folder a{color:#b9d7df}.reference-close{position:sticky;top:0;z-index:3}
 
 @media(max-height:500px) and (orientation:landscape){.blender-stage{height:calc(100dvh - 155px);min-height:180px;max-height:none}.shop3d-play nav button{min-width:65px}.shop3d-play>small{display:none}}
+
+.blender-drawer-slider{display:flex;align-items:center;gap:8px;min-height:44px;padding:4px 8px;background:#d7d1b9;color:#24342c;border:1px solid #8c947e;font-size:12px}.blender-drawer-slider input{min-height:36px;min-width:100px;touch-action:pan-x}
