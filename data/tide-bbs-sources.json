@@ -1,0 +1,19 @@
+{
+  "type": "原创虚构论坛，2008年剧情；未转载真实用户帖子或图片",
+  "research": [
+    {
+      "url": "https://forum.lowyat.net/topic/970667/all",
+      "date": "2009-03-20",
+      "use": "只参考楼层、会员资料、只看作者、引用等界面与互动惯例；不作为2008已存在的剧情页面。"
+    },
+    {
+      "url": "https://www.ruanyifeng.com/blog/2008/08/nokia_n73.html",
+      "date": "2008-08-23",
+      "use": "真实使用语境参考，未抄录正文。"
+    },
+    {
+      "url": "https://www.gamedeveloper.com/design/deep-dive-turning-phone-ux-into-game-mechanics-in-horror-game-i-simulacra-2-i-",
+      "use": "应用空间与跨应用探索思路参考，未复制剧情谜题。"
+    }
+  ]
+}
