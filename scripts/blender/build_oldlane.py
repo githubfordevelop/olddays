@@ -10,7 +10,7 @@ def wood():
  m=mat('Worn walnut grain',(.22,.11,.045),0,.65);im=bpy.data.images.new('Original worn wood',width=256,height=256);r=random.Random(731);pix=[]
  for y in range(256):
   for x in range(256):
-   v=.65+.18*math.sin(y*.6+math.sin(x*.02)*2)+r.random()*.17
+   v=.84+.035*math.sin(y*.6+math.sin(x*.02)*2)+r.random()*.04
    pix.extend((.32*v,.17*v,.074*v,1))
  im.pixels=pix;im.pack();n=m.node_tree.nodes.new('ShaderNodeTexImage');n.image=im;m.node_tree.links.new(n.outputs['Color'],m.node_tree.nodes.get('Principled BSDF').inputs['Base Color']);return m
 def box(name,size,loc,ma,bevel=.03,action=None,parent=None):
@@ -34,6 +34,18 @@ def ovalbody(name,size,loc,ma):
  mesh=bpy.data.meshes.new(name);mesh.from_pydata(verts,[],faces);mesh.update();o=bpy.data.objects.new(name,mesh);bpy.context.collection.objects.link(o);o.data.materials.append(ma)
  for p in mesh.polygons:p.use_smooth=True
  b=o.modifiers.new('Rounded shell seam','BEVEL');b.width=.045;b.segments=3;o.modifiers.new('Normals','WEIGHTED_NORMAL');return o
+def photoFace(name,w,h,z,file,crop):
+ im=bpy.data.images.load(os.path.join(ROOT,'dist/images/references',file));size=max(im.size);
+ if size>1024:im.scale(int(im.size[0]*1024/size),int(im.size[1]*1024/size))
+ im.pack();ma=mat(name+' photo',(.6,.6,.6),.08,.6);n=ma.node_tree.nodes.new('ShaderNodeTexImage');n.image=im;ma.node_tree.links.new(n.outputs['Color'],ma.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
+ verts=[];r=.14
+ for cx,cy,start in [(w/2-r,h/2-r,0),(-w/2+r,h/2-r,90),(-w/2+r,-h/2+r,180),(w/2-r,-h/2+r,270)]:
+  for j in range(9):
+   a=math.radians(start+j*90/8);verts.append((cx+r*math.cos(a),-z,cy+r*math.sin(a)))
+ me=bpy.data.meshes.new(name);me.from_pydata(verts,[],[tuple(range(len(verts)))]);me.update();o=bpy.data.objects.new(name,me);bpy.context.collection.objects.link(o);o.data.materials.append(ma);uv=me.uv_layers.new();a,b,c,d=crop
+ for li in me.polygons[0].loop_indices:
+  v=me.vertices[me.loops[li].vertex_index].co;uv.data[li].uv=(a+(v.x/w+.5)*(b-a),c+(v.z/h+.5)*(d-c))
+ return o
 def text(name,body,loc,size,ma,back=False):
  c=bpy.data.curves.new(name,'FONT');c.body=body;c.align_x='CENTER';c.align_y='CENTER';c.size=size;c.extrude=.001;o=bpy.data.objects.new(name,c);bpy.context.collection.objects.link(o);o.location=(loc[0],-loc[2],loc[1]);o.rotation_euler=(math.pi/2 if not back else -math.pi/2,0,math.pi if back else 0);o.data.materials.append(ma);bpy.context.view_layer.objects.active=o;o.select_set(True);bpy.ops.object.convert(target='MESH');o.select_set(False);return o
 def cyl(name,r,depth,loc,ma,action=None):
@@ -57,24 +69,25 @@ text('NOKIA Nseries','NOKIA  Nseries',(-.15,1.81,.345),.115,white)
 for i in range(6):box('Speaker_slot_'+str(i),(.075,.025,.025),(-.25+i*.1,1.98,.33),black,.008)
 cyl('Front_camera',.045,.03,(.65,1.82,.35),lens)
 for x,side in [(-.56,'left'),(.56,'right')]:
- for y,kind in [(-.52,'soft'),(-.76,'call')]:
+ for y,kind in [(-.69,'soft'),(-.88,'call')]:
   a=('soft:'+side) if kind=='soft' else ('contacts' if side=='left' else 'home')
   box('Key_'+a,(.43,.16,.065),(x,y,.36),keys,.035,a)
   text('Legend_'+a,'—' if kind=='soft' else ('+' if side=='left' else '-'),(x,y,.405),.12,white)
-box('Joystick_base',(.34,.36,.08),(0,-.64,.37),keys,.05)
-box('Joystick_OK',(.19,.21,.1),(0,-.64,.43),silver,.04,'ok')
-for x,y,a in [(0,-.43,'up'),(0,-.87,'down'),(-.2,-.64,'left'),(.2,-.64,'right')]:box('Joystick_'+a,(.13,.13,.03),(x,y,.39),black,.015,'dir:'+a)
+box('Joystick_base',(.34,.36,.08),(0,-.84,.37),keys,.05)
+box('Joystick_OK',(.19,.21,.1),(0,-.84,.43),silver,.04,'ok')
+for x,y,a in [(0,-.71,'up'),(0,-.97,'down'),(-.14,-.84,'left'),(.14,-.84,'right')]:box('Joystick_'+a,(.13,.13,.03),(x,y,.39),black,.015,'dir:'+a)
 for i,n in enumerate('123456789*0#'):
- x=(i%3-1)*.39;y=-1.03-(i//3)*.25
+ x=(i%3-1)*.39;y=-1.18-(i//3)*.22
  box('Digit_'+n,(.34,.19,.055),(x,y,.36),keys,.025,'digit:'+n);text('Digit_label_'+n,n,(x,y,.403),.115,white)
 for x,a,b in [(-.74,'home','edit'),(.74,'music','clear')]:
- box('Rail_'+a,(.14,.39,.05),(x,-1.13,.35),keys,.025,a);box('Rail_'+b,(.14,.39,.05),(x,-1.7,.35),keys,.025,b);text('RailLabel_'+b,'C' if b=='clear' else '/', (x,-1.7,.39),.09,white)
+ box('Rail_'+a,(.14,.39,.05),(x,-1.35,.35),keys,.025,a);box('Rail_'+b,(.14,.39,.05),(x,-1.8,.35),keys,.025,b);text('RailLabel_'+b,'C' if b=='clear' else '/', (x,-1.7,.39),.09,white)
 box('Power_button',(.27,.09,.12),(.47,2.09,0),keys,.02,'power')
 for y,a in [(1,'volume'),(.45,'capture')]:box('Side_'+a,(.08,.35,.12),(.93,y,0),keys,.02,a)
 cyl('Camera_chrome_ring',.28,.045,(0,1,-.35),silver);cyl('Camera_lens',.2,.06,(0,1,-.39),lens)
 box('Lens_cover',(1.52,1.13,.07),(0,1,-.46),keys,.09,'cover')
 text('Rear_label','NOKIA',(0,-.55,-.335),.18,white,True)
 for x in [-.65,.65]:cyl('Rear_screw',.025,.015,(x,-1.7,-.33),silver)
+photoFace('N73_real_front',1.82,4.15,.54,'nokia-n73-real.jpg',(.218,.804,.019,.982))
 export('n73-blender');light((3,5,5),500,4);preview('n73-blender',(3,1.7,7),(0,0,0))
 # Two independently modelled generations: 6600 joystick / 5230 touch slab.
 for model in ['6600','5230']:
@@ -104,7 +117,7 @@ for model in ['6600','5230']:
   box('5230_LCD',(1.47,2.64,.02),(0,.15,.39),ink,.01)
   text('5230_brand','NOKIA',(0,1.69,.39),.13,ivory)
   box('5230_earpiece',(.47,.035,.025),(0,1.87,.39),charcoal,.01)
-  for x,a,ma,label in [(-.58,'contacts',greenkey,'+'),(0,'home',ivory,'='),(.58,'soft:right',redkey,'-')]:
+  for x,a,ma,label in [(-.58,'contacts',greenkey,'+'),(0,'home',ivory,'='),(.58,'end',redkey,'-')]:
    box('5230_bottom_'+a,(.42,.23,.06),(x,-1.55,.4),ma,.06,a);text('5230_legend_'+a,label,(x,-1.55,.44),.12,charcoal)
   box('5230_power',(.22,.09,.14),(.5,2.04,0),charcoal,.025,'power')
   box('5230_lock',(.07,.3,.1),(.96,.35,0),silver,.02)
@@ -118,6 +131,7 @@ for model in ['6600','5230']:
     v=o.data.vertices[o.data.loops[li].vertex_index].co
     uv.data[li].uv=(.032+(v.x/2.02+.5)*.335,.046+(v.z/4.05+.5)*.908)
  text('Rear_brand','NOKIA',(0,-.4,-.4 if model=='6600' else -.24),.18,silver,True)
+ if model=='5230':photoFace('5230_real_front',1.87,4.03,.49,'nokia-5230-front.jpg',(.271,.735,.005,.995))
  export(model+'-blender');light((3,5,5),500,4);preview(model+'-blender',(2,1,7),(0,0,0))
 reset();walnut=wood();wall=mat('Aged plaster',(.34,.35,.29),0,.95);floor=mat('Old floor tiles',(.21,.23,.2),0,.85);green=mat('Repair mat',(.04,.16,.13),0,.9);metal=mat('Oxidized aluminium',(.25,.32,.29),.7,.35);dark=mat('Cable rubber',(.022,.027,.025),0,.8);paper=mat('Yellowed repair slips',(.63,.55,.36),0,.95);beige=mat('Landline plastic',(.5,.48,.35),0,.5);blue=mat('Phone packaging blue',(.065,.12,.17),0,.65)
 glass=mat('Counter glass',(.31,.48,.44),.05,.15);p=glass.node_tree.nodes.get('Principled BSDF');p.inputs['Transmission Weight'].default_value=.72;p.inputs['Alpha'].default_value=.3;glass.surface_render_method='DITHERED'
@@ -211,5 +225,12 @@ for i in range(5):
 box('Old_radio',(.8,.45,.28),(-3.3,1.5,-2.1),beige,.04)
 for i in range(7):box('Radio_grille_'+str(i),(.22,.018,.015),(-3.45,1.35+i*.045,-1.95),dark,.004)
 text('Radio_scale','FM 88 108',(-3.05,1.56,-1.945),.055,dark)
+for j,file in enumerate(['nokia-n73-real.jpg','charger-2008.jpg','battery-bl4c.jpg']):
+ o=photoFace('Real_accessory_catalogue_'+str(j),.64,.85,0,file,(0,1,0,1));o.location=(.2+j*.95,2.18,2.1)
+# A real battery label travels with the loose battery when it is moved.
+o=photoFace('Real_battery_label',.22,.32,0,'battery-bl4c.jpg',(.2,.62,.22,.57));o.rotation_euler.x=-math.pi/2;o.parent=bpy.data.objects['Loose_battery'];o.location=(0,0,.03)
+box('Reference_folder',(.72,.05,.55),(-1.35,1.46,1.1),paper,.01,'reference')
+text('Folder_title','ARCHIVE',(-1.35,1.51,1.12),.07,dark)
+# Original asset pixels are embedded, dates and licenses are available from the scene's reference folder.
 export('oldlane-shop');light((1,4,1),700,5);light((-3,3,3),300,3);preview('oldlane-shop',(7,5,8),(0,1,0))
 print('BLENDER_OLDDAYS_EXPORT_COMPLETE')

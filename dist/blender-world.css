@@ -7,3 +7,7 @@
 .blender-stage,.blender-css-layer{overflow:clip!important;overflow-anchor:none}
 
 .blender-silver .device-app-title{background:#405d8b}.blender-silver{background:#c3d0dc}.blender-white .device-app-title{background:#911e32}.blender-white{background:#e7e5e1}.blender-held{position:absolute;inset:10px;z-index:20;background:#201b15ed;overflow:auto;display:grid;place-items:center;touch-action:pan-y}.blender-held .evidence-inspector{width:100%;max-width:540px}.blender-held .evidence-stage{min-height:260px;max-height:380px;overflow:auto}.blender-held .evidence-photo-image{min-height:230px}.blender-held .evidence-receipt{font-size:19px;line-height:1.6}.blender-held nav{display:flex;flex-wrap:wrap}.blender-held nav button{min-height:40px}.blender-white .boot-screen{min-height:390px}
+
+.reference-folder{width:100%;padding:12px;box-sizing:border-box;color:#eddfbd}.reference-folder img{width:100%;height:auto}.reference-folder figure{margin:15px 0}.reference-folder figcaption{font:12px/1.7 SimSun}.reference-folder a{color:#b9d7df}.reference-close{position:sticky;top:0;z-index:3}
+
+@media(max-height:500px) and (orientation:landscape){.blender-stage{height:calc(100dvh - 155px);min-height:180px;max-height:none}.shop3d-play nav button{min-width:65px}.shop3d-play>small{display:none}}
