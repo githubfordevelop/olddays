@@ -103,14 +103,32 @@ for i,c in enumerate('123456789*0#'):
  legendkey('digit:'+c,c,x,y,.48,.19)
 legendkey('home','Menu',-.78,-.78,.3,.17);legendkey('clear','C',.78,-.76,.24,.17);camera_back();common_power();rearbrand();finish('nokia7610','Nokia 7610',s)
 for id,name in [('k750','Sony Ericsson K750'),('walkman','音乐手机 / 风格重制')]:
- start();body('Camera_phone_shell',1.82,4.0,black if id=='k750' else cream);box('Front_alloy', (1.65,3.6,.08),(0,0,.24),silver if id=='k750' else cream,.12)
+ start();body('Camera_phone_shell',1.82,4.0,black if id=='k750' else cream);box('Front_alloy', (1.65,3.6,.08),(0,0,.24),black if id=='k750' else cream,.12)
  s=display(0,.68,1.32,1.62,.31);speaker();brand('Sony Ericsson' if id=='k750' else 'MUSIC',1.72)
  if id=='k750':
+  deck=mat('K750 graphite keypad',(.105,.115,.12),.55,.35)
+  box('K750_keypad_deck',(1.55,1.81,.025),(0,-.91,.30),deck,.09)
+  cyl('K750_joystick_chrome',.255,.025,(0,-.50,.35),silver)
+  cyl('K750_joystick_dark_ring',.16,.030,(0,-.50,.38),black)
+  cyl('K750_joystick_cap',.092,.055,(0,-.50,.42),silver)
+  legendkey('home','<>',0,-.20,.37,.20,z=.34)
   for x,dy,a,t in [(0,.13,'dir:up','^'),(0,-.13,'dir:down','v'),(-.16,0,'dir:left','<'),(.16,0,'dir:right','>'),(0,0,'ok','o')]:legendkey(a,t,x,-.50+dy,.14,.12,z=.40)
+  for o in list(bpy.context.scene.objects):
+   if o.get('action') in ['ok','dir:up','dir:down','dir:left','dir:right']:o['photoHit']=True
+   if o.name.startswith('Legend_') and abs(o.location.x)<.25 and -.7<o.location.z<-.3:bpy.data.objects.remove(o,do_unlink=True)
   for x,y,a,t in [(-.58,-.24,'soft:left','--'),(.58,-.24,'soft:right','--'),(-.58,-.65,'soft:right','<'),(.58,-.65,'clear','C')]:legendkey(a,t,x,y,.39,.22)
  else:pad(-.48)
- numbers(-1.02,width=1.55)
- legendkey('music','M',-.85,.2,.12,.3)
+ if id=='k750':
+  for i,char in enumerate('123456789*0#'):
+   x=(i%3-1)*1.55/3;y=-1.02-(i//3)*.26
+   key('Key_digit:'+char,'digit:'+char,x,y,.462,.205,z=.34)
+   label(char,x-.10,y,.378,.105)
+   letters={'2':'ABC','3':'DEF','4':'GHI','5':'JKL','6':'MNO','7':'PQRS','8':'TUV','9':'WXYZ','0':'+','*':'a/A','#':'#'}.get(char,'')
+   if letters:label(letters,x+.075,y-.018,.378,.048)
+  label('QuickShare',0,-1.94,.32,.09)
+ else:numbers(-1.02,width=1.55)
+ if id=='k750':box('K750_side_play',(.065,.24,.13),(-.92,.2,0),silver,.018,'play')
+ else:legendkey('music','M',-.85,.2,.12,.3)
  if id!='k750':legendkey('home','Menu',-.59,-.8,.38,.16);legendkey('clear','C',.59,-.8,.28,.16)
  camera_back(1.15,0);box('Sliding_camera_cover',(1.45,.9,.07),(0,.3,-.29),silver,.08);rearbrand('2.0 MEGAPIXEL',-.5);common_power();finish(id,name,s,brandname='Sony Ericsson' if id=='k750' else 'MUSIC')
 # Clamshell: lower keypad stays fixed, upper panel hinges at its bottom edge.

@@ -43,8 +43,8 @@
     {
       "file": "dist/models/k750-collection.glb",
       "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
-      "bytes": 617036,
-      "sha256": "bdcceed08d2ccc2629a77262591231a8fe8abed993648d7ad4dc231979d6f810"
+      "bytes": 981356,
+      "sha256": "992bdd2ceb2636a98560055a1f64f3162e949647ea5e18966860ebbc9aa04beb"
     },
     {
       "file": "dist/models/walkman-collection.glb",
