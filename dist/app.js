@@ -291,6 +291,7 @@ function navigate(page, push = true) {
           ? renderAnnualStory(page)
           : embeddedArchivePage(page));
   $("#address").value = page.type === "home" ? "archaeo://home" : page.url;
+  document.body.classList.toggle('lobby-mode',page.type==='home'&&typeof experienceZone!=='undefined'&&!experienceZone);
   const homeTitle=typeof experienceZone==='undefined'?'系统桌面':({phone:'手机游玩',pc:'电脑上网',story:'故事探索'}[experienceZone]||'旧日时光');
   $("#windowtitle").textContent = page.type === "home" ? homeTitle : page.name;
   $("#status").textContent = page.type === "archive" ? "◷ 等待历史存档" : "✓ 完成";
