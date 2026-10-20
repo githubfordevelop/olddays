@@ -170,3 +170,5 @@
  .hardware-numbers{grid-template-rows:repeat(2,30px);gap:6px}
  .phone-hardware-gamepad .hardware-numbers button{height:30px;min-height:30px}
 }
+
+.phone-paper.paper-cream{background:#f1ecd8;color:#363b32}.phone-paper.paper-night{background:#202b29;color:#c5c5a6}.phone-paper.paper-green{background:#dae6cd;color:#344b3e}.phone-paper.text-large p{font-size:16px;line-height:1.9}.phone-reading-tools{display:flex;gap:4px;position:sticky;top:0;background:inherit;padding:5px 0;z-index:2;border-bottom:1px solid #8d9e7a}.phone-reading-tools button{min-height:32px;flex:1;background:#dce3c4;border:1px solid #829274;color:#344c3a;padding:4px;font-size:11px}.phone-paper.paper-night .phone-reading-tools button{background:#3c4841;color:#e4e0bd}.phone-paper.paper-night small{color:#b4bca0}

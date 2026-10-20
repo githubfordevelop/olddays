@@ -9,7 +9,7 @@ const saveBoxKeys = Object.freeze({
 });
 let saveBoxPending=null,saveBoxRead=0;
 const saveBoxFields={
- 'olddays-pocket-club':{name:'string',level:'integer',xp:'integer',coins:'integer',energy:'integer',mood:'integer',collection:'array',notes:'array',wins:'integer',fish:'integer',best:'integer'},
+ 'olddays-pocket-club':{name:'string',level:'integer',xp:'integer',coins:'integer',energy:'integer',mood:'integer',collection:'array',notes:'array',wins:'integer',fish:'integer',best:'integer',claimed:'array',battle:'object'},
  'olddays-game-library':{favorites:'array',recent:'array'},
  'archaeo-reading-room':{progress:'object',font:'string',paper:'string'},
  'olddays-experience-states':{phone:'object',pc:'object',story:'object'},

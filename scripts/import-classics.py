@@ -26,7 +26,7 @@ books=[('journey','西遊記','西游记','吴承恩'),('kingdoms','三國演義
 out=[];Path('work/classics').mkdir(parents=True,exist_ok=True);Path('dist/books').mkdir(exist_ok=True)
 for key,topic,title,author in books:
  chapters=[]
- count=20 if key in ["journey","kingdoms","redchamber"] else 10
+ count=30 if key in ["journey","kingdoms"] else 20 if key=="redchamber" else 10
  for n in range(1,count+1):
   suffix={'gods':f'卷{n:03}','scholars':f'第{n:02}回','suitang':f'{n:03}','yuefei':'第'+['一','二','三','四','五','六','七','八','九','十'][(n-1)%10]+'回'}.get(key,f'第{n:03}回');name=f'{topic}/{suffix}';u='https://zh.wikisource.org/zh-hans/'+urllib.parse.quote(name.replace(' ','_'),safe='/()');cache=Path(f'work/classics/{key}-{n}.html')
   if cache.exists():html=cache.read_text()

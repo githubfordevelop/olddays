@@ -28,3 +28,21 @@ test('pocket address navigation preserves paths, blocks credentials and future s
  vm.runInContext('openPocketAddress("https://www.youku.com")',c);assert.match(c.notice,/2006/);assert.equal(c.refreshes,1);
  vm.runInContext('openPocketAddress("https://name:secret@example.com")',c);assert.match(c.notice,/有效网址/);assert.equal(c.refreshes,1);
 });
+
+test('in-flight companion battle resumes without another energy charge and rewards cannot be claimed twice',()=>{
+ const c=club();vm.runInContext("pocketClubAction('start');pocketClubAction('attack',1000,()=>0);",c);
+ const loaded=club(c.saved);assert.equal(vm.runInContext('pocketBattle.stage',loaded),1);assert.equal(vm.runInContext('pocketClub.energy',loaded),5);
+ vm.runInContext("pocketClubAction('resume');pocketClubAction('route:1');",loaded);assert.equal(vm.runInContext('pocketClub.energy',loaded),5);
+ vm.runInContext("for(let i=0;i<40&&pocketBattle;i++)pocketClubAction(pocketBattle.hp<15&&pocketBattle.potions?'potion':'attack',1000,()=>0.9);pocketClubAction('claim:first');",loaded);
+ const coins=vm.runInContext('pocketClub.coins',loaded);assert.equal(vm.runInContext("pocketClubAction('claim:first')",loaded),false);assert.equal(vm.runInContext('pocketClub.coins',loaded),coins);
+ assert.equal(vm.runInContext('pocketBattle',club('{"battle":{"stage":1,"route":99,"hp":99}}')),null);
+});
+test('all companion routes can finish, unlock by level, and telegraph charged attacks',()=>{
+ const c=club();assert.equal(vm.runInContext("pocketClubAction('route:2')",c),false);
+ for(let r=0;r<3;r++){
+  vm.runInContext(`pocketClub.level=5;pocketClub.energy=6;pocketClubAction('route:${r}');`,c);
+  if(r){vm.runInContext("pocketClubAction('guard');pocketClubAction('guard');",c);assert.match(vm.runInContext('pocketClubMarkup()',c),/正在蓄力/);}
+  vm.runInContext("for(let i=0;i<50&&pocketBattle;i++)pocketClubAction(pocketBattle.hp<20&&pocketBattle.potions?'potion':'attack',1000,()=>0.9)",c);
+  assert.equal(vm.runInContext('pocketClub.wins',c),r+1);
+ }
+});

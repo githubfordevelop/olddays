@@ -3,19 +3,19 @@
     "id": "journey",
     "title": "西游记",
     "author": "吴承恩",
-    "label": "公版经典 · 前20回",
+    "label": "公版经典 · 前30回",
     "license": "经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。",
-    "chapterCount": 20,
-    "characters": 119818
+    "chapterCount": 30,
+    "characters": 181468
   },
   {
     "id": "kingdoms",
     "title": "三国演义",
     "author": "罗贯中",
-    "label": "公版经典 · 前20回",
+    "label": "公版经典 · 前30回",
     "license": "经典原作属公版；数字化来源为维基文库，保留其署名与适用许可。",
-    "chapterCount": 20,
-    "characters": 99538
+    "chapterCount": 30,
+    "characters": 145417
   },
   {
     "id": "redchamber",
