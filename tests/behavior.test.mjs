@@ -105,7 +105,7 @@ function boot(initial = {}, runtime = {}) {
     vm.runInContext(readFileSync("dist/" + file, "utf8"), context, {
       filename: file,
     });
-  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
+  if(runtime.deep)for(const file of ["tide-deep.js","handset-model-keys.js","night-shop.js","shop-closeups.js","shop-hands.js"])vm.runInContext(readFileSync("dist/"+file,"utf8"),context,{filename:file});
   context.yearbookTestData=JSON.parse(readFileSync("data/yearbook.json","utf8"));
   vm.runInContext("Object.assign(yearbook, yearbookTestData)",context);
   delete context.yearbookTestData;
@@ -814,4 +814,21 @@ test('shop closeups require layered searching, preserve it, and gate later photo
  const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run("nightShop.rummaged.includes('reverse')"),true);assert.equal(c.run("nightShop.events.includes('photo-sms')"),true);
  c.run("tide.device='black';tideView='shop:photo-message'");assert.match(c.run('tideSms()'),/我在拍照/);
  c.run("visitMode='phone'");assert.match(c.run('renderPhoneEntrance()'),/oldlane-hero/);assert.match(c.run('renderPhoneEntrance()'),/随便玩玩/);
+});
+
+test('physical drag requires distance and valid layer; lift and power preserve device stories',()=>{
+ const b=boot({}, {deep:true});assert.equal(b.run("shopLift('unknown')"),false);assert.equal(b.run('shopPower()'),false);
+ b.run("shopInspect('drawer');nightShop.drawer=true");assert.equal(b.run("shopDragResolve('cards',10,4)"),false);assert.equal(b.run("shopDragResolve('battery',80,0)"),false);assert.equal(b.run("shopDragResolve('cards',65,10)"),true);assert.equal(b.run("shopDragResolve('battery',0,60)"),true);assert.equal(b.run("shopDragResolve('battery',NaN,1)"),false);
+ assert.equal(b.run("shopLift('black')"),true);assert.match(b.run('shopMap()'),/data-hands-power/);assert.equal(b.run('shopPower()'),true);assert.equal(b.run('tide.device'),'black');assert.equal(b.run('phoneState.app'),'home');
+ b.run("shopLift('silver');shopPower()");assert.equal(b.run('tide.device'),'silver');assert.equal(b.run('phoneState.model'),'symbian');
+});
+test('shop correspondence validates physical evidence and waits for separate story milestones',()=>{
+ const b=boot({}, {deep:true});assert.equal(b.run("shopChatChoose('hello')"),false);assert.match(b.run("shopMatch('receipt','0731')"),/不太一样/);
+ b.run("shopInspect('counter');shopEvidence('receipt');shopDetailBack=true;shopMarkBack()");assert.equal(b.run("shopChatChoose('hello')"),true);assert.match(b.run("shopMatch('receipt','2240')"),/不太一样/);assert.equal(b.run("shopMatch('receipt','0731')"),'');
+ b.run("shopInspect('drawer');nightShop.drawer=true;shopRummage('cards');shopRummage('battery');shopEvidence('photo');shopDetailBack=true;shopMarkBack()");assert.equal(b.run("shopMatch('date','11/02')"),'');assert.equal(b.run("shopChatChoose('edge')"),true);assert.equal(b.run("shopChatChoose('witness')"),false);
+ b.run("tide.device='black';deepMark('repairlog')");assert.equal(b.run("shopChatChoose('witness')"),true);assert.equal(b.run("shopChatChoose('silence')"),false);
+ b.run("nightShop.events.push('photo-sms');shopChatChoose('silence');shopChatChoose('negative');shopChatChoose('keep');shopAdvance()");assert.equal(b.run("nightShop.events.includes('dawn')"),false);
+ b.run("tideDeep.completed=true;shopAdvance();shopChatChoose('finished')");assert.equal(b.run("nightShop.events.includes('dawn')"),true);assert.equal(b.run("nightShop.correspondence.length"),9);
+ const c=boot(Object.fromEntries(b.values),{deep:true});assert.equal(c.run("nightShop.correspondence.length"),9);assert.equal(c.run("nightShop.evidenceRead.includes('photo-back')"),true);assert.equal(c.run("nightShop.events.includes('dawn')"),true);
+ c.run("tide.device='black';tideView='shop:qq'");assert.match(c.run('tideQQ()'),/卷帘门/);assert.match(c.run('tideQQ()'),/不是同一卷/);c.run("tideView='shop:dawn'");assert.match(c.run('tideSms()'),/早点铺/);
 });
