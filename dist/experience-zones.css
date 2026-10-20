@@ -5,3 +5,5 @@
 
 .experience-save{float:right;padding:8px 12px;background:#d5dfbc;border:1px solid #819570;color:#233b30;cursor:pointer}
 .phone-book-library header{padding:12px;background:#d7d5b6;color:#344331}.phone-book-library header h2{font:20px SimSun}.phone-book-library form{display:flex;padding:8px}.phone-book-library form input{min-width:0;width:100%;font-size:16px}.phone-book-library details{padding:9px;background:#e0dfc5}.phone-book-library details button{display:block;padding:8px;width:100%;text-align:left}.phone-book-library>p{padding:0 9px;font:12px/1.8 SimSun}
+/* Keep the entry hall readable when the old WAP skin styles all main elements. */
+body[data-mobile-skin] main.experience-home{background:#192820;color:#dfdfc9}
