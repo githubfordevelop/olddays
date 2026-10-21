@@ -1,0 +1,25 @@
+{
+  "scope": "current",
+  "stats": {
+    "items": 5235,
+    "archives": 25,
+    "historical_public_test_fixtures": 0,
+    "skipped": []
+  },
+  "findings": [],
+  "removed_test_fixture": true,
+  "historical_audit": {
+    "scope": "history",
+    "stats": {
+      "items": 30720,
+      "archives": 51,
+      "historical_public_test_fixtures": 9,
+      "skipped": []
+    },
+    "findings": [],
+    "removed_test_fixture": false
+  },
+  "checked_at": "2026-10-21T15:00:44.323469+00:00",
+  "checked_commit": "ab7681ad2261c72cef88fe5a4cc4a9ecac08af1b",
+  "archive_sha256": "6db28fc9b8756a31f1e7ebad2776482735e3cc86775be3406506f846f9fc8fc7"
+}
