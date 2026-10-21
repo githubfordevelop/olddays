@@ -58,14 +58,10 @@ def strip_fixture():
 
 def inspect(data, path, findings, stats, historical=False, depth=0):
     stats['items'] += 1
-    expected_fixture = historical and path.endswith('!'+FIXTURE) and hashlib.sha256(data).hexdigest() == PUBLIC_TEST_SHA256
     for name, pattern in RULES.items():
         for match in re.finditer(pattern, data):
             entry = {'path': path, 'type': name, 'line': data[:match.start()].count(b'\n')+1}
-            if expected_fixture:
-                stats['historical_public_test_fixtures'] += 1
-            else:
-                findings.append(entry)
+            findings.append(entry)
     candidates = [(m.group(1), m.group(3), m.start()) for m in ASSIGNMENT.finditer(data)]
     candidates += [(m.group(1), m.group(2), m.start()) for m in UNQUOTED.finditer(data)]
     for field, value, start in candidates:
