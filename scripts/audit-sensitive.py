@@ -28,7 +28,7 @@ RULES = {
     'slack-token': rb'xox[baprs]-[A-Za-z0-9-]{20,}',
 }
 KEY_NAME = rb'(?:[A-Za-z][A-Za-z0-9_-]*[_-])?(ak|sk|access[_-]?key(?:[_-]?(?:id|secret))?|secret[_-]?access[_-]?key|secret[_-]?key|secret[_-]?id|client[_-]?secret|api[_-]?key|access[_-]?token|auth[_-]?token|password|passwd)'
-ASSIGNMENT = re.compile(rb'''(?i)(?<![A-Za-z0-9_-])["']?'''+KEY_NAME+rb'''["']?\s*[:=]\s*(["'])([^\r\n]{16,200}?)\2''')
+ASSIGNMENT = re.compile(rb'''(?i)(?<![A-Za-z0-9_-])["']?'''+KEY_NAME+rb'''["']?\s*[:=]\s*(["'])([\x21-\x7e]{16,200}?)\2''')
 UNQUOTED = re.compile(rb'(?im)^\s*(?:export\s+)?'+KEY_NAME+rb'\s*[:=]\s*([A-Za-z0-9_+/=-]{16,200})\s*$')
 PLACEHOLDER = re.compile(rb'(?i)example|placeholder|your[_-]|dummy|sample|process\.env|\$\{|getenv|secret.*name|^[*xX_<>. -]+$')
 
