@@ -30,9 +30,9 @@
     },
     {
       "file": "dist/models/nokia1100-collection.glb",
-      "reference": "Period hardware study; independently built Blender mesh. Concept devices explicitly labelled.",
-      "bytes": 413312,
-      "sha256": "fd1ba041e1c7495b8d1be10e3cdb9065808533b883acc023814cfedde9d88e63"
+      "reference": "Mgpa / Ubcule, Nokia 1100 Series photograph, CC BY 3.0; independently reconstructed body and photo-measured controls.",
+      "bytes": 213604,
+      "sha256": "79c90a359d45110ce9980cf28dad264c34e924396f9e39c2f67ae439cf7623c8"
     },
     {
       "file": "dist/models/nokia7610-collection.glb",

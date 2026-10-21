@@ -48,5 +48,15 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "source": "https://commons.wikimedia.org/wiki/File:Nokia_7610.png",
     "changes": "Original licensed cutout retained. Cropped, resized and contour-mapped onto independently reconstructed interactive body; derived GLB/photo material offered under CC BY-SA 4.0. Screen replaced by live local application; no original firmware distributed."
+  },
+  {
+    "model": "nokia1100",
+    "file": "nokia1100-archive-reference.jpg",
+    "author": "Mgpa (photograph); Ubcule (2011 crop/brightness/rotation)",
+    "photographed": "2008-10-18; derivative 2011-08-23",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Nokia_1100_Series.jpg",
+    "changes": "Licensed reference retained. Contour-cropped and resized into independently modelled 3D front; screen replaced with local live UI. Key hit areas measured on photograph. No original firmware."
   }
 ]

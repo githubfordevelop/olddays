@@ -53,11 +53,11 @@ def rearbrand(s='NOKIA',y=.45):
  o=text('Rear_brand',s,(0,y,-.27),.17,silver,True);o.rotation_euler=(math.pi/2,0,math.pi)
 def finish(id,name,screen,kind='classic',brandname='NOKIA',mechanism=None,screenGroup=None,distance=8):
  profiles[id]={'name':name,'model':id,'file':id+'-collection','kind':kind,'brand':brandname,'screen':screen,'height':round(260*screen[4]/screen[3]),'distance':distance}
- if id in ['nokia3310','razr','n95','nokia7610']:
+ if id in ['nokia3310','nokia1100','razr','n95','nokia7610']:
   profiles[id]['reference']=id
  if mechanism:profiles[id]['mechanism']=mechanism
  if screenGroup:profiles[id]['screenGroup']=screenGroup
- if id in ['nokia3310','razr','n95','nokia7610']:
+ if id in ['nokia3310','nokia1100','razr','n95','nokia7610']:
   for obj in list(bpy.context.scene.objects):
    if obj.name.startswith('Legend_') and (id!='n95' or obj.parent and obj.parent.name=='Slide_panel'):bpy.data.objects.remove(obj,do_unlink=True)
  if os.environ.get('OLDDAYS_HANDSET') and id not in os.environ['OLDDAYS_HANDSET'].split(','):return
@@ -73,7 +73,7 @@ def start():
  global silver,black,keys,white,glass,blue,orange,cream
  reset();silver=mat('Brushed alloy',(.57,.59,.61),.75,.28);black=mat('Graphite plastic',(.025,.032,.041),.08,.36);keys=mat('Satin key caps',(.16,.18,.20),.3,.4);white=mat('Printed white legends',(.9,.91,.87));glass=mat('Dark glass',(.015,.035,.045),.15,.13);blue=mat('2000 navy cover',(.035,.08,.19),.05,.42);orange=mat('Music orange',(.95,.29,.035));cream=mat('Ivory plastic',(.76,.76,.69),.05,.5)
 for id,name in [('nokia3310','Nokia 3310'),('nokia1100','Nokia 1100')]:
- start();body('Rounded_removable_cover',1.85,4.1,blue if id=='nokia3310' else cream,.65);body('Dark_front_insert',1.56,3.73,black,.07).location.y=-.34
+ start();body('Rounded_removable_cover',1.85,4.1 if id=='nokia3310' else 4.3,blue if id=='nokia3310' else black,.65);body('Dark_front_insert',1.56,3.73,black,.07).location.y=-.34
  screen=display(0,.56,1.32 if id=='nokia3310' else 1.30,.872 if id=='nokia3310' else .93,.49);speaker();brand('NOKIA',1.6)
  # Navi key and separate clear/up/down, not a later S60 joystick.
  legendkey('ok','Navi',0,-.10,.65,.25,z=.43);legendkey('clear','C',-.57,-.38,.35,.24,z=.43)
@@ -91,6 +91,19 @@ for id,name in [('nokia3310','Nokia 3310'),('nokia1100','Nokia 1100')]:
   # Rendering comes from the photo, while independent geometry still owns every hit key.
   for o in bpy.context.scene.objects:
    if o.get('action') and o.get('action')!='power':o.hide_render=True;o['photoHit']=True
+ if id=='nokia1100':
+  reference_face('1100_real_cover','nokia1100-archive-reference.jpg',(.13,.90,.068,.937),1.85,4.3,.46,outline=[(.28,.079),(.50,.068),(.72,.078),(.82,.096),(.87,.15),(.898,.35),(.884,.70),(.864,.88),(.82,.917),(.68,.935),(.42,.936),(.22,.93),(.16,.91),(.13,.85),(.13,.55),(.14,.26),(.17,.12)])
+  centres={'power':(.337,.525),'ok':(.520,.560),'clear':(.325,.586),'dir:up':(.719,.525),'dir:down':(.724,.590)}
+  for row,chars in enumerate(['123','456','789','*0#']):
+   for col,char in enumerate(chars):centres['digit:'+char]=([.295,.495,.740][col],[.661,.723,.785,.844][row]+(.007 if col==1 else 0))
+  for o in bpy.context.scene.objects:
+   if o.get('action') in centres:
+    u,v=centres[o['action']];o.location.x=((u-.13)/.77-.5)*1.85;o.location.z=(.5-(v-.068)/.869)*4.3;o.location.y=-.47;o['photoHit']=True
+    if o['action']=='ok':o.dimensions=(.46,.025,.30)
+  screen[:]=[((.515-.13)/.77-.5)*1.85,(.5-(.368-.068)/.869)*4.3,.49,1.30,.95]
+  glassObj=bpy.data.objects.get('Display_glass');glassObj.location.x=screen[0];glassObj.location.z=screen[1];glassObj.dimensions.x=screen[3];glassObj.dimensions.z=screen[4]
+  # Small torch lens at the top; this reconstruction does not simulate its electronics.
+  box('1100_torch_lens',(.20,.04,.18),(0,2.16,0),glass,.02)
  finish(id,name,screen,'mono')
 start();body('7610_asymmetric_cover',1.98,4.0,black)
 # Shape both lower corners differently, characteristic leaf outline.

@@ -99,3 +99,17 @@ body.model-play-expanded .experience-nav{display:none!important}
 .blender-screen.blender-mp4 .mp4-album .photo-zoom img{width:200%;max-width:none;height:auto;object-fit:initial}
 .blender-screen.blender-mp4 .mp4-album nav{display:flex;gap:3px;flex:0 0 auto}
 .blender-screen.blender-mp4 .mp4-album nav button{min-width:0;min-height:0;padding:3px;font-size:10px;flex:1}
+/* Monochrome 3D displays use their own compact metrics, independent of the flat preview. */
+.blender-screen.blender-mono .device-viewport{min-height:0!important;flex:1 1 0;height:auto!important}
+.blender-screen.blender-mono .device-status,.blender-screen.blender-mono .device-app-title{flex:0 0 auto;font-size:8px;padding:2px}
+.blender-screen.blender-mono .mono-home{padding:4px;font-size:9px}
+.blender-screen.blender-mono .mono-network{font-size:9px}
+.blender-screen.blender-mono .mono-clock{font-size:21px;margin:3px 0;letter-spacing:0}
+.blender-screen.blender-mono .mono-home>small{font-size:8px}
+.blender-screen.blender-mono .mono-home>nav{margin:4px 0}
+.blender-screen.blender-mono .mono-home>nav button{font-size:10px!important;min-height:0!important;padding:2px 4px!important;line-height:1.2}
+.blender-screen.blender-mono .mono-home>span{font-size:8px}
+.blender-screen.blender-mono .mono-messages,.blender-screen.blender-mono .mono-contacts,.blender-screen.blender-mono .mono-calculator{padding:5px}
+.blender-screen.blender-mono .mono-messages h3,.blender-screen.blender-mono .mono-contacts h3,.blender-screen.blender-mono .mono-calculator h3{font-size:12px;margin:0 0 5px;padding-bottom:3px}
+.blender-screen.blender-mono .mono-messages textarea{min-height:45px;font-size:12px;margin:4px 0;padding:3px}
+.blender-screen.blender-mono .mono-home>nav{display:block}
