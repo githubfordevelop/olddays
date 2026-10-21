@@ -134,7 +134,7 @@ def pages(path,token):
 
 def download_api(path,token):
     try:
-        with request('GET','https://api.github.com'+path,token,headers={'Accept':'application/octet-stream'}) as r:return r.read(MAX_BYTES+1)
+        with request('GET','https://api.github.com'+path,token,headers={'Accept':'application/vnd.github+json' if '/tarball/' in path else 'application/octet-stream'}) as r:return r.read(MAX_BYTES+1)
     except urllib.error.HTTPError as e:
         if e.code not in (301,302,303,307,308):raise RuntimeError('Download API failed: HTTP '+str(e.code)) from None
         url=e.headers['Location'];parts=urllib.parse.urlsplit(url)
