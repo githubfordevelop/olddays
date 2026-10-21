@@ -1,0 +1,53 @@
+{
+  "checked_at": "2026-10-21T16:09:29Z",
+  "repository": "githubfordevelop/olddays",
+  "history_cleanup": {
+    "branches_rewritten": 2,
+    "tags_checked": 9,
+    "historical_archive_blob_versions_cleaned": 9,
+    "independent_fresh_clone_blobs_checked": 1522,
+    "private_key_findings_after_cleanup": 0
+  },
+  "verification": {
+    "current": {
+      "scope": "current",
+      "stats": {
+        "items": 5237,
+        "archives": 25,
+        "historical_public_test_fixtures": 0,
+        "skipped": []
+      },
+      "findings": [],
+      "removed_test_fixture": false
+    },
+    "history": {
+      "scope": "history",
+      "stats": {
+        "items": 33636,
+        "archives": 52,
+        "historical_public_test_fixtures": 0,
+        "skipped": []
+      },
+      "findings": [],
+      "removed_test_fixture": false
+    },
+    "releases_checked": 9,
+    "release_assets_checked": 27,
+    "generated_source_archives_checked": 9,
+    "live_actions_artifacts_checked": 0,
+    "javascript_tests_passed": 155,
+    "python_tests_passed": 4,
+    "source_and_runtime_checks": "passed",
+    "workflow_run": "https://github.com/githubfordevelop/olddays/actions/runs/39630734366",
+    "report_publication_note": "All security and runtime verification steps succeeded. Automatic report push encountered a concurrent main update; this report was submitted separately through the GitHub API."
+  },
+  "cache_limit": {
+    "old_commit_raw_download_http_status": 200,
+    "note": "A force-push removes the fixture from published branches and tags, but cannot erase GitHub dangling objects, old-SHA caches, forks or existing clones. Do not interpret this report as a guarantee that old-SHA URLs are unavailable."
+  },
+  "prevention": {
+    "historical_test_key_exemption_removed": true,
+    "old_shared_local_worktree_push_blocked": true,
+    "reclone_required_before_contributing": true
+  }
+}
