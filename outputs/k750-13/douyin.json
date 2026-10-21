@@ -1,0 +1,25 @@
+{
+  "new": {
+    "plays": 146,
+    "likes": 3,
+    "comments": 1,
+    "shares": 0,
+    "favorites": 2,
+    "completionPercent": 2.01,
+    "exit2sPercent": 44.65
+  },
+  "old": {
+    "plays": 157,
+    "likes": 4,
+    "comments": 0,
+    "shares": 0,
+    "favorites": 1,
+    "completionPercent": 0,
+    "exit2sPercent": 37.62
+  },
+  "newPlaysDelta": 1,
+  "oldPlaysDelta": 5,
+  "newCommentsDelta": 0,
+  "oldCommentsDelta": 0,
+  "note": "Small samples; no new actionable comment signal."
+}

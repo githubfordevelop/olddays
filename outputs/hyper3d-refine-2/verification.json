@@ -1,0 +1,19 @@
+{
+  "viewport": [
+    390,
+    844
+  ],
+  "tests": [
+    "boot",
+    "numeric SMS input and C deletion",
+    "call and multimedia keys",
+    "snake controls",
+    "rear slide open/closed",
+    "receipt/photo flip and zoom",
+    "accessory inspect/zoom/return",
+    "drawer drag 71 to40 and reload",
+    "battery projected position 193,226 unchanged after reload",
+    "desktop 1280x900 counter and wide view"
+  ],
+  "all_games_or_story_endings_retested": false
+}

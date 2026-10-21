@@ -1,0 +1,15 @@
+{
+  "version": {
+    "commit": "a0668b35b577a8ca5a2e2a418f1e68029019641d",
+    "deployedAt": "2026-10-20T14:37:41Z",
+    "transport": "ssh"
+  },
+  "tide-night.js": {
+    "matches": true,
+    "sha256": "f4dd00f9ed05696857347f57ae4d9ffba8419ad543c4db7c218e589e59c65eee"
+  },
+  "tide-night.css": {
+    "matches": true,
+    "sha256": "99ba745dac44facde9b6b463ff4b7baabdf94119fb011ea56bb08b7c0e4a27eb"
+  }
+}

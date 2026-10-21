@@ -1,0 +1,10 @@
+{
+  "version": {
+    "commit": "b80c4dbeb735d6e3b63ec7548eccba67e123ad54",
+    "deployedAt": "2026-10-20T20:36:55Z",
+    "transport": "ssh"
+  },
+  "handset-collection.js": "b21198e1ab9896ede1d2402a0098af5579f6cfe8fc466d27db5f0e7d42ae1426",
+  "blender-world.css": "31c627ed17207cf9ab6f5db83522b19eaf49db59fcbd296cc32c59167bdd2fb7",
+  "models/iphone-collection.glb": "b107c152dbe042f6087441f63fc8ee8dc1474bf96fcd33ceae162d72bf2d416c"
+}

@@ -1,0 +1,126 @@
+Window: "抖音", App: 抖音.
+0 标准窗口 抖音, Secondary Actions: Raise
+	1 HTML 内容 抖音, URL: file:///Applications/%E6%8A%96%E9%9F%B3.app/Contents/Resources/app.asar/pages/internalBrowser/index.html?initURL=https%3A%2F%2Fcreator.douyin.com%2Fcreator-micro%2Fcontent%2Fupload%3Fenter_from%3Ddou_web&preloadPath=file%3A%2F%2F%2FApplications%2F%E6%8A%96%E9%9F%B3.app%2FContents%2FResources%2Fapp.asar.unpacked%2Fpreload.js
+		2 container
+			3 文本 抖音创作者中心
+			4 图像
+			5 图像
+			6 图像
+			7 图像
+			8 图像
+			9 HTML 内容 抖音创作者中心, URL: creator.douyin.com/creator-micro/content/manage
+				10 container
+					11 container
+						12 弹出式按钮 作品发布
+							13 container
+								14 图像
+								15 文本 作品发布
+								16 图像
+						17 菜单 Secondary Actions: Cancel
+							18 首页
+								19 图像
+								20 文本 首页
+							21 内容管理
+								22 图像
+								23 文本 内容管理
+							24 数据中心
+								25 图像
+								26 文本 数据中心
+							27 收入变现
+								28 图像
+								29 文本 收入变现
+							30 创作服务
+								31 图像
+								32 文本 创作服务
+					33 container
+						34 container 智能创作
+							35 按钮 首页
+								36 图像
+								37 文本 首页
+							38 按钮 AI分身
+							39 按钮 随变
+							40 按钮 世界书
+							41 按钮 AI工坊
+						42 按钮 星光余额 0，查看星光明细
+					43 container
+						44 文本 内容管理
+						45 按钮 作品 (26)
+						46 container 作品合集
+							47 按钮 作品合集 (4)
+						48 组合框 (settable) 审核状态
+							49 文本 审核状态
+							50 图像
+						51 组合框 (settable) 体裁
+							52 文本 体裁
+							53 图像
+						54 组合框 (settable) Description: Choose date, Value: 发布日期
+							55 按钮 发布日期
+								56 container
+									57 文本 发布日期
+									58 图像 chevron_down
+						59 组合框 (settable) Description: selected, Value: 最新发布
+							60 图像
+							61 文本 最新发布
+							62 图像
+						63 container
+							64 图像
+							65 文本栏 (settable) Value: 那台诺基亚, Placeholder: 搜索作品
+							66 图像 clear
+						67 按钮 导出数据
+							68 文本 导出数据
+						69 container
+							70 文本 00:52
+							71 文本 那台诺基亚，被我搬进了网页
+							72 container
+								73 图像
+								74 文本 编辑作品
+								75 图像
+								76 文本 设置权限
+								77 图像
+								78 文本 作品置顶
+								79 图像
+								80 文本 删除作品
+							81 container
+								82 text 2026年10月20日 20:16 已发布
+							83 container
+								84 文本 播放
+								85 文本 146
+								86 文本 点赞
+								87 文本 3
+								88 文本 评论
+								89 文本 1
+								90 文本 分享
+								91 文本 0
+								92 文本 收藏
+								93 文本 2
+								94 文本 完播率
+								95 文本 2.01%
+								96 文本 2秒跳出率
+								97 文本 44.65%
+								98 文本 吸粉量
+								99 文本 0
+						100 文本 没有更多作品
+					101 container 审核通知, Help: 加载中，请稍后^_^
+						102 标题 审核通知, Value: 5
+							103 文本 审核通知
+						104 按钮 close
+							105 图像 close
+						106 container
+							107 文本 加载中，请稍后^_^
+					108 container 审核通知, Help: 加载中，请稍后^_^
+						109 标题 审核通知, Value: 5
+							110 文本 审核通知
+						111 按钮 close
+							112 图像 close
+						113 container
+							114 文本 加载中，请稍后^_^
+	115 关闭按钮
+	116 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	117 最小化按钮
+118 menu bar
+	119 抖音
+	120 文件
+	121 编辑
+	122 窗口
+
+The focused UI element is 65 文本栏 (settable) Value: 那台诺基亚, Placeholder: 搜索作品

@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-21",
+  "new": {
+    "title": "那台诺基亚，被我搬进了网页",
+    "published": "2026-10-20 20:16",
+    "plays": 145,
+    "likes": 3,
+    "comments": 1,
+    "shares": 0,
+    "favorites": 2,
+    "completionPercent": 2.05,
+    "exit2sPercent": 45.22,
+    "deltaPlaysSinceLastVerified": 23
+  },
+  "old": {
+    "title": "我把被窝里那一格电，做成了一个网站",
+    "published": "2026-10-20 12:03",
+    "plays": 152,
+    "likes": 4,
+    "comments": 0,
+    "shares": 0,
+    "favorites": 1,
+    "completionPercent": 0,
+    "exit2sPercent": 37.19,
+    "deltaPlaysSinceLastVerified": 11
+  },
+  "interpretation": "Small samples. No additional comments observed by count; no new product conclusion."
+}

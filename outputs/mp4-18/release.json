@@ -1,0 +1,17 @@
+{
+  "version": {
+    "commit": "2da8b153ef1e16f582ccced032a8e7b203349676",
+    "deployedAt": "2026-10-20T23:38:34Z",
+    "transport": "ssh"
+  },
+  "assets": {
+    "blender-world.js": {
+      "matches": true,
+      "sha256": "302e8f175d912f1a64b4a32421d8629b75fe7f434fbc8d04b58107c6dc09c3ce"
+    },
+    "blender-world.css": {
+      "matches": true,
+      "sha256": "f3a41c8d1b9e1de6e4ace3050d2abfe5b556cced73dae128c7c3bc05892a4561"
+    }
+  }
+}

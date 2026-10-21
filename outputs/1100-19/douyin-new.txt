@@ -1,0 +1,36 @@
+The following is a diff from the previous accessibility tree for Window: "抖音" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 68-461
++							484 图像 clear
++						485 container
++							486 文本 00:52
++							487 文本 那台诺基亚，被我搬进了网页
++							488 container
++								489 图像
++								490 文本 编辑作品
++								491 图像
++								492 文本 设置权限
++								493 图像
++								494 文本 作品置顶
++								495 图像
++								496 文本 删除作品
++							497 container
++								498 text 2026年10月20日 20:16 已发布
++							499 container
++								500 文本 播放
++								501 文本 155
++								502 文本 点赞
++								503 文本 3
++								504 文本 评论
++								505 文本 1
++								506 文本 分享
++								507 文本 0
++								508 文本 收藏
++								509 文本 2
++								510 文本 完播率
++								511 文本 1.86%
++								512 文本 2秒跳出率
++								513 文本 45.29%
++								514 文本 吸粉量
++								515 文本 0
++						516 文本 没有更多作品
+The focused UI element is 65 文本栏 (settable) Value: 那台诺基亚, Placeholder: 搜索作品

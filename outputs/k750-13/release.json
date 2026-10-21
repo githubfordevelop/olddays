@@ -1,0 +1,9 @@
+{
+  "version": {
+    "commit": "cddf771d62735b1a73191d225a689a9f213cd1bb",
+    "deployedAt": "2026-10-20T18:38:17Z",
+    "transport": "ssh"
+  },
+  "blender-world.js": "48ab6cd54f7cccf2bcf0a658803f3cb283747c9a8cbbefa90c7ab94c557fa5ff",
+  "models/k750-collection.glb": "992bdd2ceb2636a98560055a1f64f3162e949647ea5e18966860ebbc9aa04beb"
+}

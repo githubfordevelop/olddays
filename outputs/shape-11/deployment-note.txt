@@ -1,0 +1,1 @@
+GitHub automatic deployment published e23d03120103edcc8684818b749b133498dd57cf. Concurrent manual rsync exited 23; live version and changed scripts/models plus iphone were verified byte-identical. Future runs should wait for automatic deployment after push, only use manual fallback if automatic deployment is unavailable.

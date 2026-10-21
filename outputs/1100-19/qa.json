@@ -1,0 +1,41 @@
+{
+  "time": "2026-10-21T08:28+08:00",
+  "base": "2da8b153ef1e16f582ccced032a8e7b203349676",
+  "checks": "155 JS + 4 Python passed",
+  "tested": [
+    "390x844 browser: front Navi opens SMS and composer",
+    "existing draft 70 + physical 0/8 becomes 7008; C deletes to 700",
+    "front power switches off; same physical key starts again",
+    "compact home has 4 vertical rows",
+    "3310 regression: 4 increasing row positions, screen root scrollTop=0",
+    "default viewport restored"
+  ],
+  "limits": [
+    "photo-based 3D front, approximate independent body, not factory CAD",
+    "not a physical handset test",
+    "top flashlight lens is visual only"
+  ],
+  "source": "https://commons.wikimedia.org/wiki/File:Nokia_1100_Series.jpg",
+  "photo": "Mgpa 2008-10-18; Ubcule 2011-08-23 derivative; CC BY 3.0",
+  "douyin": {
+    "old": {
+      "plays": 162,
+      "likes": 4,
+      "comments": 0,
+      "shares": 0,
+      "favorites": 1,
+      "completion": "0%",
+      "exit2s": "38.68%"
+    },
+    "new": {
+      "plays": 155,
+      "likes": 3,
+      "comments": 1,
+      "shares": 0,
+      "favorites": 2,
+      "completion": "1.86%",
+      "exit2s": "45.29%"
+    }
+  },
+  "feedback": "Unchanged; no new comments, no work edits or replies."
+}

@@ -1,0 +1,29 @@
+{
+  "version": {
+    "commit": "3cc6518e5fb8cb75826ca4c38b7d714fe46c19b4",
+    "deployedAt": "2026-10-20T22:37:13Z",
+    "transport": "ssh"
+  },
+  "assets": {
+    "blender-world.js": {
+      "matches": false,
+      "sha256": "cb158ba3123f6b8aedafa07b119a23671c7ea92c9daddbe600f92681739173da"
+    },
+    "blender-world.css": {
+      "matches": true,
+      "sha256": "628afecc47b45a90ec8a72c8393d6e76ee879a82e99c6b91cafa8731c48d3bde"
+    },
+    "model-gamepad.js": {
+      "matches": true,
+      "sha256": "258704e98fb6a5147db3911661b275921c21e0a5e4bcd03db2081a024e30c2af"
+    },
+    "handset-collection.js": {
+      "matches": true,
+      "sha256": "f47d6d01e564cc27c7f2b0559ad526e7c8923a49c0de747824a9212a17cbd6b1"
+    },
+    "models/psp-collection.glb": {
+      "matches": true,
+      "sha256": "18c8ef4e4ad4188eb65654e8ab98f7d94245aa3aed4a58f0209b4f93a328abfc"
+    }
+  }
+}

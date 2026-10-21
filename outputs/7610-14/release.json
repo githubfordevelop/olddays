@@ -1,0 +1,10 @@
+{
+  "version": {
+    "commit": "51a1d6a3ac9f8e9a773221687bb6d93c993083e2",
+    "deployedAt": "2026-10-20T19:41:28Z",
+    "transport": "ssh"
+  },
+  "handset-collection.js": "a5b71345bf1bf30e7d378cd7c36b19c386238f9ac6884955508e7a60f8d3c8a0",
+  "models/nokia7610-collection.glb": "161af36187f452f8927c8dd40e4a33a0abbcbdc4c38ffb353bef678782f452f9",
+  "images/references/nokia7610-archive-reference.png": "c1e3fb0e9609f12f750ce3e31d58d0bf065f8f76b0410ace7e1fbdc55f696b47"
+}

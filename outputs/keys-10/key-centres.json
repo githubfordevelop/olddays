@@ -1,0 +1,133 @@
+[
+  {
+    "id": "nokia3310",
+    "keys": 16,
+    "mismatch": []
+  },
+  {
+    "id": "nokia1100",
+    "keys": 16,
+    "mismatch": []
+  },
+  {
+    "id": "symbian",
+    "keys": 24,
+    "mismatch": []
+  },
+  {
+    "id": "nokia7610",
+    "keys": 23,
+    "mismatch": []
+  },
+  {
+    "id": "walkman",
+    "keys": 24,
+    "mismatch": []
+  },
+  {
+    "id": "k750",
+    "keys": 22,
+    "mismatch": []
+  },
+  {
+    "id": "twist",
+    "keys": 21,
+    "mismatch": [],
+    "unhit": [
+      "digit:#",
+      "digit:*",
+      "digit:0"
+    ]
+  },
+  {
+    "id": "n73",
+    "keys": 25,
+    "mismatch": [],
+    "unhit": [
+      "digit:#",
+      "digit:*",
+      "digit:0",
+      "clear",
+      "edit"
+    ]
+  },
+  {
+    "id": "iphone",
+    "keys": 1,
+    "mismatch": [],
+    "unhit": [
+      "home"
+    ]
+  },
+  {
+    "id": "n95",
+    "keys": 11,
+    "mismatch": [],
+    "unhit": [
+      "clear",
+      "contacts",
+      "dir:down",
+      "end"
+    ]
+  },
+  {
+    "id": "nokia5230",
+    "keys": 4,
+    "mismatch": [],
+    "unhit": [
+      "contacts",
+      "home",
+      "end"
+    ]
+  },
+  {
+    "id": "n97",
+    "keys": 3,
+    "mismatch": [],
+    "unhit": [
+      "contacts",
+      "end",
+      "home"
+    ]
+  },
+  {
+    "id": "mp5",
+    "keys": 1,
+    "mismatch": [],
+    "unhit": [
+      "home"
+    ]
+  },
+  {
+    "id": "fullscreen",
+    "keys": 1,
+    "mismatch": [],
+    "unhit": [
+      "home"
+    ]
+  },
+  {
+    "id": "mp3",
+    "keys": 5,
+    "mismatch": [],
+    "unhit": []
+  },
+  {
+    "id": "mp4",
+    "keys": 4,
+    "mismatch": [],
+    "unhit": []
+  },
+  {
+    "id": "psp",
+    "keys": 10,
+    "mismatch": [],
+    "unhit": []
+  },
+  {
+    "id": "razr",
+    "keys": 21,
+    "mismatch": [],
+    "unhit": []
+  }
+]

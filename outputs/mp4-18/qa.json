@@ -1,0 +1,37 @@
+{
+  "time": "2026-10-21T07:34+08:00",
+  "base": "be3299d193529823e2903f5ca5e3f7c15ab8f7b7",
+  "checks": "154 JS + 4 Python passed",
+  "verified": [
+    "390x844 browser viewport: track keys select movie in home menu; PLAY opens movie",
+    "physical MENU returns to same device home",
+    "track selects album, PLAY opens photo 1; next switches to photo 2; PLAY toggles zoom and back",
+    "default desktop viewport checked after reset"
+  ],
+  "limitations": [
+    "Not a physical-device test",
+    "Video play/pause clicked but native media accessibility did not expose a clear playback state, so no new video playback verification claimed",
+    "Existing three creative images reused and labelled non-historical; no new historical resources added"
+  ],
+  "douyin": {
+    "old": {
+      "plays": 162,
+      "likes": 4,
+      "comments": 0,
+      "shares": 0,
+      "favorites": 1,
+      "completion": "0%",
+      "exit2s": "38.68%"
+    },
+    "new": {
+      "plays": 155,
+      "likes": 3,
+      "comments": 1,
+      "shares": 0,
+      "favorites": 2,
+      "completion": "1.86%",
+      "exit2s": "45.29%"
+    }
+  },
+  "feedback": "No count changes or new comments; no edits/replies/reposts."
+}

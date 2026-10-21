@@ -1,0 +1,37 @@
+{
+  "time": "2026-10-21T06:30+08:00",
+  "base": "78026a9f6f5d09ec6d5403285c3e307eefd9b4c4",
+  "tested": [
+    "844x390 landscape full-screen: analog digital quadrants and circle completed Lights Out from fresh board",
+    "cross returns to same console home",
+    "front volume raises to 45%",
+    "reload then square opens saved completed board",
+    "390x844 portrait full-screen keypad bottom=833, viewport=844, screen parent scroll=0"
+  ],
+  "limitations": [
+    "browser viewport tests, not physical phone",
+    "independent PSP-family reconstruction, not original firmware or commercial PSP emulator"
+  ],
+  "checks": "151 JS + 4 Python pass",
+  "douyin": {
+    "old_1203": {
+      "plays": 162,
+      "likes": 4,
+      "comments": 0,
+      "shares": 0,
+      "favorites": 1,
+      "completion": "0%",
+      "exit2s": "38.68%"
+    },
+    "new_2016": {
+      "plays": 155,
+      "likes": 3,
+      "comments": 1,
+      "shares": 0,
+      "favorites": 2,
+      "completion": "1.86%",
+      "exit2s": "45.29%"
+    }
+  },
+  "feedback": "Comment counts unchanged. Samples too small for outcome claims. No replies or edits."
+}

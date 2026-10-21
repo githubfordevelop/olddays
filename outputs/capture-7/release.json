@@ -1,0 +1,10 @@
+{
+  "blender-world.js": {
+    "sha256": "4da3227132cc61c6dbc89440d03135abbd745b542707affb8d197660eb219259",
+    "matches": true
+  },
+  "capture-studio.js": {
+    "sha256": "46d1da5ac05759b3485fabddc4277fafdcd3c4b85e037c1450fc5dd5aed3d943",
+    "matches": true
+  }
+}

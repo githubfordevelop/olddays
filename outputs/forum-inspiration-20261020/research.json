@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-10-20T15:01:11.241428+08:00",
+  "scope": "网页调研与下一轮实现依据，本轮未上线新功能",
+  "sources": [
+    {
+      "url": "https://forum.lowyat.net/topic/970667/all",
+      "verified": "已打开全文，首楼2009-03-20",
+      "usage": "参考机友楼结构：楼层/引用/只看该作者/资料栏/机主名单。不可在2008剧情中当已存在帖直接使用。无转载图片授权核实，不复制素材。"
+    },
+    {
+      "url": "https://www.ruanyifeng.com/blog/2008/08/nokia_n73.html",
+      "verified": "已打开，2008-08-23个人一手使用记录",
+      "usage": "参考当年真实使用语境，链接到原文，不搬整篇文章。"
+    },
+    {
+      "url": "https://www.gamedeveloper.com/design/deep-dive-turning-phone-ux-into-game-mechanics-in-horror-game-i-simulacra-2-i-",
+      "verified": "已打开，开发者自述",
+      "usage": "参考不同app空间功能与跨软件探索机制，不复制谜题剧情。"
+    },
+    {
+      "url": "https://accidentalqueens.com/press/a_normal_lost_phone/",
+      "verified": "已打开，官方presskit",
+      "usage": "参考用短信与相册建立人物关系、通过手机界面叙事。"
+    },
+    {
+      "url": "https://www.motoshop.com.cn/thread-29869-1-1.html",
+      "verified": "搜索有2008年购机帖片段，但直接访问超时",
+      "usage": "仅列待验候选，不当成已读全文或可用素材。"
+    }
+  ],
+  "priorities": [
+    {
+      "priority": 1,
+      "task": "论坛从单页正文升级为版面列表、帖子分页、只看楼主、用户资料、该用户回帖、关键词搜索和引用回链。保留当前剧情与独立机型故事。",
+      "acceptance": "手机窄屏从回帖进入作者资料、查到另一旧帖、再引用返回原楼；搜索无结果不剧透答案。"
+    },
+    {
+      "priority": 2,
+      "task": "补有区别的普通人物生活，器材求助、实验课、二手交易、日常照片穿插，关键线索出现于自然交流。减少解释证据性质的说教式剧情文字。",
+      "acceptance": "玩家可以从人物表达习惯与时间顺序自行比较，不由按钮直接宣布证据结论。"
+    },
+    {
+      "priority": 3,
+      "task": "相册从命名部位按钮改为整图观察/缩放平移/点选图上位置，检查结果是局部描述而非直接答案。",
+      "acceptance": "照片主体首屏可见、窄屏能放大定位、返回保持缩放和观察进度；故事插画与真实历史照片分别标注。"
+    },
+    {
+      "priority": 4,
+      "task": "以查阅/回复/返回待机等事件控制消息间隔；日常事件先行，异常只改一处可回查细节。通话/录音主动播放，文本可完成，无突然大音量。",
+      "acceptance": "不靠挂机倒计时通关，不覆盖输入草稿，已读与到达分开，刷新不重复推送。"
+    }
+  ]
+}

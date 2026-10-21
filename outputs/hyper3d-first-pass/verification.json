@@ -1,0 +1,32 @@
+{
+  "commit": "546997b",
+  "viewport": [
+    390,
+    844
+  ],
+  "checks": {
+    "phone_power_and_boot": true,
+    "numeric_3_sms": true,
+    "menu_key_game_5": true,
+    "snake_direction_and_score_10": true,
+    "story_qq_thread_in_same_shell": true,
+    "story_photo_ticket_details_in_same_shell": true,
+    "drawer_direct_drag_30_to_71": true,
+    "drawer_after_reload_71": true,
+    "document_width_375_at_viewport_390": true,
+    "rear_hides_front_ui": true,
+    "desktop_sms": true,
+    "all_story_endings_retested": false
+  },
+  "screenshots": [
+    "n73-desktop.jpg",
+    "n73-mobile.jpg",
+    "n73-mobile-sms.jpg",
+    "shop-drawer-mobile.jpg"
+  ],
+  "notes": [
+    "Only generated display counter adopted from shop output",
+    "Generated lettering and camera/back geometry remain inaccurate; opt-in prototype",
+    "No paid subscription purchased"
+  ]
+}

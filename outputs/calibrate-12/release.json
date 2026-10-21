@@ -1,0 +1,9 @@
+{
+  "version": {
+    "commit": "aad4b3d8a42cb3988c420aeaa88863829c658ba2",
+    "deployedAt": "2026-10-20T17:30:27Z",
+    "transport": "ssh"
+  },
+  "handset-collection.js": "74a16914af3c17db991202c3d558ff6136ab1329d33a64620a4c768c1d86ebe7",
+  "models/nokia3310-collection.glb": "3e3274fed3147c37dd2666c910c36037e64af663214d6fc64058df4ce254a553"
+}

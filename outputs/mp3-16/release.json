@@ -1,0 +1,10 @@
+{
+  "blender-world.js": {
+    "matches": true,
+    "sha256": "cbe2de1b082b15d6d32526e009a657acd9c52a84c3f8852ba49e12d6506b2af1"
+  },
+  "blender-world.css": {
+    "matches": true,
+    "sha256": "2d037928abde207fc3afae43fcc4e60f52219516f9cf6a1765bcf5561e92a189"
+  }
+}

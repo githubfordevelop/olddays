@@ -1,0 +1,269 @@
+{
+  "checkedAt": "2026-10-20T11:57:46.868Z",
+  "checks": [
+    {
+      "model": "nokia3310",
+      "apps": [],
+      "dom": {
+        "canvas": 1,
+        "flat": "none",
+        "screen": 1
+      }
+    },
+    {
+      "model": "nokia1100",
+      "apps": [],
+      "dom": {
+        "canvas": 1,
+        "flat": "none",
+        "screen": 1
+      }
+    },
+    {
+      "model": "razr",
+      "apps": [
+        {
+          "app": "sms",
+          "title": "短信"
+        },
+        {
+          "app": "qq",
+          "title": "QQ"
+        },
+        {
+          "app": "photos",
+          "title": "相册"
+        },
+        {
+          "app": "games",
+          "title": "游戏"
+        }
+      ],
+      "dom": {
+        "canvas": 1,
+        "flat": "none",
+        "screen": 1
+      }
+    },
+    {
+      "model": "nokia7610",
+      "apps": [
+        {
+          "app": "sms",
+          "title": "短信"
+        },
+        {
+          "app": "qq",
+          "title": "QQ"
+        },
+        {
+          "app": "photos",
+          "title": "相册"
+        },
+        {
+          "app": "games",
+          "title": "游戏"
+        }
+      ],
+      "dom": {
+        "canvas": 1,
+        "flat": "none",
+        "screen": 1
+      }
+    },
+    {
+      "model": "walkman",
+      "apps": [
+        {
+          "app": "sms",
+          "title": "短信"
+        },
+        {
+          "app": "qq",
+          "title": "QQ"
+        },
+        {
+          "app": "photos",
+          "title": "相册"
+        },
+        {
+          "app": "games",
+          "title": "游戏"
+        }
+      ],
+      "dom": {
+        "canvas": 1,
+        "flat": "none",
+        "screen": 1
+      }
+    },
+    {
+      "model": "n97",
+      "apps": [
+        {
+          "app": "sms",
+          "title": "短信"
+        },
+        {
+          "app": "qq",
+          "title": "QQ"
+        },
+        {
+          "app": "photos",
+          "title": "相册"
+        },
+        {
+          "app": "games",
+          "title": "游戏"
+        }
+      ],
+      "dom": {
+        "canvas": 1,
+        "flat": "none",
+        "screen": 1
+      }
+    },
+    {
+      "model": "iphone",
+      "apps": [
+        {
+          "app": "sms",
+          "title": "短信"
+        },
+        {
+          "app": "qq",
+          "title": "QQ"
+        },
+        {
+          "app": "photos",
+          "title": "相册"
+        },
+        {
+          "app": "games",
+          "title": "游戏"
+        }
+      ],
+      "dom": {
+        "canvas": 1,
+        "flat": "none",
+        "screen": 1
+      }
+    },
+    {
+      "model": "fullscreen",
+      "apps": [
+        {
+          "app": "sms",
+          "title": "短信"
+        },
+        {
+          "app": "qq",
+          "title": "QQ"
+        },
+        {
+          "app": "photos",
+          "title": "相册"
+        },
+        {
+          "app": "games",
+          "title": "游戏"
+        }
+      ],
+      "dom": {
+        "canvas": 1,
+        "flat": "none",
+        "screen": 1
+      }
+    },
+    {
+      "model": "nokia5230",
+      "apps": [
+        {
+          "app": "sms",
+          "title": "短信"
+        },
+        {
+          "app": "qq",
+          "title": "QQ"
+        },
+        {
+          "app": "photos",
+          "title": "相册"
+        },
+        {
+          "app": "games",
+          "title": "游戏"
+        }
+      ]
+    },
+    {
+      "model": "n73",
+      "apps": [
+        {
+          "app": "sms",
+          "title": "短信"
+        },
+        {
+          "app": "qq",
+          "title": "QQ"
+        },
+        {
+          "app": "photos",
+          "title": "相册"
+        },
+        {
+          "app": "games",
+          "title": "游戏"
+        }
+      ]
+    },
+    {
+      "model": "n95",
+      "apps": [
+        {
+          "app": "sms",
+          "title": "短信"
+        },
+        {
+          "app": "qq",
+          "title": "QQ"
+        },
+        {
+          "app": "photos",
+          "title": "相册"
+        },
+        {
+          "app": "games",
+          "title": "游戏"
+        }
+      ]
+    },
+    {
+      "model": "k750",
+      "test": "SMS/QQ/photos/games and physical back",
+      "body": "桌面"
+    },
+    {
+      "model": "symbian",
+      "apps": [
+        {
+          "app": "sms",
+          "title": "短信"
+        },
+        {
+          "app": "qq",
+          "title": "QQ"
+        },
+        {
+          "app": "photos",
+          "title": "相册"
+        },
+        {
+          "app": "games",
+          "title": "游戏"
+        }
+      ]
+    }
+  ],
+  "note": "Application switching and hardware regression, not full game completion. 6600 joystick opened QQ chat with touch clicks."
+}

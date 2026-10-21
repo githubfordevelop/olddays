@@ -1,0 +1,11 @@
+{
+  "commit": "1664f9314f847534f2198ead6061d1d0aa9f2d09",
+  "assetsMatch": {
+    "blender-world.js": true,
+    "models/n97-collection.glb": true,
+    "models/n95-collection.glb": true,
+    "models/nokia3310-collection.glb": true,
+    "models/razr-collection.glb": true,
+    "models/twist-collection.glb": true
+  }
+}

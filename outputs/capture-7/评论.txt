@@ -1,0 +1,105 @@
+Window: "抖音", App: 抖音.
+0 标准窗口 抖音, Secondary Actions: Raise
+	1 HTML 内容 抖音, URL: file:///Applications/%E6%8A%96%E9%9F%B3.app/Contents/Resources/app.asar/pages/internalBrowser/index.html?initURL=https%3A%2F%2Fcreator.douyin.com%2Fcreator-micro%2Fcontent%2Fupload%3Fenter_from%3Ddou_web&preloadPath=file%3A%2F%2F%2FApplications%2F%E6%8A%96%E9%9F%B3.app%2FContents%2FResources%2Fapp.asar.unpacked%2Fpreload.js
+		2 container
+			3 文本 抖音创作者中心
+			4 图像
+			5 图像
+			6 图像
+			7 图像
+			8 图像
+			9 HTML 内容 抖音创作者中心, URL: creator.douyin.com/creator-micro/work-management/work-detail/7698722820376775977?enter_from=content
+				10 container
+					11 container
+						12 弹出式按钮 作品发布
+							13 container
+								14 图像
+								15 文本 作品发布
+								16 图像
+						17 菜单 Secondary Actions: Cancel
+							18 首页
+								19 图像
+								20 文本 首页
+							21 内容管理
+								22 图像
+								23 文本 内容管理
+							24 数据中心
+								25 图像
+								26 文本 数据中心
+							27 收入变现
+								28 图像
+								29 文本 收入变现
+							30 创作服务
+								31 图像
+								32 文本 创作服务
+					33 container 智能创作
+						34 按钮 首页
+							35 图像
+							36 文本 首页
+						37 按钮 AI分身
+						38 按钮 随变
+						39 按钮 世界书
+						40 按钮 AI工坊
+					41 按钮 星光余额 0，查看星光明细
+					42 container
+						43 文本 数据指标说明
+						44 图像
+						45 文本 内容管理
+						46 container
+							47 未加标签的图片 /svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMjMiIHZpZXdCb3g9IjAgMCAxNiAyMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgb3BhY2l0eT0iMC42Ij4KPHBhdGggZD0iTTAuNDAwMDI0IDE2LjYxNjZWNi4xNTU4M0MwLjQwMDAyNCA0LjQyMzcyIDAuNDAwMDI0IDMuNTU3NjcgMC43NTk1OTUgMy4wOTAzM0MxLjA3MjY4IDIuNjgzNDIgMS41NTAwNCAyLjQzNjI0IDIuMDYzMDQgMi40MTU0MUMyLjY1MjIxIDIuMzkxNDkgMy4zNTk0NiAyLjg5MTMzIDQuNzczOTcgMy44OTEwMUwxMi4wMDI3IDguOTk5NzRDMTMuMDYwMSA5Ljc0NzA5IDEzLjU4ODkgMTAuMTIwOCAxMy43ODAyIDEwLjU4NzhDMTMuOTQ3NyAxMC45
+							48 未加标签的图片 /d08d1a1b40bb47ce9c38b539949a691f~tplv-dy-resize-walign-adapt-aq:540:q75.webp?lk3s=138a59ce&x-expires=1793710800&x-signature=NsBCw2aGAVFzHsVQBMIaq1ywJRw%3D&from=327834062&s=PackSourceEnum_CREATOR_CENTER&se=false&sc=cover&biz_tag=aweme_video&l=202610202138422DE33ED55D0384DD700D
+						49 文本 0:00:51
+						50 text 那台诺基亚，被我搬进了网页 2026年10月20日 20:16
+						51 图像
+						52 文本 作品状态正常
+						53 container
+							54 标签 (settable, integer) 总览, Value: 0
+							55 标签 (settable, integer) 流量分析, Value: 0
+							56 标签 (settable, integer) 观众分析, Value: 0
+							57 标签 (settable, integer) 评论热词, Value: 0
+							58 标签 (selected) 评论管理, Value: 1
+						59 未加标签的图片 /tos-cn-i-c9aec8xkvj_a443dafdbd35492c904981d0c3c5b43a.jpeg?from=2956013662
+						60 文本输入区 (settable) 有爱评论，说点好听的~
+							61 文本 有爱评论，说点好听的~
+						62 图像
+						63 按钮 (disabled) 发送
+							64 文本 发送
+						65 组合框 (settable) Description: selected, Value: 全部评论
+							66 文本 全部评论
+							67 图像
+						68 组合框 (settable) Description: selected, Value: 全部人群
+							69 文本 全部人群
+							70 图像
+						71 组合框 (settable) Description: selected, Value: 最新发布
+							72 文本 最新发布
+							73 图像
+						74 图像 search
+						75 文本栏 (settable) 搜索评论关键词
+						76 未加标签的图片 /tos-cn-i-0813_osfm519EAHDmKw4EfvF6HIAQACAiQgC3F5ACAA.jpeg?from=2956013662
+						77 text 金多米 30分钟前 这个声音，满满的回忆
+						78 按钮 0
+							79 图像
+							80 文本 0
+						81 按钮
+							82 图像
+						83 按钮 回复
+							84 图像
+							85 文本 回复
+						86 按钮 删除
+							87 图像
+							88 文本 删除
+						89 按钮 举报
+							90 图像
+							91 文本 举报
+						92 文本 没有更多评论
+					93 图像
+	94 关闭按钮
+	95 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	96 最小化按钮
+97 menu bar
+	98 抖音
+	99 文件
+	100 编辑
+	101 窗口
+
+The focused UI element is 9 HTML 内容 抖音创作者中心, URL: creator.douyin.com/creator-micro/work-management/work-detail/7698722820376775977?enter_from=content

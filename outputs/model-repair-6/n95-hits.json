@@ -1,0 +1,117 @@
+[
+  {
+    "hit": "digit:1",
+    "inside": true,
+    "key": "digit:1"
+  },
+  {
+    "hit": "digit:2",
+    "inside": true,
+    "key": "digit:2"
+  },
+  {
+    "hit": "digit:3",
+    "inside": true,
+    "key": "digit:3"
+  },
+  {
+    "hit": "digit:4",
+    "inside": true,
+    "key": "digit:4"
+  },
+  {
+    "hit": "digit:5",
+    "inside": true,
+    "key": "digit:5"
+  },
+  {
+    "hit": "digit:6",
+    "inside": true,
+    "key": "digit:6"
+  },
+  {
+    "hit": "digit:7",
+    "inside": true,
+    "key": "digit:7"
+  },
+  {
+    "hit": "digit:8",
+    "inside": true,
+    "key": "digit:8"
+  },
+  {
+    "hit": "digit:9",
+    "inside": true,
+    "key": "digit:9"
+  },
+  {
+    "hit": "digit:*",
+    "inside": true,
+    "key": "digit:*"
+  },
+  {
+    "hit": "digit:0",
+    "inside": true,
+    "key": "digit:0"
+  },
+  {
+    "hit": "digit:#",
+    "inside": true,
+    "key": "digit:#"
+  },
+  {
+    "hit": "clear",
+    "inside": true,
+    "key": "clear"
+  },
+  {
+    "hit": "contacts",
+    "inside": true,
+    "key": "contacts"
+  },
+  {
+    "hit": "dir:down",
+    "inside": true,
+    "key": "dir:down"
+  },
+  {
+    "hit": "dir:left",
+    "inside": true,
+    "key": "dir:left"
+  },
+  {
+    "hit": "dir:right",
+    "inside": true,
+    "key": "dir:right"
+  },
+  {
+    "hit": "dir:up",
+    "inside": true,
+    "key": "dir:up"
+  },
+  {
+    "hit": "end",
+    "inside": true,
+    "key": "end"
+  },
+  {
+    "hit": "home",
+    "inside": true,
+    "key": "home"
+  },
+  {
+    "hit": "ok",
+    "inside": true,
+    "key": "ok"
+  },
+  {
+    "hit": "soft:left",
+    "inside": true,
+    "key": "soft:left"
+  },
+  {
+    "hit": "soft:right",
+    "inside": true,
+    "key": "soft:right"
+  }
+]

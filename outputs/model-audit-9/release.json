@@ -1,0 +1,14 @@
+{
+  "commit": "020c4f294cf131a54196956d596713617f94dda3",
+  "assetSha256": "7a6ff4d4f7d40084d7673a63b26dc1ecf6801ce6cdd717c693b1b8cbc71a24c7",
+  "onlineVideoSeek": [
+    0,
+    10,
+    0
+  ],
+  "mobileViewport": [
+    390,
+    844
+  ],
+  "tests": "141 JS and 4 Python"
+}

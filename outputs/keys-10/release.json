@@ -1,0 +1,8 @@
+{
+  "version": {
+    "commit": "a1de3462d952fe9237230389fefc5f5e166a63eb",
+    "deployedAt": "2026-10-20T16:37:23Z",
+    "transport": "ssh"
+  },
+  "sha256": "11189b5491d14b3e62b6875101f46ca93169ed76c34b441ca3e81088bad57835"
+}

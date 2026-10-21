@@ -1,0 +1,29 @@
+{
+  "version": {
+    "commit": "1924891e39f41418146a1d7b4c5b650877bc8d74",
+    "deployedAt": "2026-10-21T00:33:58Z",
+    "transport": "ssh"
+  },
+  "assets": {
+    "blender-world.js": {
+      "matches": true,
+      "sha256": "ae1c41d8cb4831f2f5a304ec035c920a0adfb0ec50da9a48a2d2ac7392adfaad"
+    },
+    "blender-world.css": {
+      "matches": true,
+      "sha256": "12a4f6ef01f4da5b50e829c4ed72030a250b3b065974b910164afdaf5a33c7d0"
+    },
+    "handset-collection.js": {
+      "matches": true,
+      "sha256": "abc66e462713deaf63de22492a735b52968b6bd63cf7bf6b5a89c93d0a104196"
+    },
+    "models/nokia1100-collection.glb": {
+      "matches": true,
+      "sha256": "79c90a359d45110ce9980cf28dad264c34e924396f9e39c2f67ae439cf7623c8"
+    },
+    "images/references/nokia1100-archive-reference.jpg": {
+      "matches": true,
+      "sha256": "d64b9df1cd2141d89ac04da972fcee4d0b3443372e06f5e82ca1dd4a4c26d235"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "commit": "f2545219e9217d60701310c644cc178c6ceb74d0",
+  "assets": {
+    "blender-world.js": {
+      "match": true,
+      "sha256": "5257ca7c77df5aa6c7491abd61535dad5e85b43bebc44b8e262e758d1ff782f7"
+    },
+    "blender-world.css": {
+      "match": true,
+      "sha256": "9b85d5d163a1cfc15fc14b5efcadd67bbfdeddd9f75ed22bd8b6af7264260cfc"
+    },
+    "experience-zones.js": {
+      "match": true,
+      "sha256": "c3c07171b1eff494a4ca840be16011e6aeb5cd17ff4a32a35e35a52dc77b33f6"
+    }
+  }
+}

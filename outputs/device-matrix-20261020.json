@@ -1,0 +1,110 @@
+[
+  {
+    "model": "nokia3310",
+    "callApp": null,
+    "phoneControls": 0,
+    "visibleNumeric": 12
+  },
+  {
+    "model": "mp3",
+    "callApp": null,
+    "phoneControls": 0,
+    "visibleNumeric": 0
+  },
+  {
+    "model": "nokia1100",
+    "callApp": null,
+    "phoneControls": 0,
+    "visibleNumeric": 12
+  },
+  {
+    "model": "symbian",
+    "callApp": "contacts",
+    "phoneControls": 1,
+    "visibleNumeric": 12
+  },
+  {
+    "model": "razr",
+    "callApp": "contacts",
+    "phoneControls": 1,
+    "visibleNumeric": 12
+  },
+  {
+    "model": "nokia7610",
+    "callApp": "contacts",
+    "phoneControls": 1,
+    "visibleNumeric": 12
+  },
+  {
+    "model": "mp4",
+    "callApp": null,
+    "phoneControls": 0,
+    "visibleNumeric": 0
+  },
+  {
+    "model": "walkman",
+    "callApp": "contacts",
+    "phoneControls": 1,
+    "visibleNumeric": 12
+  },
+  {
+    "model": "psp",
+    "callApp": null,
+    "phoneControls": 0,
+    "visibleNumeric": 0
+  },
+  {
+    "model": "k750",
+    "callApp": "contacts",
+    "phoneControls": 1,
+    "visibleNumeric": 12
+  },
+  {
+    "model": "twist",
+    "callApp": "contacts",
+    "phoneControls": 3,
+    "visibleNumeric": 12
+  },
+  {
+    "model": "n73",
+    "callApp": null,
+    "phoneControls": 1,
+    "visibleNumeric": 12
+  },
+  {
+    "model": "iphone",
+    "callApp": null,
+    "phoneControls": 0,
+    "visibleNumeric": 0
+  },
+  {
+    "model": "n95",
+    "callApp": "contacts",
+    "phoneControls": 1,
+    "visibleNumeric": 12
+  },
+  {
+    "model": "nokia5230",
+    "callApp": null,
+    "phoneControls": 1,
+    "visibleNumeric": 0
+  },
+  {
+    "model": "n97",
+    "callApp": "contacts",
+    "phoneControls": 1,
+    "visibleNumeric": 0
+  },
+  {
+    "model": "mp5",
+    "callApp": null,
+    "phoneControls": 0,
+    "visibleNumeric": 0
+  },
+  {
+    "model": "fullscreen",
+    "callApp": null,
+    "phoneControls": 0,
+    "visibleNumeric": 0
+  }
+]
