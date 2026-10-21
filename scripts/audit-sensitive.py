@@ -27,7 +27,9 @@ RULES = {
     'google-api-key': rb'AIza[0-9A-Za-z_-]{35}',
     'slack-token': rb'xox[baprs]-[A-Za-z0-9-]{20,}',
 }
-ASSIGNMENT = re.compile(rb'''(?i)(?<![A-Za-z0-9_-])["']?(ak|sk|access[_-]?key(?:[_-]?(?:id|secret))?|secret[_-]?access[_-]?key|secret[_-]?key|secretid|secretkey|client[_-]?secret|api[_-]?key|access[_-]?token|auth[_-]?token|password|passwd)["']?\s*[:=]\s*(["'])([^\r\n]{16,200}?)\2''')
+KEY_NAME = rb'(?:[A-Za-z][A-Za-z0-9_-]*[_-])?(ak|sk|access[_-]?key(?:[_-]?(?:id|secret))?|secret[_-]?access[_-]?key|secret[_-]?key|secret[_-]?id|client[_-]?secret|api[_-]?key|access[_-]?token|auth[_-]?token|password|passwd)'
+ASSIGNMENT = re.compile(rb'''(?i)(?<![A-Za-z0-9_-])["']?'''+KEY_NAME+rb'''["']?\s*[:=]\s*(["'])([^\r\n]{16,200}?)\2''')
+UNQUOTED = re.compile(rb'(?im)^\s*(?:export\s+)?'+KEY_NAME+rb'\s*[:=]\s*([A-Za-z0-9_+/=-]{16,200})\s*$')
 PLACEHOLDER = re.compile(rb'(?i)example|placeholder|your[_-]|dummy|sample|process\.env|\$\{|getenv|secret.*name|^[*xX_<>. -]+$')
 
 
@@ -64,12 +66,13 @@ def inspect(data, path, findings, stats, historical=False, depth=0):
                 stats['historical_public_test_fixtures'] += 1
             else:
                 findings.append(entry)
-    for match in ASSIGNMENT.finditer(data):
-        value = match.group(3)
+    candidates = [(m.group(1), m.group(3), m.start()) for m in ASSIGNMENT.finditer(data)]
+    candidates += [(m.group(1), m.group(2), m.start()) for m in UNQUOTED.finditer(data)]
+    for field, value, start in candidates:
         counts = collections.Counter(value)
         entropy = -sum(n/len(value)*math.log2(n/len(value)) for n in counts.values())
         if entropy >= 3.5 and not PLACEHOLDER.search(value):
-            findings.append({'path': path, 'type': 'hardcoded-'+match.group(1).decode(), 'line': data[:match.start()].count(b'\n')+1})
+            findings.append({'path': path, 'type': 'hardcoded-'+field.decode(), 'line': data[:start].count(b'\n')+1})
     if depth >= 3:
         return
     if data.startswith(b'PK\x03\x04'):
